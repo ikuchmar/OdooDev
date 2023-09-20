@@ -1,0 +1,86 @@
+===================================================
+1.	Загальний вигляд представлення діаграми
+
+<record id="kw_lib_book_graph" model="ir.ui.view">
+   <field name="name">kw.lib.book.graph (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <graph>
+           <field name="create_date" interval="day"/>
+           <field name="name"/>
+           <field name="state"/>
+           <field name="qty" type="measure"/>
+       </graph>
+   </field>
+</record>
+
+Для створення представлення діаграми створюється запис в моделі ir.ui.view для потрібної моделі та в поле arch додається xml опис даного представлення. Весь контент має бути огорнутий у тег graph, а в ньому іде опис полів, що будуть відображені на даному представлені.
+
+Важливо! Перше поле буде віссю абсцис, а останнє поле з типом measure буде джерелом для значень, графіку та віссю ординат. Попередні поля типу measure будуть проігноровані.
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення діаграми1.png
+===================================================
+Типи діаграм
+
+Є три типи діаграм bar, line та pie
+
+<record id="kw_lib_book_graph" model="ir.ui.view">
+   <field name="name">kw.lib.book.graph (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <graph type="bar">
+           <field name="create_date" interval="day"/>
+           <field name="name"/>
+           <field name="state"/>
+           <field name="qty" type="measure"/>
+       </graph>
+   </field>
+</record>
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення діаграми2.png
+
+<record id="kw_lib_book_graph" model="ir.ui.view">
+   <field name="name">kw.lib.book.graph (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <graph type="line">
+           <field name="create_date" interval="day"/>
+           <field name="name"/>
+           <field name="state"/>
+           <field name="qty" type="measure"/>
+       </graph>
+   </field>
+</record>
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення діаграми3.png
+<record id="kw_lib_book_graph" model="ir.ui.view">
+   <field name="name">kw.lib.book.graph (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <graph type="pie">
+           <field name="create_date" interval="day"/>
+           <field name="name"/>
+           <field name="state"/>
+           <field name="qty" type="measure"/>
+       </graph>
+   </field>
+</record>
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення діаграми4.png
+===================================================
+Окремі стовбці
+
+<record id="kw_lib_book_graph" model="ir.ui.view">
+   <field name="name">kw.lib.book.graph (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <graph stacked="0">
+           <field name="create_date" interval="day"/>
+           <field name="name"/>
+           <field name="state"/>
+           <field name="qty" type="measure"/>
+       </graph>
+   </field>
+</record>
+
+Атрибут stacked доступний лише для типу bar, визначає чи будуть стовпці відображатись окремо при значенні 0 або у вигляді полоскових діаграм у при значенні 1
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення діаграми5.png
+

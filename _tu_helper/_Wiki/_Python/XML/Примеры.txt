@@ -1,0 +1,56 @@
+Чтение XML-файла:
+python
+Copy code
+import xml.etree.ElementTree as ET
+
+tree = ET.parse('example.xml')
+root = tree.getroot()
+
+# выводим атрибуты корневого элемента
+print(root.attrib)
+
+# выводим все дочерние элементы
+for child in root:
+    print(child.tag, child.attrib)
+Создание нового XML-документа:
+python
+Copy code
+import xml.etree.ElementTree as ET
+
+root = ET.Element('root')
+
+# создаем дочерний элемент и добавляем его в корень
+child1 = ET.SubElement(root, 'child1')
+child1.text = 'Text for child 1'
+
+# создаем еще один дочерний элемент
+child2 = ET.SubElement(root, 'child2', {'attrib1': 'value1', 'attrib2': 'value2'})
+child2.text = 'Text for child 2'
+
+# выводим результат в файл
+tree = ET.ElementTree(root)
+tree.write('new.xml', encoding='utf-8', xml_declaration=True)
+Изменение XML-документа:
+python
+Copy code
+import xml.etree.ElementTree as ET
+
+tree = ET.parse('example.xml')
+root = tree.getroot()
+
+# изменяем значение атрибута у элемента
+for elem in root.iter('country'):
+    elem.set('population', '100000000')
+
+# удаляем элемент
+for neighbor in root.iter('neighbor'):
+    if neighbor.attrib['name'] == 'Russia':
+        root.remove(neighbor)
+
+# добавляем новый элемент
+new_neighbor = ET.Element('neighbor', {'name': 'Japan', 'direction': 'East'})
+root.append(new_neighbor)
+
+# выводим результат в файл
+tree.write('example_modified.xml', encoding='utf-8', xml_declaration=True)
+Надеюсь, эти примеры помогут вам начать работу с XML в Python!

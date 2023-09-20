@@ -1,0 +1,53 @@
+Для начала придумаем подходящую HTML/CSS-структуру.
+
+Здесь каждый компонент времени удобно поместить в соответствующий `<span>`:
+
+```html
+<div id="clock">
+  <span class="hour">hh</span>:<span class="min">mm</span>:<span class="sec">ss</span>
+</div>
+```
+
+Каждый `span` раскрашивается при помощи CSS.
+
+Функция `update` будет обновлять часы, `setInterval` вызывает её каждую секунду:
+
+```js
+function update() {
+  let clock = document.getElementById('clock');
+*!*
+  let date = new Date(); // (*)
+*/!*
+  let hours = date.getHours();
+  if (hours < 10) hours = '0' + hours;
+  clock.children[0].innerHTML = hours;
+
+  let minutes = date.getMinutes();
+  if (minutes < 10) minutes = '0' + minutes;
+  clock.children[1].innerHTML = minutes;
+
+  let seconds = date.getSeconds();
+  if (seconds < 10) seconds = '0' + seconds;
+  clock.children[2].innerHTML = seconds;
+}
+```
+
+В строке `(*)` каждый раз мы получаем текущую дату. Вызовы `setInterval` не надёжны: они могут происходить с задержками.
+
+Функция `clockStart` для запуска часов:
+
+```js
+let timerId;
+
+function clockStart() { // запустить часы
+  timerId = setInterval(update, 1000);
+  update(); // (*)
+}
+
+function clockStop() {
+  clearInterval(timerId);
+  timerId = null;
+}
+```
+
+Обратите внимание, что вызов `update()` не только запланирован, но и тут же производится в строке `(*)`. Иначе посетителю пришлось бы ждать до первого выполнения `setInterval`, то есть целую секунду.

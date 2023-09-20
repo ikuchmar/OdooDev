@@ -1,0 +1,14 @@
+в своем модуле
+
+- создать модель ... .purchase.order.line
+-- с полями product_id (m2o), Quantity (float)
+- создать модель ... .sales.order.line
+-- с полями product_id (m2o), Quantity (float)
+
+Вывести модели .purchase.order.line и .sales.order.line в меню (родитель = Orders)
+
+- в моделе ... .purchase.order
+-- добавить поле line_ids (o2m) на модель (.purchase.order.line)
+
+- в моделе ... .sales.order
+-- добавить поле line_ids (o2m) на модель (.sales.order.line)

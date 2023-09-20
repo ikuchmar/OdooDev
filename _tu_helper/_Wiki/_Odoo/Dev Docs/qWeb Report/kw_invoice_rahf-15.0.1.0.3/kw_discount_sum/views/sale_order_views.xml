@@ -1,0 +1,17 @@
+<odoo>
+
+    <odoo>
+        <record id="kw_discount_sum_sale_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form (kw_discount_sum)</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tax_totals_json']" position="before">
+                    <field name="kw_discount_sum" widget="monetary"/>
+                </xpath>
+            </field>
+        </record>
+    </odoo>
+
+
+</odoo>

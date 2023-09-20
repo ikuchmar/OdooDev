@@ -1,0 +1,123 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* kw_invoice_doc_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-10 11:35+0000\n"
+"PO-Revision-Date: 2022-08-10 11:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: kw_invoice_doc_base
+#: model_terms:ir.ui.view,arch_db:kw_invoice_doc_base.kw_invoice_doc_base_product_template_only_form_view
+msgid "Adding to reports"
+msgstr "Відображення у друкованих документах"
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_city_of_assembly
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_city_of_assembly
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_city_of_assembly
+msgid "City of assembly"
+msgstr "Місце складання"
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,help:kw_invoice_doc_base.field_product_product__kw_is_added_to_so
+#: model:ir.model.fields,help:kw_invoice_doc_base.field_product_template__kw_is_added_to_so
+msgid "If checked, the product will be added to the SO."
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,help:kw_invoice_doc_base.field_account_move_line__kw_is_added_to_doc
+#: model:ir.model.fields,help:kw_invoice_doc_base.field_product_product__kw_is_added_to_doc
+#: model:ir.model.fields,help:kw_invoice_doc_base.field_product_template__kw_is_added_to_doc
+msgid "If checked, the product will be added to the invoice."
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_product_product__kw_is_added_to_doc
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_product_template__kw_is_added_to_doc
+msgid "Include in report printed from invoice"
+msgstr "Відображати у документах для друку з комерціїної пропозиції"
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_product_product__kw_is_added_to_so
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_product_template__kw_is_added_to_so
+msgid "Include in reports printed from SO"
+msgstr "Відображати у друкованих документах з рахунку"
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move_line__kw_is_added_to_doc
+msgid "Is a configurable product"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model,name:kw_invoice_doc_base.model_account_move
+msgid "Journal Entry"
+msgstr "Запис у журналі"
+
+#. module: kw_invoice_doc_base
+#: model:ir.model,name:kw_invoice_doc_base.model_account_move_line
+msgid "Journal Item"
+msgstr "Елемент журналу"
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_amount_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_amount_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_amount_ukr_text
+msgid "Kw Amount Ukr Text"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_amount_untaxed_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_amount_untaxed_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_amount_untaxed_ukr_text
+msgid "Kw Amount Untaxed Ukr Text"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_currency_cent_name
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_currency_cent_name
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_currency_cent_name
+msgid "Kw Currency Cent Name"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_currency_name
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_currency_name
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_currency_name
+msgid "Kw Currency Name"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_partner_invoice_id
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_partner_invoice_id
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_partner_invoice_id
+msgid "Kw Partner Invoice"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_taxed_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_taxed_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_taxed_ukr_text
+msgid "Kw Taxed Ukr Text"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model,name:kw_invoice_doc_base.model_product_template
+msgid "Product Template"
+msgstr "Шаблон товару"
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_responsible_person
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_responsible_person
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_responsible_person
+#: model_terms:ir.ui.view,arch_db:kw_invoice_doc_base.kw_invoice_doc_base_account_move_form
+msgid "Responsible person"
+msgstr "Відповідальна особа"

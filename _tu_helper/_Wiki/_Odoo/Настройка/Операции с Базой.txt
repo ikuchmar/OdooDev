@@ -1,0 +1,34 @@
+http://localhost:8069/web/database/manager
+http://localhost:8069/web/database/selector
+
+D:\Turbo\venv\include\odoo-14.0\requirements.txt
+E:\Work_Odoo\TurboUa\Odoo_14\venv\Include\odoo-alex.conf
+
+=================================================
+Script path
+E:\Work_Odoo\TurboUa\Odoo_14\venv\Include\odoo-14.0\odoo-bin
+
+Paramerts
+-c "E:\Work_Odoo\TurboUa\Odoo_14\venv\Include\odoo-alex.conf" -d turbo --dev=all
+
+
+Enviroment variables
+PYTHONUNBUFFERED=1
+
+Working directory
+E:\Work_Odoo\TurboUa\Odoo_14\venv\Include\odoo-14.0
+
+======================
+Paramerts
+======================
+Для установки модуля перед открытием Оду
+-u base
+
+
+
+
+turbo_adm
+12345678
+
+D:\Turbo\venv\Scripts\pip.exe install pypdf2
+

@@ -1,0 +1,35 @@
+Debugging in Odoo.sh
+Debugging an Odoo.sh build is not really different than another Python app. This article only explains the specificities and limitations of the Odoo.sh platform, and assumes that you already know how to use a debugger.
+
+ Note
+
+If you don’t know how to debug a Python application yet, there are multiple introductory courses that can be easily found on the Internet.
+
+You can use pdb, pudb or ipdb to debug your code on Odoo.sh. As the server is run outside a shell, you cannot launch the debugger directly from your Odoo instance backend as the debugger needs a shell to operate.
+
+pdb is installed by default in every container.
+
+If you want to use pudb or ipdb you have to install it before.
+
+To do so, you have two options:
+
+temporary (only in the current build):
+
+$  pip install pudb --user
+or
+
+$  pip install ipdb --user
+permanent: add pudb or ipdb to your project requirements.txt file.
+
+Then edit the code where you want to trigger the debugger and add this:
+
+import sys
+if sys.__stdin__.isatty():
+    import pdb; pdb.set_trace()
+The condition sys.__stdin__.isatty() is a hack that detects if you run Odoo from a shell.
+
+Save the file and then run the Odoo Shell:
+
+$ odoo-bin shell
+Finally, via the Odoo Shell, you can trigger the piece of code/function/method you want to debug.
+

@@ -1,0 +1,13 @@
+===========================================
+ |=   оператор выполняет объединение двух множеств и присваивает результат обратно в левый операнд.
+===========================================
+pickings_without_quantities = {'picking1', 'picking2'}
+picking = {'picking2', 'picking3'}
+
+pickings_without_quantities |= picking
+print(pickings_without_quantities)
+
+Результат выполнения кода будет:
+
+{'picking1', 'picking2', 'picking3'}
+Обратите внимание, что оператор |= модифицирует исходное множество pickings_without_quantities.

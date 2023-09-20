@@ -1,0 +1,171 @@
+===================================================
+Домени пошуку
+===================================================
+Домени пошуку являють собою список кортежів та операторів зв’язку
+
+request.env[place'].sudo().search([
+   ('is_shown_on_mobile', '=', True),
+   ('is_checkpoint', '=', False),
+   ('primary_category_id', '!=', False),
+   ('latitude', '!=', False), ('longitude', '!=', False),
+   '|', ('active', '=', True), ('active', '=', False)]))
+
+Важливо! Доменом є саме список цих елементів. Окремий кортеж не є доменом.
+
+[('name','=','ABC'), ('language.code','!=','en_US'),
+'|',('country_id.code','=','be'), ('country_id.code','=','de')]
+
+[('name','=','ABC')]
+
+Окремий кортеж умови складається з трьох елементів
+Назва поля, причому для полів типу Many2one можна використовувати поля зі зв’язаної моделі partner_id.country.
+
+[('partner_id.country_id.code','=','ABC')]
+Другим елементом є оператор, третім значення сумісне з оператором та полем. Наприклад, число, дата, список або рядок.
+
+Важливо! Якщо ми створюємо умову для поля Many2one треба передавать числове значення id, а не поле.
+
+Неправильно
+
+[('partner_id','=',self.partner_id)]
+
+Правильно
+
+[('partner_id','=',self.partner_id.id)]
+
+Оператори умов доменів
+
+= рівність (записи де, значення поля дорівнює переданому значенню)
+
+!= не рівність (записи де, значення поля не дорівнює переданому значенню)
+
+>, >=, <, <= - більше, більше або дорівнює, менше, менше або дорівнює
+
+=? - у вибірку також потраплять записи, де значення поля не встановлено
+
+=like - оператор фільтрації за шаблоном. Використовує патерни _ та % будь-який символ та будь яка кількість будь яких символів. Щоб вказати один або більше символів, використовують комбінацію _%. Також патернів може бути декілька.
+
+copied_count = self.search_count(
+   [('name', '=like', (u"Copy of {}%").format(self.name))])
+
+like - огортає передане значення в патерни %, аналогічний
+
+[('name','=like','%value%')]
+
+=ilike та ilike - регістр незалежні версії like операторів
+
+not like та not ilike - зворотні до відповідних like операторів
+
+in - перевіряє чи значення поля є серед значень списку значень. Для цього параметру значенням має бути саме список
+
+not in - зворотний до in
+
+child_of - перевіряє чи є запис є нащадком запису або одного запису зі списку. Працює для моделей, що є ієрархічними
+domain_company = [
+    '|', ('company_id', '=', False),
+    ('company_id', 'child_of', values['company_id'].ids)]
+
+parent_of - перевіряє чи є запис є батьківським для запису або одного запису зі списку. Працює для моделей, що є ієрархічними
+
+domain = AND([domain, [('subcontractor_ids', 'parent_of', subcontractor.ids)]])
+
+Комбінування умов доменів
+Є три оператора для роботи над умовами доменами
+
+'&' - оператор І (AND). Він використовується, якщо оператор не вказаний
+'|' - оператор АБО (OR).
+'!' - оператор НІ (NOT). На відміну від перших двох це унарний оператор
+
+default_domain = ['&', ('config_id', '=', config_id), '!',
+'|', ('state', '=', 'draft'), ('state', '=', 'canceled')]
+
+Спочатку може бути складно звикнути способу запису.
+
+Важливо! Оператор виконується над наступними двома елементами, незалежно є цей елемент умовою чи оператором
+
+Розлянемо приклад
+
+['|', A, '&','|', B, C, D]  розбір домену відбувається з ліва на право
+
+1. Операція АБО надо А та результатом І  '&'
+2. Операція І виконається над АБО та … (ще не визначено)
+3. Друга операція АБО виконається над В та С
+4. Межі другої операції або визначено, а отже І виконається над результатом АБО В та С та D
+5. Виконається перша АБО
+
+А отже виконуються вони в такій послідовності
+['|', A, (('&', ('|', B, C - 1-ая итерация) , D-2-ая итерация))]
+
+Важливо! ['|', A, B, '|',C]  є помилковим, оскільки до С не має пари
+
+Функції AND та OR
+Функції які спрощують заплутаний синтаксис доменної нотації, як параметри вони приймають список доменів
+
+Важливо! приймають список доменів, а кортежів умов. Тобто якщо кожен кортеж треба обробити окремо, його треба огорнути в список
+
+request.env['place'].sudo().search(
+   AND([
+       [('is_shown_on_mobile', '=', True),
+        ('is_checkpoint', '=', False),
+        ('primary_category_id', '!=', False),
+        ('latitude', '!=', False), ('longitude', '!=', False), ],
+       OR([
+           [('write_date', '>=', start_date), ],
+           [('id', 'in', ids), ],
+       ]),
+       OR([
+           [('active', '=', True), ],
+           [('active', '=', False), ],
+       ]),
+   ])))
+
+================================================================================================================
+Список всех операторов описан здесь:
+https://www.odoo.com/uk_UA/forum/dopomoga-1/v8-what-is-the-full-list-of-available-term-operators-in-the-expression-domain-75580
+
+List of Domain operators: ! (Not), | (Or), & (And)
+List of Term operators: '=', '!=', '<=', '<', '>', '>=', '=?', '=like', '=ilike', 'like', 'not like', 'ilike', 'not ilike', 'in', 'not in', 'child_of'
+Usage:
+Input records:
+Record 1: Openerp
+Record 2: openerp
+Record 3: Opensource
+Record 4: opensource
+Record 5: Open
+Record 6: open
+Record 7: Odoo
+Record 8: odoo
+Record 9: Odooopenerp
+Record 10: OdooOpenerp
+'like': [('input', 'like', 'open')] - Returns case sensitive (wildcards - '%open%') search. O/p: open, opensource, openerp, Odooopenerp
+'not like': [('input', 'not like', 'open')] - Returns results not matched with case sensitive (wildcards - '%open%') search. O/p: Openerp, Opensource, Open, Odoo, odoo, OdooOpenerp
+'=like': [('name', '=like', 'open')] - Returns exact (= 'open') case sensitive search. O/p: open
+'ilike': [('name', 'ilike', 'open')] - Returns exact case insensitive (wildcards - '%open%') search. O/p: Openerp, openerp, Opensource, opensource, Open, open, Odooopenerp, OdooOpenerp
+'not ilike': [('name', 'not ilike', 'open')] - Returns results not matched with exact case insensitive (wildcards - '%open%') search. O/p: Odoo, odoo
+'=ilike': [('name', '=ilike', 'open')] - Returns exact (= 'open' or 'Open') case insensitive search. O/p: Open, open
+'=?':
+name = 'odoo'
+parent_id = False
+[('name', 'like', name), ('parent_id', '=?', parent_id)] - Returns name domain result & True
+name = 'odoo'
+parent_id = 'openerp'
+[('name', 'like', name), ('parent_id', '=?', parent_id)] - Returns name domain result & parent_id domain result
+'=?' is a short-circuit that makes the term TRUE if right is None or False, '=?' behaves like '=' in other cases
+'in':
+[('value1', 'in', ['value1', 'value2'])] - in operator will check the value1 is present or not in list of right term
+'not in':
+[('value1', 'not in', ['value2'])] - not in operator will check the value1 is not present in list of right term
+While these 'in' and 'not in' works with list/tuple of values, the latter '=' and '!=' works with string
+'=':
+value = 10
+[('value','=',value)] - term left side has 10 in db and term right our value 10 will match
+'!=':
+value = 15
+[('value','!=',value)] - term left side has 10 in db and term right our value 10 will not match
+'child_of':
+parent_id = '1' #Agrolait
+'child_of':
+[('partner_id', 'child_of', parent_id)] - return left and right list of partner_id for given parent_id
+'<=', '<', '>', '>=':
+These operators are largely used in openerp for comparing dates - [('date', '>=', date_begin), ('date', '<=', date_end)].
+You can use these operators to compare int or float also.

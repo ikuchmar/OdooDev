@@ -1,0 +1,215 @@
+Створення та перевірка перекладів
+1.	Механізм перекладів в Odoo
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Механізм перекладів в Odoo.png
+Система Odoo має підтримку декількох мов інтерфейсу, що дозволяє кожному користувачу обирати найбільш зручну для себе. Зверніть увагу, що базова мова, на якій повинні створюватися вихідні терміни, - це міжнародна англійська (код мови en_US). При перемиканні мови інтерфейсу, англійські терміни замінюються на терміни тієї мови, котру обрав користувач.
+
+При створенні нових модулів або при внесенні змін до існуючих додаються нові поля та елементи форм, які мають власні назви та текстові повідомлення. У системі Odoo існує вбудований механізм для перекладу, який надає декілька шляхів для здійснення перекладу термінів. Самі переклади зберігаються у базі даних.
+
+Механізм перекладів потребує наявності у контексті певної активної мови, зазвичай вона визначена у віртуальному середовищі у параметру lang:
+self.with_context(lang="en_US")
+
+Перелік шляхів, за допомогою яких можна зробити переклад:
+-	за допомогою веб інтерфейсу;
+-	за допомогою зовнішнього файлу формату PO.
+
+Зверніть увагу - для роботи з перекладами потрібно обов’язково активувати режим розробника.
+2.	Переклад за допомогою веб інтерфейсу
+Зробити переклад деяких термінів можливо за допомогою веб інтерфейсу системи. Поперед цієї дії бажано оновити існуючі та нові терміни за допомогою відповідного візарду. Щоб запустити цей процес, перейдить до меню Settings - Translations - Application Terms - Generate Missing Terms, та оберіть мову, для котрої буде проведено оновлення. Після чого натиснить на Update.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\2.	Переклад за допомогою веб інтерфейсу.png
+Далі, перейдіть до меню Settings - Translations - Application Terms - Translated Terms, що призведе до відображення списку всіх існуючих у базі даних записів перекладів.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\відображення списку.png
+Використовуючи стандартні фільтри, знайдіть необхідні терміни та додайте нові переклади до них.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\нові переклади.png
+Пам’ятайте: Щоб побачити нові переклади термінів, користувачам системи потрібно оновити сторінку браузера.
+перекладати терміни в веб
+Також є можливість перекладати терміни для певної моделі, для цього з будь якого перегляда форми, у режимі розробника, оберить пункт меню Debug - Technical Translation.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\пункт меню Debug - Technical Translation.png
+У списку, що з’явиться, можна ввести або змінити переклади.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\переклади.png
+Інші шляхи для перекладу за допомогою інтерфейсу, -  це переклад поодиноких полів. Якщо поле має атрибут translate=True (по замовчуванню False), то його значення можна перекласти у інтерфейсі системи наступним чином:
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\значення у інтерфейсі системи.png
+Після натискання на позначку мови у верхньому правому кутку, буде відкрите вікно, де можна ввести значення для усіх встановлених у системі мов.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\значення встановлених мов.png
+3.	Переклад за допомогою зовнішніх файлів
+Експорт термінів у зовнішній файл
+Для генерування файлу з термінами перейдить у меню Settings - Translations - Import/Export - Export Translation. У формі оберить:
+●	мову, для котрої потрібно згенерувати файл;
+●	формат файлу (оберить значення PO File);
+●	модуль, для котрого робиться переклад.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Export Translation.png
+По заповненню всіх полів натиснить на Export.
+У наступному вікні натиснить на посилання, та завантажте файл у директорію i18n модуля:
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\директорія i18n модуля.png
+Далі, за допомогою редактора додайте переклади у згенерований файл. Є спеціалізовані редактори, наприклад POEdit (https://poedit.net/), котрі надають зручні можливості для роботи з перекладами.
+
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* school_lesson_6_3
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-31 13:47+0000\n"
+"PO-Revision-Date: 2022-05-31 13:47+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: school_lesson_6_3
+#: model:ir.model.fields,field_description:school_lesson_6_3.field_library_author__biography
+msgid "Biography"
+msgstr "Біографія"
+
+#. module: school_lesson_6_3
+#: model:ir.model.fields,field_description:school_lesson_6_3.field_library_book__description
+#: model_terms:ir.ui.view,arch_db:school_lesson_6_3.library_book_view_form
+msgid "Description"
+msgstr "Опис"
+
+#. module: school_lesson_6_3
+#: model:ir.model,name:school_lesson_6_3.model_library_author
+msgid "Library Book Authors"
+msgstr "Автори книг"
+
+#. module: school_lesson_6_3
+#: model:ir.model,name:school_lesson_6_3.model_library_book
+msgid "Library Books"
+msgstr "Книги"
+
+Після збереження перекладів у файлі, потрібно оновити їх у системі. Для цього потрібно, або оновити модуль, або, якщо оновлювати модуль цілком не бажано з будь-яких міркувань, можливо оновити лише переклади. Це можно зробити перейшовши у меню Settings - Translations - Languages, обравши потрібну мову, та натиснувши на Update.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Languages.png
+Імпортування файлу
+У системі є можливість завантажити терміни з зовнішнього PO файлу. Це може бути необхідно, якщо є потреба “переписати” всі наявні у системі переклади терминами з файлу.
+Перейдіть до меню Settings - Translations - Import/Export - Import Translation та заповнить поля форми наступним чином:
+●	введіть будь яке значення у поле Language Name, це значення буде використано лише у випадку, якщо буде додано новий, не існуючий у системі код мови;
+●	уважно введіть код мови, для якої будуть завантажені терміни з файлу;
+●	оберіть PO файл для завантаження;
+●	залиште активною опцію Overwrite Existing Terms, якщо потрібно переписати наявні переклади.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Import Translation.png
+По заповненню всіх полів натисніть на Import.
+4.	Підготовка термінів при розробці
+У процесі розробці необхідно дотримуватися рекомендацій по оголошенню та “обгортанню” термінів, які потребують перекладу.
+Так, для передачі термінів у транслятор використовуються наступні функції, у Python коді використовується функція odoo._():
+
+title = _("Bank Accounts")
+
+У JavaScript, функція odoo.web._t():
+
+title = _t("Bank Accounts");
+
+“Ледача” версія цих функцій, тобто функція котра отримує переклад лише у разі звернення до терміну, це, у Python функція odoo._lt() та odoo.web._lt() у Javascript відповідно. Зазвичай ці функції використовують при оголошенні глобальних змінних та термінів у методах класу.
+
+●	Змінні:
+○	Не потрібно так робити:
+_("Scheduled meeting with %s" % partner.name)
+○	Потрібно робити так:
+_("Scheduled meeting with %s", partner.name)
+
+●	Блоки:
+○	Не потрібно розділяти повідомлення на блоки:
+_("You have ") + len(invoices) + _(" invoices waiting")
+_t(“You have ") + invoices.length + _t(" invoices waiting");
+○	Намагайтесь залишати повідомлення цілком у одному блоці, це передасть у транслятор його у повному обсязі, що дозволить розуміти контекст та зробити коректний переклад:
+_("You have %s invoices waiting") % len(invoices)
+_.str.sprintf(_t("You have %s invoices waiting"), invoices.length);
+○	Не потрібно розділяти ціле повідомлення на частки:
+	_("Reference of the document that generated ") + \
+_("this sales order request.")
+○	Намагайтесь використовувати наступний синтаксис:
+_("Reference of the document that generated " + \
+  "this sales order request.")
+
+
+●	Множина:
+○	Не створюйте повідомлення з множиною так, як це робиться у англійській  мові.
+msg = _("You have %(count)s invoice", count=invoice_count)
+if invoice_count > 1:
+  msg += _("s")
+○	Намагайтесь враховувати, що у різних мовах різні множинні форми. Намагайтесь додати додаткову логіку для множинних форм:
+if invoice_count > 1:
+  msg = _("You have %(count)s invoices", count=invoice_count)
+else:
+  msg = _("You have one invoice")
+
+●	Зайві виклики функцій перекладу можуть вплинути на загальний час виконання. Це стосується використання цих функція при оголошенні загальних змінних. Для цього краще використовувати “ледачі” версії функцій.
+
+○	Не потрібно так робити:
+ERROR_MESSAGE = {
+  # буде виконана при старті сервера “вхолосту”,
+  # так як у контексті не буде вказано мови
+  'access_error': _('Access Error'),
+  'missing_error': _('Missing Record'),
+}
+
+class Record(models.Model):
+
+  def _raise_error(self, code):
+    raise UserError(ERROR_MESSAGE[code])
+
+○	Потрібно робити так:
+ERROR_MESSAGE = {
+  'access_error': _lt('Access Error'),
+  'missing_error': _lt('Missing Record'),
+}
+
+class Record(models.Model):
+
+  def _raise_error(self, code):
+    # translation lookup executed at error rendering
+    raise UserError(ERROR_MESSAGE[code])
+
+ 
+Перевірка повноти перекладів
+Розглянемо засоби, котрими можна перевірити наскільки повний переклад має модуль. Для цього будемо використовувати скрипт odoo-helper.
+
+Для оцінки повноти перекладів запустить скрипт з наступними параметрами:
+odoo-helper tr rate --lang uk_UA school_lesson_6_3
+
+Після його виконання у лозі буде відображена таблиця з результатами:
+
+Addon             |      Total |    Untranslated |       Rate
+--------------------------------------------------------------
+school_lesson_6_3 |         10 |               4 |   60.00
+--------------------------------------------------------------
+TOTAL             |         10 |               4 |   60.00
+
+
+Сінтаксис скрипта для оцінки наступний:
+
+odoo-helper tr rate --lang uk_UA <addon1> [addon2]...
+- розрахувати оцінку повноти перекладів для мови “uk_UA” та певних модулів.
+
+odoo-helper tr rate --lang uk_UA --dir <path>
+- розрахувати оцінку повноти перекладів для мови “uk_UA” та всіх модулів у певній директорії.
+
+Також цей скрипт можна використовувати для генерації файлів з термінами, для цього потрібно запустити скрипт з такими параметрами:
+
+odoo-helper tr regenerate --lang uk_UA --file uk <addon1> [addon2]... - згенерувати файл з термінами для певної мови та для певних модулів.
+
+odoo-helper tr regenerate --lang uk_UA --file uk --dir <path>
+- згенерувати файли з термінами для певної мови та модулів, котри розташовані у певній директорії.
+
+
+
+ 
+Додаткова інформація
+●	Додати нову мову у базу даних можливо за допомогою командного рядка, виконавши наступну команду:
+$ ./odoo-bin -c /etc/odoo15-server.conf -d school --load-language=pl_PL
+
+●	Імпортувати файл з перекладами за допомогою командного рядка:
+$ cd ../custom_addons/school_lesson_6_3/i18n
+$ odoo-bin -c /etc/odoo15-server.conf -d school \
+--i18n-import="uk_UA.po" --lang=uk_UA --i18n-overwrite
+
+ 
+Додаткові матеріали до уроку
+●	Translating Modules: https://www.odoo.com/documentation/15.0/developer/howtos/translations.html
+●	Contribute to the translation of Odoo: https://github.com/odoo/odoo/wiki/Translations
+
+
+
+

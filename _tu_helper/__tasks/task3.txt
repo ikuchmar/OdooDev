@@ -1,0 +1,9 @@
+в своем модуле
+- сделать пункты меню первого уровня Orders (в файле маин меню)
+
+- создать модель ... .purchase.order
+-- с полями name, data, supplier_id (partner m2o)
+- создать модель ... .sales.order
+-- с полями name, data, client_id (partner m2o)
+
+Богдан - заполнение файла _tu_helper/_Wiki/_правила/наименования объектов.txt

@@ -1,0 +1,9 @@
+===========================================
+in  Проверка наличия элемента в set
+===========================================
+
+my_set = {1, 2, 3, 4, 5}
+if 4 in my_set:
+    print("Element is present in the set")
+else:
+    print("Element is not present in the set")

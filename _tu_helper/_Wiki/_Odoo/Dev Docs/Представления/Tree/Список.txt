@@ -1,0 +1,212 @@
+===================================================
+Загальний вигляд
+===================================================
+
+<record id="kw_lib_author_tree" model="ir.ui.view">
+   <field name="name">kw.lib.author.tree (kw_library)</field>
+   <field name="model">kw.lib.author</field>
+   <field name="arch" type="xml">
+       <tree default_order="sequence">
+           <field name="sequence" widget="handle"/>
+           <field name="name" optional="show"/>
+           <field name="name1" optional="hide"/>
+           <field name="state" optional="show" />
+           <button icon="fa-ticket"  name="create" attrs="{'invisible': [('state','in',['posted', False,'draft'])]}"/>
+       </tree>
+   </field>
+</record>
+
+Для створення представлення списком створюється запис в моделі ir.ui.view для потрібної моделі та в поле arch додається xml опис даного представлення.
+Весь контент має бути огорнутий у тег tree, а в ньому іде опис полів або кнопок, що будуть відображені на даному представлені.
+Особливості відображення конкретного представлення виконуються за допомогою додавання атрибутів у тег tree та теги полів та кнопок
+
+===================================================
+Підсвічування всього рядка
+===================================================
+
+   <tree decoration-bf="bool1==True"
+         decoration-muted="bool2==True"
+         decoration-info="bool3==True"
+         decoration-danger="bool4==True"
+         decoration-warning="bool5==True"
+         decoration-success="bool6==True">
+       <field name="name"/>
+       <field name="name1"/>
+       <field name="bool1"/>
+       <field name="bool2"/>
+       <field name="bool3"/>
+       <field name="bool4"/>
+       <field name="bool5"/>
+       <field name="bool6"/>
+   </tree>
+
+Підсвічування може змінити колір та жирність тексту в перегляді списком. Доступні наступні види підсвічування: BF, muted, info, danger, warning, success
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком.png
+
+===================================================
+Підсвічування окремого поля
+===================================================
+
+<tree>
+   <field name="name"/>
+   <field name="name1" decoration-bf="bool1==True"
+          decoration-muted="bool2==True"
+          decoration-info="bool3==True"
+          decoration-danger="bool4==True"
+          decoration-warning="bool5==True"
+          decoration-success="bool6==True"/>
+   <field name="bool1"/>
+   <field name="bool2"/>
+   <field name="bool3"/>
+   <field name="bool4"/>
+   <field name="bool5"/>
+   <field name="bool6"/>
+</tree>
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком1.png
+
+===================================================
+create="false" Не створювати
+===================================================
+
+<tree create="false">
+   <field name="name"/>
+   <field name="name1"/>
+   <field name="state" widget="badge"
+          decoration-success="state == 'posted'"
+          decoration-info="state == 'draft'"/>
+</tree>
+
+Атрибут create визначає чи буде відображатись кнопка Створити. Зв замовчуванню кнопка відображається
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком2.png
+
+===================================================
+expand="1" Розгортання
+===================================================
+
+<tree expand="1">
+   <field name="name"/>
+   <field name="name1"/>
+   <field name="state" widget="badge"
+          decoration-success="state == 'posted'"
+          decoration-info="state == 'draft'"/>
+</tree>
+
+Атрибут expand визначає чи будуть групи розгорнуті при групуванні. За замовчанням згорнуті.
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком3.png
+
+===================================================
+editable="top" Редагування у списку
+===================================================
+
+<tree editable="top">
+   <field name="name"/>
+   <field name="name1"/>
+   <field name="state" widget="badge"
+          decoration-success="state == 'posted'"
+          decoration-info="state == 'draft'"/>
+</tree>
+
+Атрибут editable надає можливість редагувати значення у списку, а також додавати нові записи (крім випадків, коли create=”False” ) новий запис з’явиться відповідно до значення атрибуту top - вгори, bottom - наприкінці
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком4.png
+
+===================================================
+multi_edit="1" Множине редагування
+===================================================
+
+<tree multi_edit="1">
+   <field name="name"/>
+   <field name="name1"/>
+   <field name="state"/>
+</tree>
+
+Атрибут multy_edit надає можливість змінити значення декільком записам, які обрані (відмічені галочкою). Усім записам буде прописано однакове значення.
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком5.png
+
+===================================================
+optional="show" "hide"   Опціональне відображення полів
+===================================================
+
+<tree>
+   <field name="name" optional="show"/>
+   <field name="name1" optional="hide"/>
+   <field name="state" optional="show"/>
+</tree>
+
+Прописаний для поля атрибут optional надає користувачу можливість відображати або приховувати поле у списку. Змінювати режим відображення користувач може лише полям з даним атрибутом. Якщо хоча б одне поле має цей атрибут, у списку з'явиться віджет у вигляді 3х крабочек, який розкриє меню для вибору стану відображення поля. Значення атрибуту буде поведінкою поля за замовчуванням (потім буде братись визначене користувачем). Значення show буде відображати поле, а hide відповідно приховувати.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком6.png
+
+===================================================
+default_order  - сортування
+===================================================
+
+<tree default_order="name">
+
+   <field name="name" optional="show"/>
+   <field name="name1" optional="hide"/>
+   <field name="state" optional="show"/>
+</tree>
+
+Атрибут default_order надає можливість змінити сортування значень
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком7.png
+
+===================================================
+widget="handle" Віджет handle - перетягування
+===================================================
+
+<tree default_order="sequence">
+   <field name="sequence" widget="handle"/>
+   <field name="name" optional="show"/>
+   <field name="name1" optional="hide"/>
+   <field name="state" optional="show"/>
+</tree>
+
+Призначений полю віджет handle надає можливість переставляти записи перетягуванням, змінюючи їх порядок
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком8.png
+
+===================================================
+button кнопки
+===================================================
+
+<tree default_order="sequence">
+   <field name="sequence" widget="handle"/>
+   <field name="name" optional="show"/>
+   <field name="name1" optional="hide"/>
+   <field name="state" optional="show" />
+   <button string="New button" name="create" attrs="{'invisible': [('state','=','posted')]}"/>
+</tree>
+
+У перегляді списком можна використовувати кнопки, вони будуть відображатись у стовпчиках аналогічно полям
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком9.png
+<tree default_order="sequence">
+   <field name="sequence" widget="handle"/>
+   <field name="name" optional="show"/>
+   <field name="name1" optional="hide"/>
+   <field name="state" optional="show" />
+   <button icon="fa-ticket"  name="create" attrs="{'invisible': [('state','=','posted')]}"/>
+</tree>
+
+Кнопка може використовувати іконку, що дозволяє економити місце
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком10.png
+
+===================================================
+invisible приховування
+===================================================
+
+<tree default_order="sequence">
+   <field name="sequence" widget="handle"/>
+   <field name="name" optional="show"/>
+   <field name="name1" optional="hide"/>
+   <field name="state" optional="show" />
+   <button icon="fa-ticket"  name="create" attrs="{'invisible': [('state','=','posted')]}"/>
+</tree>
+
+При використанні приховування елемент (поле або кнопка) будуть приховані, але стовпчик залишеться, навіть, якщо всі значення будуть приховані
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком11.png
+===================================================

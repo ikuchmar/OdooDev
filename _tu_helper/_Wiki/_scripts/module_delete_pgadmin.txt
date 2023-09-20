@@ -1,0 +1,29 @@
+script pgadmin delete model
+
+
+-- SELECT * FROM ir_module_module WHERE name = '_tu_helper';
+-- DELETE FROM ir_module_module WHERE name = '_tu_helper';
+
+-- SELECT * FROM ir_model_data  WHERE name = 'module__tu_helper';
+-- DELETE  FROM ir_model_data  WHERE name = 'module__tu_helper';
+
+-- SELECT * FROM ir_model WHERE module = '_tu_helper';
+-- SELECT * FROM ir_model;
+-- DELETE FROM ir_model WHERE module = '_tu_helper';
+
+-- SELECT *  FROM ir_model_fields;
+-- SELECT *  FROM ir_model_fields WHERE module = '_tu_helper';
+-- DELETE FROM ir_model_fields WHERE module = '_tu_helper';
+
+-- DELETE FROM ir_model_access WHERE module = '_tu_helper';
+-- DELETE FROM ir_ui_menu WHERE module = '_tu_helper';
+
+
+полностью удаляет таблицу с именем table_name:
+DROP TABLE IF EXISTS table_name;
+
+опции к команде DROP TABLE, такие как
+ CASCADE, чтобы удалить все связанные объекты, такие как индексы и ограничения,
+и RESTRICT, чтобы предотвратить удаление таблицы, если на нее ссылается другой объект.
+
+DROP TABLE IF EXISTS table_name CASCADE RESTRICT;

@@ -1,0 +1,43 @@
+        <record id="view_order_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree.mo.vchasnokasa</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="payment_type" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+
+===================================
+дополнить вью
+===================================
+ <record id="view_in_invoice_tree" model="ir.ui.view">
+
+===================================
+заменить вью
+===================================
+ <record id="sale.view_in_invoice_tree" model="ir.ui.view">
+
+=====================================
+вставка поля в конец
+=====================================
+<field name="arch" type="xml">
+    <tree>
+      <field name="payment_type" optional="show"/>
+    </tree>
+</field>
+
+=====================================
+вставка поля (к существующему полю) с xpath и без
+=====================================
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='invoice_date_due']" position="replace">
+                    <field name="curr_date" invisible="1"/>
+                </xpath>
+
+                <field name="invoice_partner_display_name" position="after">
+                    <field name="warehouse_id"/>
+                </field>
+            </field>

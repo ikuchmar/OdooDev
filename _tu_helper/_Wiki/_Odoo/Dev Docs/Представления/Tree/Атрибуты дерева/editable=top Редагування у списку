@@ -1,0 +1,15 @@
+===================================================
+editable="top" Редагування у списку
+===================================================
+
+<tree editable="top">
+   <field name="name"/>
+   <field name="name1"/>
+   <field name="state" widget="badge"
+          decoration-success="state == 'posted'"
+          decoration-info="state == 'draft'"/>
+</tree>
+
+Атрибут editable надає можливість редагувати значення у списку, а також додавати нові записи (крім випадків, коли create=”False” ) новий запис з’явиться відповідно до значення атрибуту top - вгори, bottom - наприкінці
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком4.png

@@ -1,0 +1,2 @@
+<field name="vchasnokasa_device_id" options="{'no_open': True}"/>
+

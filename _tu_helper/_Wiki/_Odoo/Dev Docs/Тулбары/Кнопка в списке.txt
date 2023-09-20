@@ -1,0 +1,57 @@
+====================================================
+Определите свою процедуру в файле models.py вашего модуля. Например, создадим метод my_action для модели my.model:
+====================================================
+class MyModel(models.Model):
+    _name = 'my.model'
+
+    # ...определение полей и методов модели...
+
+    @api.multi
+    def my_action(self):
+        # ...ваш код для действия...
+
+
+====================================================
+Добавьте свою процедуру в тулбар действия, определив кнопку с действием в файле views.xml вашего модуля. Например:
+====================================================
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="my_model_tree_view" model="ir.ui.view">
+            <field name="name">My Model Tree View</field>
+            <field name="model">my.model</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <!-- ...определение столбцов... -->
+                    <header>
+                        <button name="my_action" string="My Action" type="object" icon="fa-cog"/>
+                    </header>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+====================================================
+????? Определите действие в файле actions.xml вашего модуля. Например:
+====================================================
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="my_action_id" model="ir.actions.act_window">
+            <field name="name">My Action</field>
+            <field name="res_model">my.model</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="context">{'default_state': 'draft'}</field>
+            <field name="search_view_id" ref="my_module.my_model_search_view"/>
+            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to perform my action.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

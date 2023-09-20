@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- action вызова формы или дерева модели-->
+
+    <record id="action_field_basic" model="ir.actions.act_window">
+        <field name="name">field_basic_action</field>
+        <field name="res_model">tu_helper.field_basic</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help">learn field.basic</field>
+        <!--        <field name="view_id" ref="field_basic_tree"/>-->
+    </record>
+
+    <!--    команда вызова модели  обязательно нужно указать action-->
+    <!--    !!!! parent должен быть выше action-->
+    <menuitem id="menu_field_basic"
+              parent="menu_field"
+              name="Basic fields"
+              action="action_field_basic"
+              sequence="1"/>
+
+
+</odoo>

@@ -1,0 +1,18 @@
+1.1 PO_line_SO_line - создать модель для связи (вручную) РО лайн и SO лайн
+с полями:
+ - PO_line
+ - SO_line
+ - Количество (Qty)
+ - Себестоимость (cost amount)  = PO_line_SO_line.PO_line.Цена * Количество
+ - Доход (revenue amount)       = PO_line_SO_line.SO_line.Цена * Количество
+ - Прибыль (profit amount)      =  PO_line_SO_line.Доход - PO_line.Себестоимость
+
+
+1.2 показать таблицу PO_line_SO_line на формах РО и SO
+(сделать закладки со страницами)
+
+
+
+
+
+

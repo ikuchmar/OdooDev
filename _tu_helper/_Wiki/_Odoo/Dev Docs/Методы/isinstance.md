@@ -1,0 +1,1 @@
+if not isinstance(approver, models.BaseModel):

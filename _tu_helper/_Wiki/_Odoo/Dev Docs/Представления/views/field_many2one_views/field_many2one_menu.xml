@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record  id="fields_many2one_list_action" model="ir.actions.act_window">
+        <field name="name">fields_many2one_list_action</field>
+        <field name="res_model">fields.many2one</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help">learn many2one.fields</field>
+    </record>
+
+    <menuitem id="menu_field_many2one"
+              parent="menu_catalog"
+              name="Many2one fields"
+              action="fields_many2one_list_action"
+              sequence="1"/>
+
+</odoo>
+
+
+
+
+
+

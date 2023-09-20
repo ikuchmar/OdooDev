@@ -1,0 +1,131 @@
+<odoo>
+    <template id="logo_template">
+        <div>
+            <div class="col-6">
+                <img t-att-src="image_data_uri(user.company_id.logo)"
+                     alt="Logo"/>
+            </div>
+        </div>
+    </template>
+
+    <template id="print_date_time">
+        <div name="hr_hospital" style="text-align:right;">
+            <strong>
+                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+            </strong>
+        </div>
+    </template>
+
+    <template id="doctor_data">
+        <div style="text-align:right;">
+            <table class="table-bordered" style="text-align:right;">
+                <tr>
+                    <th>Doctor:</th>
+                    <th style="text-align:left;">
+                        <div t-field="doc.name"/>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Specialty:</th>
+                    <th style="text-align:left;">
+                        <div t-field="doc.specialty"/>
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <template id="doctor_history">
+        <div>
+            <table class="table-bordered">
+                <tr>
+                    <th class="text-center">date_medication</th>
+                    <th class="text-center">patient_id</th>
+                    <th class="text-center">sick_id</th>
+                    <th class="text-center">sick_type_id</th>
+                    <th class="text-center">sick_type_color</th>
+                </tr>
+                <t t-foreach="doc.doctor_history_ids"
+                   t-as="history_id">
+                    <th>
+                        <div t-field="history_id.date_medication"/>
+                    </th>
+                    <th>
+                        <div t-field="history_id.patient_id"/>
+                    </th>
+                    <th>
+                        <div t-field="history_id.sick_id"/>
+                    </th>
+                    <th>
+                        <div t-field="history_id.sick_type_id"/>
+                    </th>
+                    <th>
+                        <t t-name="boolean-value-condition-elif">
+                            <t t-if="history_id.sick_type_color == 1">
+                                <div t-field="history_id.sick_type_color" t-attf-style="background-color:yellow"/>
+                            </t>
+                            <t t-elif="history_id.sick_type_color == 2">
+                                <div t-field="history_id.sick_type_color" t-attf-style="background-color:red"/>
+                            </t>
+                            <t t-else="">
+                                <div t-field="history_id.sick_type_color" t-attf-style="background-color:green"/>
+                            </t>
+                        </t>
+                    </th>
+                </t>
+
+
+            </table>
+        </div>
+    </template>
+
+    <template id="doctor_patient_visit">
+        <div>
+            <table class="table-bordered">
+                <tr>
+                    <th class="text-center">date_visit</th>
+                    <th class="text-center">time_visit</th>
+                    <th class="text-center">patient_id</th>
+                    <th class="text-center">diagnosis_id</th>
+                    <th class="text-center">recommendations</th>
+                </tr>
+                <t t-foreach="doc.patient_visit_ids"
+                   t-as="visit_id">
+                    <th>
+                        <div t-field="visit_id.date_visit"/>
+                    </th>
+                    <th>
+                        <div t-field="visit_id.time_visit"/>
+                    </th>
+                    <th>
+                        <div t-field="visit_id.patient_id"/>
+                    </th>
+                    <th>
+                        <div t-field="visit_id.diagnosis_id"/>
+                    </th>
+                    <th>
+                        <div t-field="visit_id.recommendations"/>
+                    </th>
+                </t>
+
+
+            </table>
+        </div>
+    </template>
+
+    <template id="report_doctor">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="hr_hospital.logo_template"/>
+                <br/>
+                <t t-call="hr_hospital.doctor_data"/>
+                <br/>
+                <t t-call="hr_hospital.doctor_patient_visit"/>
+                <br/>
+                <t t-call="hr_hospital.doctor_history"/>
+                <br/>
+                <t t-call="hr_hospital.print_date_time"/>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="field_basic_tree" model="ir.ui.view">
+        <field name="name">field.basic.view.tree</field>
+        <field name="model">_tu_helper.field.basic</field>
+        <field name="arch" type="xml">
+            <tree>
+<!--                <field name="field_boolean"/>-->
+                <field name="field_char"/>
+                <field name="field_float"/>
+				<field name="field_integer"/>
+
+
+            </tree>
+        </field>
+    </record>
+
+ </odoo>

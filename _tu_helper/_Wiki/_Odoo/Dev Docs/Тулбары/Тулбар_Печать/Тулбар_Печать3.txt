@@ -1,0 +1,55 @@
+python
+Copy code
+from odoo import api, models, _
+from odoo.exceptions import UserError
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+    
+    def print_custom_report(self):
+        # your custom logic for report generation
+        return True
+
+    @api.multi
+    def print_quotation(self):
+        if self.env.context.get('custom_report', False):
+            # call the custom report function
+            self.print_custom_report()
+        else:
+            # call the default Odoo report function
+            return super(SaleOrder, self).print_quotation()
+xml
+Copy code
+<odoo>
+    <data>
+        <record id="sale.action_quotations" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="sale.view_quotation_search"/>
+            <field name="context">{'default_state': 'draft'}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    You have no quotations in draft state.
+                </p>
+                <p>
+                    Click here to create a new one.
+                </p>
+            </field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="view_id" ref="sale.view_order_tree"/>
+            <field name="toolbar" type="object">
+                <button name="%(sale.action_quotation_report)d" string="Quotation Report" type="action" icon="fa-print" context="{'custom_report': True}"/>
+                <button name="print_quotation" string="Print" type="action" icon="fa-print"/>
+                <button name="action_confirm" string="Confirm" states="draft" type="object" icon="fa-check" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                <button name="action_cancel" string="Cancel" states="draft,sent" type="object" icon="fa-ban" attrs="{'invisible': [('state', 'not in', ['draft', 'sent'])]}"/>
+            </field>
+        </record>
+    </data>
+</odoo>
+В примере выше мы переопределили метод print_quotation() модели sale.order
+и добавили проверку на наличие параметра custom_report в контексте вызова.
+Если параметр есть, то вызываем свою процедуру print_custom_report(),
+иначе вызываем стандартную функцию печати от Odoo.
+В файле XML мы добавили новую кнопку в тулбар печати и задали контекст параметр custom_report в значение True,
+ чтобы при нажатии на эту кнопку вызывалась наша процедура печати.

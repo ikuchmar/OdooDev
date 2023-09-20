@@ -1,0 +1,96 @@
+Создайте файл python с именем report.py, который будет содержать процедуру для печати. Например:
+python
+Copy code
+from odoo import models
+
+class Report(models.AbstractModel):
+    _name = 'report.my_module.my_report'
+
+    def get_report_data(self, docids, data=None):
+        # код процедуры для получения данных отчета
+        return {'doc_ids': docids, 'doc_model': 'my.module.model', 'data': data, 'docs': docs}
+
+Создайте файл XML с именем my_report.xml, который будет определять отчет и настройки печати. Например:
+====================================================
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <report
+            id="my_module.report_my_report"
+            model="my.module.model"
+            string="My Report"
+            report_type="qweb-pdf"
+            name="my_module.my_report"
+            file="my_module.my_report"
+            attachment_use="False">
+            <template id="my_module.my_report">
+                <t t-call="report.html_container">
+                    <t t-call="report.internal_layout">
+                        <div class="page">
+                            <h2>My Report</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Field 1</th>
+                                        <th>Field 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="docs" t-as="o">
+                                        <td>
+                                            <span t-field="o.field1"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.field2"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </template>
+        </report>
+    </data>
+</odoo>
+
+====================================================
+Зарегистрируйте файлы в модуле __manifest__.py. Например:
+====================================================
+{
+    'name': 'My Module',
+    'version': '1.0',
+    'category': 'Tools',
+    'summary': 'My custom module',
+    'description': '',
+    'depends': ['base'],
+    'data': [
+        'report.xml',
+    ],
+    'demo': [],
+    'installable': True,
+    'auto_install': False,
+}
+
+====================================================
+Добавьте пункт меню для печати отчета.
+====================================================
+<record id="menu_report_my_report" model="ir.ui.menu">
+    <field name="name">My Report</field>
+    <field name="action" ref="my_module.action_my_report"/>
+    <field name="parent_id" ref="base.menu_reporting"/>
+    <field name="sequence" type="int">10</field>
+</record>
+
+====================================================
+Добавьте действие для запуска процедуры печати отчета. Например:
+====================================================
+<record id="action_my_report" model="ir.actions.report">
+    <field name="name">My Report</field>
+    <field name="type">ir.actions.report</field>
+    <field name="model">my.module.model</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">my_module.my_report</field>
+</record>
+
+После выполнения этих шагов вы сможете запустить про

@@ -1,0 +1,219 @@
+Створення груп та правил доступу
+
+Безпека та розмежування прав в Odoo
+В системі Odoo реалізовано два механізми для керування правами доступу. Обидва механізми використовують таку сутність, як групи користувача, у якості обмежувача прав.
+
+Як це працює? З одного боку механізми розмежування прав використовують групи для надання або обмеження доступу, з іншого - кожний користувач має певний набір груп, до котрих він входить. При цьому, користувач може входити до будь якої кількості груп.
+
+Групи користувачів
+            security
+             ir.model.acccess.csv
+             library_book_groups.xml <==
+             library_book_security.xml
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+
+        <record id="category_library" model="ir.module.category">
+            <field name="name">Library</field>
+            <field name="description">User access levels for the Library</field>
+            <field name="sequence">1</field>
+        </record>
+
+
+        <record id="group_library_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="category_library"/>
+            <field name="comment">Users of the Library</field>
+        </record>
+
+
+        <record id="group_library_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="category_library"/>
+            <field name="implied_ids" eval="[(4, ref('group_library_user'))]"/>
+            <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
+            <field name="comment">Administrators of the Library (full rights)</field>
+        </record>
+
+
+    </data>
+</odoo>
+
+Для додання груп користувачів у рішення на базі Odoo використовується модель res.groups. При створенні запису з групою необхідно вказати наступні поля:
+
+name - назва ролі користувача;
+category_id - категорія груп, котра об’єднує групи, ща додаються, та дозволяє будувати ієрархічну структуру;
+implied_ids - список інших груп системи, до котрих користувача буде додано автоматично, при включені у поточну групу.
+users - список користувачів, котрих потрібно додати до цієї групи за замовчуванням. Зазвичай, додаються системні користувачі: Суперюзер (base.user_root) та Адміністратор системи (base.user_admin).
+comment - пояснення, для чого призначена ця група, та які має права та обмеження.
+
+Зазвичай, при додаванні власних груп користувачів у модуль, що розробляється, використовується щонайменш дві ролі: користувач - обмежена роль для модуля, та менеджер (або адміністратор) - користувач з повними правами на модуль.
+
+Групи користувачів, згідно рекомендацій Odoo, повинні додаватися за допомогою XML файлу <module>_groups.xml, який повинен бути розташований у директорії security.
+
+Права доступу
+        security
+             ir.model.acccess.csv
+             library_book_groups.xml <==
+
+
+
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_library_author_user,access_library_author_user,model_library_author,base.group_user,1,0,0,0
+access_library_author_system,access_library_author_system,model_library_author,base.group_system,1,1,1,1
+access_library_book_library_user,access_library_book_library_user,model_library_book,school_lesson_6_2.group_library_user,1,1,0,0
+access_library_book_library_admin,access_library_book_library_admin,model_library_book,school_lesson_6_2.group_library_admin,1,1,1,1
+
+Першочергово, доступ до записів моделей визначається за допомогою прав доступу, котрі у системі Odoo зберігаються у моделі ir.model.access та мають наступні поля:
+
+name - зрозуміла назва прав доступу;
+model_id - модель системи, котрої стосуються дані права;
+group_id - група користувачів, для якої застосовуються права;
+perm_create - бульовий атрибут, котрий дає право на створення запису;
+perm_read - бульовий атрибут, котрий дає право на читання запису;
+perm_write - бульовий атрибут, котрий дає право на зміну запису;
+perm_unlink - бульовий атрибут, котрий дає право на видалення запису.
+
+Права визначені таким чином є базовими, а всі подальші обмеження накладаються лише поверх них.
+
+Права доступу обов’язково потрібно надавати для кожної нової стандартної (models.Model) або тимчасової (models.TransientModel) моделі.
+
+Права доступу тільки додають права для групи, за їх допомогою неможливо обмежити вже існуючі права користувача, надані за допомогою іншої групи.
+
+ group create read update delete
+   A     X      X
+   B            X
+   C                  X
+
+Тобто, користувач, котрий входить до груп A та C, має на об’єкт всі права, крім видалення, а користувач що входить до груп B та C, може лише читати та оновлювати записи моделі.
+
+Права доступу, згідно рекомендацій Odoo, повинні додаватися за допомогою CSV файлу ir.model.access.csv, котрий повинен бути розташований у директорії security.
+
+Правила записів
+           security
+             ir.model.acccess.csv
+             library_book_groups.xml
+             library_book_security.xml   <==
+
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+
+        <record id="library_book_rule_user" model="ir.rule">
+            <field name="name">Library users can only view own books</field>
+            <field name="model_id" ref="model_library_book"/>
+            <field name="domain_force">[('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_library_user'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+
+        <record id="library_book_rule_admin" model="ir.rule">
+            <field name="name">Library administrators have full rights on books</field>
+            <field name="model_id" ref="model_library_book"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_library_admin'))]"/>
+        </record>
+
+
+    </data>
+</odoo>
+
+Правила записів -  це другий механізм обмежень, заснований на групах користувачів. За замовчуванням, користувачі, котрі належать до певних груп, мають усі дозволи від цих груп.
+У випадках, коли потрібно обмежити ці дозволі при виконанні певних умов, додають правила записів.
+
+Правила записів - це своєрідний фільтр, котрий звужує права, надані за допомогою прав доступу. Наприклад, є два користувачі A та B з однаковими правами (мають однаковий набір груп) і потрібно обмежити їх таким чином, щоб кожний міг бачити лише власні записи:
+
+User Group Records (without rule)     Record Rule Domain         Records (with rule)
+ A      U    100                    (‘user_id”, ‘=’, user.id)           9
+ B      U    100                    (‘user_id”, ‘=’, user.id)          17
+
+
+Для більш “тонкого” налаштування правила запису можна вказати, на які саме операції воно застосовується. Так, у поточному прикладі ми можемо вказати, що правило повинно застосовуватися лише на операції читання:
+
+perm_read = True
+perm_write = False
+perm_create = False
+perm_unlink = False
+
+Якщо явно не вказувати ці параметри, то правило записів буде застосовано для всіх операцій: читання, внесення змін, створення та видалення.
+
+Згідно цьому прикладу, якщо би ми не додали правило запису, то кожний з користувачів міг бачити всі 100 записів. Але після додавання, кожний користувач має можливість бачити лише ті записи, де він встановлений як відповідальний. Тобто користувачи A та B - це користувачі з обмеженими правами.
+
+Якщо правило доступу було додано для однієї з базових груп користувачів, скоріш за все буде потрібно прибрати його для адміністраторів системи або користувачів з розширеними правами. Для цього використовується спеціальний домен, котрий завжди є істиною:
+
+User Group Records (without rule) Record Rule Domain Records (with rule)
+  C    M            100               (1, ‘=’, 1)            100
+
+
+У цьому випадку ми розширюємо права для певної групи, які були звужені іншим правилом.
+Глобальні правила записів
+Глобальні правила записів діють на рівні всієї системи, а не на рівні груп користувачів. Вони є обмеженнями, і їх не можна обійти.
+
+Алгоритм накладення правил:
+
+GLOBAL_RULE_1 AND GLOBAL_RULE_2 AND (
+    (GROUP_A_RULE_1 OR GROUP_A_RULE_2) OR
+    (GROUP_B_RULE_1 OR GROUP_B_RULE_2)
+)
+
+
+Зразок XML файла для додання правила записів:
+
+<record id="rule_id" model="ir.rule">
+    <field name="name">A description of the rule's role</field>
+    <field name="model_id" ref="model_to_manage"/>
+    <field name="global" eval="False"/>
+    <field name="domain_force">[
+        '|', ('user_id', '=', user.id),
+             ('user_id', '=', False)
+    ]</field>
+    <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    <field name="perm_read" eval="False"/>
+</record>
+
+Поля правила записів:
+name - зрозуміла назва правила записів;
+model_id - модель, до котрої буде застосовано правило;
+groups - групи користувачів, до котрих буде застосовано правило;
+domain_force - умова (фільтр), при виконанні котрої користувачі груп отримають дозвіл на операції над об’єктом;
+global - ознака глобального правила записів. Якщо до правила не додано ні однієї групи користувачів, воно також буде вважатися глобальним.
+perm_read - визначає, чи застосовувати поточне правило на операції читання. За замовчуванням, - так (True);
+perm_write - визначає, чи застосовувати поточне правило на операції внесення змін. За замовчуванням, - так (True);
+perm_create - визначає, чи застосовувати поточне правило на операції створення. За замовчуванням, - так (True);
+perm_unlink - визначає, чи застосовувати поточне правило на операції видалення. За замовчуванням, - так (True).
+Правила записів, згідно рекомендацій Odoo, повинні додаватися за допомогою XML файлів <model>_security.xml, котрі повинні бути розташовані у директорії security.
+Перевірка прав безпеки та її пропуск
+У деяких випадках буває потрібно обійти існуючі права для конкретних груп користувачів, або виконати деякий метод, недоступний для поточного користувача. У системі Odoo існують спеціальні методи для цих операцій.
+
+Методи для перевірки прав доступу:
+
+self.env.user.has_group() - перевірка, що поточний користувач входить до певної групи;
+self.check_access_rights(operation) - перевірка, що поточний користувач має права доступу на модель, де operation, це один з методів:
+read
+write
+create
+unlink
+self.check_access_rule(operation) - перевірка, що поточному користувачу дозволено виконувати операцію для кожного запису з набору.
+
+Для виконання операцій, оминаючи перевірки прав доступу, застосовується метод sudo(). При застосувані цього методу, запуск методу або доступ до записів відбувається таким самим чином, якби його виконував адміністратор системи.
+
+Застосовувати метод sudo() потрібно дуже обережно, розуміючи усі наслідки його використання.
+
+Додаткові матеріали до уроку
+
+Security in Odoo: https://www.odoo.com/documentation/15.0/developer/reference/addons/security.html
+Chapter 5: Security - A Brief Introduction: https://www.odoo.com/documentation/15.0/developer/howtos/rdtraining/05_securityintro.html
+Advanced B: ACL and Record Rules: https://www.odoo.com/documentation/15.0/developer/howtos/rdtraining/B_acl_irrules.html
+Odoo Guidelines: https://www.odoo.com/documentation/15.0/developer/misc/other/guidelines.html
+

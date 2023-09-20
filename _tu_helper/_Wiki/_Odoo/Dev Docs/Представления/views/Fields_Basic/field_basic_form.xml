@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="field_basic_form" model="ir.ui.view">
+        <field name="name">field.basic.view.form</field>
+        <field name="model">_tu_helper.field.basic</field>
+        <field name="arch" type="xml">
+            <form>
+                <header></header>
+                <sheet>
+                    <group>
+<!--                        <field name="field_boolean"/>-->
+                        <field name="field_char"/>
+                        <field name="field_float"/>
+                        <field name="field_integer"/>
+                        <field name="field_integer3"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    <record id="basic_fields_window" model="ir.actions.act_window">-->
+    <!--        <field name="name">basic.fields</field>-->
+    <!--        <field name="type">ir.actions.act_window</field>-->
+    <!--        <field name="res_model">basic.fields</field>-->
+    <!--&lt;!&ndash;        <field name="view_model">tree,form</field>&ndash;&gt;-->
+    <!--    </record>-->
+
+    <!--    <menuitem id="basic_fields_main_menu"-->
+    <!--              action="basic_fields_window"-->
+    <!--              parent="basic_fields_main_menu"-->
+    <!--              name="A_test" sequence="200"/>-->
+
+</odoo>

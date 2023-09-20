@@ -1,0 +1,15 @@
+===================================================
+expand="1" Розгортання
+===================================================
+
+<tree expand="1">
+   <field name="name"/>
+   <field name="name1"/>
+   <field name="state" widget="badge"
+          decoration-success="state == 'posted'"
+          decoration-info="state == 'draft'"/>
+</tree>
+
+Атрибут expand визначає чи будуть групи розгорнуті при групуванні. За замовчанням згорнуті.
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення списком3.png

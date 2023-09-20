@@ -1,0 +1,10 @@
+wkfhtmltopdf setup
+cоздано ICh 16.03.2023
+Для вывода форм в формате pdf
+скачиваем по ссылке
+https://wkhtmltopdf.org/downloads.html
+заводим путь к bin в переменную path
+
+C:\Program Files\wkhtmltopdf\bin
+вносим этот путь в переменную bin_path файла odoo.conf
+bin_path = D:\odoo14_turbo\venv\odoo-14.0, C:\Program Files\wkhtmltopdf\bin

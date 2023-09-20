@@ -1,0 +1,81 @@
+===================================================
+Загальний вигляд представлення
+
+<record id="kw_lib_book_calendar" model="ir.ui.view">
+   <field name="name">kw.lib.book.calendar (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field eval="2" name="priority"/>
+   <field name="arch" type="xml">
+       <calendar date_start="start_date" date_stop="stop_date"
+                 string="Booking" mode="month"
+                 color="state">
+           <field name="user_id" avatar_field="avatar_128"/>
+           <field name="name"/>
+           <field name="isbn"/>
+       </calendar>
+   </field>
+</record>
+
+Для створення представлення календар створюється запис в моделі ir.ui.view для потрібної моделі та в поле arch додається xml опис даного представлення. Весь контент має бути огорнутий у тег calendar, а в ньому перелік полів, які будуть відображатись у швидкому перегляді.
+
+Календар вимагає атрибуту date_start, в якому має бути поле, що містить дату початку. Також треба заповнити атрибут date_stop - дата завершения або date_delay (тривалість у днях). Якщо події вимірюються днями (відпустки, промо акції, спринти тощо), то відповідно поле, записане у date_start має тип Date, можна і доволі зручно використовувати date_delay.
+Для подій, що вимірюють хвилинами / годинами (зустрічі, співбесіди, тренінги тощо) треба використовувати поля для date_start та date_stop типу Datetime, і краще їх, а не date_delay.
+
+Атрибут mode визначає, який тип відображення буде використовуватись за замовчуванням. Доступні day, week, month, year. Відповідно день та тиждень зручні для короткотривалих подій, а місяць та рік для довготривалих. Для відображень month та year конкретний час нівелюється.
+
+Атрибут color визначає, яке поле буде визначати підсвічування подій. Кольори назначаються напіввипадково.
+
+Атрибут event_open_popup визначає, чи буде форма події відкриватись у попап вікні чи переходити на представлення.
+
+Атрибути quick_add, create, delete дозволяє відключити швидке створення та видалення.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення календар1.png
+===================================================
+Додаткові налаштування
+
+<record id="kw_lib_book_calendar" model="ir.ui.view">
+   <field name="name">kw.lib.book.calendar (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field eval="2" name="priority"/>
+   <field name="arch" type="xml">
+       <calendar date_start="start_date" date_stop="stop_date"
+                 string="Booking" mode="month" event_open_popup="1"
+                 form_view_id="%(kw_library.kw_lib_book_quick_form)d"
+                 color="state">
+           <field name="user_id" avatar_field="avatar_128"/>
+           <field name="name"/>
+           <field name="isbn"/>
+           <field name="category_id" filters="1" color="color"/>
+       </calendar>
+   </field>
+</record>
+
+form_view_id
+Атрибут form_view_id визначає представлення, яке буде використовуватись для перегляду форми. Слід зуважити, що формат цього атрибуту має вигляд
+
+form_view_id="%(kw_library.kw_lib_book_quick_form)d"
+
+Є можливість додавати кастомні фільтрації на основі полів на календарі, за допомогою атрибутів filter (додає поле в список фільтрів) та color (встановлює колір чекбокса).
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення календар2.png
+===================================================
+Без date_stop
+
+   <record id="visit_to_doctor_calendar" model="ir.ui.view">
+        <field name="name">visit_to_doctor.calendar</field>
+        <field name="model">hr_hospital.visit.to.doctor</field>
+        <field eval="2" name="priority"/>
+        <field name="arch" type="xml">
+            <calendar date_start="date_visit"
+                      string="visits"
+                      mode="month"
+                      color="state">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="date_visit"/>
+            </calendar>
+        </field>
+    </record>
+
+Для хранения color="state">
+Нужно сделать поле
+    state = fields.Integer()
+

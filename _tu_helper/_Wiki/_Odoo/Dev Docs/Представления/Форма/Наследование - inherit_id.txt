@@ -1,0 +1,22 @@
+    <record id="view_attendance_tree_inherit_ds" model="ir.ui.view">
+        <field name="name">hr.attendance.tree.inherit.ds</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="groups_id" eval="[(4, ref('darkstore_role.group_darkstore'))]"/>
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="edit">1</attribute>
+                <attribute name="editable">bottom</attribute>
+            </tree>
+        </field>
+    </record>
+
+
+        <field name="arch" type="xml">
+            <tree>
+                <field name="journal_type" string="journal_type" optional="show"/>
+            </tree>
+
+         <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="replace"/>
+        </field>

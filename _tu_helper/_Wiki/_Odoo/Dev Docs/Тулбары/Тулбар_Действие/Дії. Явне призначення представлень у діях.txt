@@ -1,0 +1,206 @@
+===================================================
+1.	Дії
+Усі дії є спадковими моделями від ir.actions.actions. Ці моделі відповідають за візуальні і невізуальні дії Odoo. Дії можуть викликатись при виборі меню, контекстного меню Дії, натисканні кнопки або при виконанні коду методів моделі.
+
+Важливо! При виконанні дії з меню або кнопки, дія має бути створена в базі і мати ID, при виконанні коду дію можна створювати динамічно.
+===================================================
+1.1.	Способи виклику дій
+1.1.1.	Через виконання методу моделі
+
+def validate(self):
+   bnk_stmt_id = self.env.context.get('active_id', False)
+   if bnk_stmt_id:
+       self.env['account.bank.statement'].browse(bnk_stmt_id).button_validate()
+   return {'type': 'ir.actions.act_window_close'}
+
+Дії можна викликати з коду, через повернення методом моделі словнику, що містить параметри, які описують дію.
+===================================================
+1.1.2.	Через виклик контекстного меню
+
+<record id="kw_lib_book_author_act_window" model="ir.actions.act_window">
+   <field name="name">Books</field>
+   <field name="type">ir.actions.act_window</field>
+   <field name="res_model">kw.lib.book</field>
+   <field name="view_mode">tree,form</field>
+   <field name="binding_model_id" ref="model_kw_lib_author" />
+   <field name="binding_view_types">form</field>
+   <field name="domain">[('author_ids','=',active_id)]</field>
+</record>
+
+   <field name="binding_model_id" ref="model_crm_lead"/>
+   <field name="binding_view_types">list</field>
+
+Дії ir.actions.server, ir.actions.report та ir.actions.act_window, можуть викликатись з контекстного меню моделі. Для цього вони мають бути прикріплені до певної моделі.
+
+binding_model_id - Визначає ID моделі, до якої прикріплена дія
+
+binding_type - контекстне меню action (Дія) або report (Друк)
+
+binding_view_types - представлення, в меню яких буде з’являтись меню дії
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Дії. Явне призначення представлень у діях1.png
+===================================================
+1.1.3.	Через натискання пов’язаної кнопки
+
+<record id="kw_lib_author_form" model="ir.ui.view">
+   <field name="name">kw.lib.author.form (kw_library)</field>
+   <field name="model">kw.lib.author</field>
+   <field name="arch" type="xml">
+       <form>
+           <header/>
+           <sheet>
+               <div class="oe_button_box" name="button_box">
+                   <button class="oe_stat_button" type="action"
+                           name="%(kw_lib_book_author_act_window)d" icon="fa-book">
+                       <div class="o_field_widget o_stat_info">
+                           <span class="o_stat_text">Books</span>
+                       </div>
+                   </button>
+               </div>
+               <group>
+                   <field name="name"/>
+                   <field name="name1"/>
+                   <field name="state"/>
+               </group>
+           </sheet>
+       </form>
+   </field>
+</record>
+
+Дія може бути викликана натисканням кнопки, кнопка має мати тип action, а атрибут name містити посилання на ID дії.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Дії. Явне призначення представлень у діях2.png
+===================================================
+1.2.	ir.actions.act_url
+
+def action_export_xml(self):
+   self.ensure_one()
+   return {
+       'type': 'ir.actions.act_url',
+       'url':  '/web/content/account.edi.document/%s/edi_content' % self.id
+   }
+
+<record model='ir.actions.act_url' id='action_third_party'>
+   <field name='name'>Third-Party Apps</field>
+   <field name='url'>https://apps.odoo.com/apps/modules</field>
+</record>
+<menuitem id="menu_third_party" parent="menu_apps" name="Third-Party Apps" sequence="20" action="action_third_party"/>
+
+Спеціальна дія для відкриття посилання. Може використовуватись з коду, або для створення дій, які будуть викликані кнопкою чи меню.
+===================================================
+1.3.	ir.actions.act_window_close
+
+def validate(self):
+   bnk_stmt_id = self.env.context.get('active_id', False)
+   if bnk_stmt_id:
+       self.env['account.bank.statement'].browse(bnk_stmt_id).button_validate()
+   return {'type': 'ir.actions.act_window_close'}
+
+Закриває поточне відображення.
+===================================================
+1.4.	ir.actions.server
+
+<record id="invoice_send" model="ir.actions.server">
+   <field name="name">Send &amp; print</field>
+   <field name="state">code</field>
+   <field name="type">ir.actions.server</field>
+   <field name="model_id" ref="model_account_move"/>
+   <field name="binding_model_id" ref="model_account_move"/>
+   <field name="binding_view_types">list</field>
+   <field name="code">
+       if records:
+           action = records.action_send_and_print()
+   </field>
+</record>
+
+Спеціальні дії, що виконуються на сервері: створення або оновлення даних, або виконання заданого коду. Може використовуватись для запуску складних процесів у фоновому режимі.
+===================================================
+1.5.	ir.actions.report
+
+<record id="timesheet_report" model="ir.actions.report">
+   <field name="name">Timesheet Entries</field>
+   <field name="model">account.analytic.line</field>
+   <field name="report_type">qweb-pdf</field>
+   <field name="report_name">hr_timesheet.report_timesheet</field>
+   <field name="report_file">report_timesheet</field>
+   <field name="binding_model_id" ref="model_account_analytic_line"/>
+   <field name="binding_type">report</field>
+</record>
+
+Дії, що запускають генерацію друкованих форм на основі шаблону, вказаного в report_name. Зазвичай використовують binding_type report, що додає їх в меню Друк.
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Дії. Явне призначення представлень у діях3.png
+===================================================
+1.6.	ir.actions.act_window
+
+<record id="action_merge_opportunities" model="ir.actions.act_window">
+   <field name="name">Merge</field>
+   <field name="res_model">crm.merge.opportunity</field>
+   <field name="res_id" ref="crm.crm_case_23" />
+   <field name="search_view_id" ref="view_attachment_queue_search" />
+   <field name="target">new</field>
+   <field name="context">{'search_default_active_docs':1}</field>
+   <field name="domain">[('product_state_id', '=', active_id)]</field>
+   <field name="view_mode">form</field>
+   <field name="binding_model_id" ref="model_crm_lead"/>
+   <field name="binding_view_types">list</field>
+</record>
+
+Дія, що відкриває представлення моделі. Її параметри
+
+res_model - модель, з якою працює дія
+
+res_id - встановлюється, якщо представленням за замовчуванням є форма (якщо не вказати
+параметр, то створиться новий запис, таку поведінку можна побачити у візардах)
+
+search_view_id - дозволяє явно вибрати представлення пошуку для цієї дії
+
+target - вказує, де будуть розміщуватись представлення
+	current - у зоні вдображення, це звичайна поведінка
+	fullscreen - на повний екран
+	new - діалогове вікно
+main - аналогічно current, але з очищенням історії хлібних крихт
+
+context  - дозволяє передати або змінити певні параметри контексту для цієї дії
+
+domain - дозволяє строго обмежити записи, що з'являється у даній дії
+
+view_mode - список представлень, які буде відкривати дана дія
+===================================================
+2.	Моделі, що пов’язані з діями
+2.1.	ir.actions.act_window.view
+
+<record id="crm_lead_opportunities_view_kanban" model="ir.actions.act_window.view">
+   <field name="sequence" eval="0"/>
+   <field name="view_mode">kanban</field>
+   <field name="view_id" ref="crm_case_kanban_view_leads"/>
+   <field name="act_window_id" ref="crm_lead_opportunities"/>
+</record>
+Модель дозволяє явно призначити представлення до дії. Використовується, щоб застосовувати в дії представлення інше від того, що мало б використовуватись за замовчуванням.
+===================================================
+2.2.	ir.cron
+
+<record id="cronjob" model="ir.cron">
+   <field name="name">Check Let's Encrypt certificates</field>
+   <field name="model_id" ref="model_letsencrypt" />
+   <field name="state">code</field>
+   <field name="code">model._cron()</field>
+   <field name="interval_type">days</field>
+   <field name="interval_number">1</field>
+   <field name="numbercall">-1</field>
+</record>
+
+Створює дії, що виконуються з певною періодичністю. Для будь-яких дій: відправлення повідомлень, зчитування даних з зовнішніх сервісів, перерахунок показників, створення завдань, нагадувань тощо. Має такі параметри:
+
+interval_number - кількість часу, через яку дія буде виконана повторно
+
+interval_type - одиниця виміру часу від хвилин до місяців (minutes, hours, days, weeks, months)
+
+numbercall - кількість разів, які дія буде виконана. Якщо 0 - то не буде виконана, а якщо  (-1) буде виконуватись нескінченно.
+
+doall - примушує виконати всі пропущені дії. Для нескінченно повторюваних дій не потрібно.
+
+model_id - власне модель, над якою буде виконуватись дія.
+
+code - пайтон код, який буде виконуватись. Хоча код може бути будь-який, навіть викликати інші моделі, але зазвичай викликають спеціально створений метод моделі.
+
+
+===================================================
+

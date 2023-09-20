@@ -1,0 +1,18 @@
+Для того чтобы запрограммировать присвоение текущей даты при создании новой записи модели в Odoo, вы можете использовать функцию "default" в модели.
+
+Вот простой пример того, как добавить автоматическую дату создания для модели "my_module.my_model":
+
+Добавьте следующий код в файл my_model.py вашего модуля:
+python
+Copy code
+from odoo import models, fields, api
+
+class MyModel(models.Model):
+    _name = 'my_module.my_model'
+    _description = 'My Model'
+
+    name = fields.Char(string='Name', required=True)
+    create_date = fields.Date(string='Create Date', default=fields.Date.context_today, readonly=True)
+Здесь мы добавляем поле "create_date" с типом "Date" в нашу модель "my_module.my_model". Мы также используем функцию "default" для установки значения этого поля на текущую дату при создании новой записи.
+
+Обновите модуль в Odoo и создайте новую запись модели "my_module.my_model". Вы увидите, что поле "create_date" будет автоматически заполнено текущей датой.

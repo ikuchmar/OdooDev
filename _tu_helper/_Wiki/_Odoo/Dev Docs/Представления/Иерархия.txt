@@ -1,0 +1,37 @@
+---------------------------------------------------------------------
+модель MyHierarchyModel
+parent_id - ссылка на родительскую запись,
+child_ids - связь один-ко-многим на дочерние записи.
+
+---------------------------------------------------------------------
+from odoo import fields, models
+
+class MyHierarchyModel(models.Model):
+    _name = 'my.hierarchy.model'
+    _description = 'My Hierarchy Model'
+    
+    name = fields.Char(string='Name', required=True)
+    parent_id = fields.Many2one('my.hierarchy.model', string='Parent')
+    child_ids = fields.One2many('my.hierarchy.model', 'parent_id', string='Children')
+
+---------------------------------------------------------------------
+представление формы Форма содержит три поля: name, parent_id, child_ids
+---------------------------------------------------------------------
+<odoo>
+    <record id="my_hierarchy_model_form_view" model="ir.ui.view">
+        <field name="name">my.hierarchy.model.form.view</field>
+        <field name="model">my.hierarchy.model</field>
+        <field name="arch" type="xml">
+            <form string="My Hierarchy Model">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="parent_id"/>
+                        <field name="child_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
+

@@ -1,0 +1,51 @@
+Для добавления своей процедуры в действия печать
+при выборе действия печать на форме  модели, действие печать My Print Action - вызовет процедуру my_print_action().
+
+====================================================
+Создать метод my_print_action для модели my.model:
+====================================================
+class MyModel(models.Model):
+    _name = 'my.model'
+
+    # ...определение полей и методов модели...
+
+    @api.multi
+    def my_print_action(self):
+        # ...ваш код для печати...
+
+
+====================================================
+Определите действие печать в файле report.xml
+====================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        id="my_model_report_id"
+        model="my.model"
+        string="My Report"
+        report_type="qweb-pdf"
+        name="my_module.my_report_template"
+        file="my_module.my_report_template"
+        print_report_name="'My Report ' + time.strftime('%Y-%m-%d %H:%M:%S')"
+        attachment_use="True"
+    />
+</odoo>
+
+====================================================
+Добавьте свою процедуру в действия печать (actions.xml)
+====================================================
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="my_print_action_id" model="ir.actions.report">
+            <field name="name">My Print Action</field>
+            <field name="model">my.model</field>
+            <field name="report_name">my_module.my_report_template</field>
+            <field name="print_report_name">My Report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="print_action">model.my_print_action()</field>
+        </record>
+    </data>
+</odoo>
+

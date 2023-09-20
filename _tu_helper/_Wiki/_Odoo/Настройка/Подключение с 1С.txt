@@ -1,0 +1,28 @@
+Odoo - на 80 порту
+Защищенное соединение - НЕТ
+Сервер localhost
+База turbo
+Пользователь turbo_adm
+Пароль 12345678
+
+Вчасно
+http://185.250.23.138:3939/
+
+10.1.0.56
+
+АП
+DkyLSkUPLK79RTbrlpJ5rWC9lfkrsrAt
+
+=========================================
+Вчасно
+=========================================
+
+https://kasa.vchasno.ua/app/shops/0ebc92e9-1722-8a3d-afe8-e8b1996aa2dc/registers?view
+test
+6Ss04ieDTdt6GCGqZjFa85W64II51EIOu_FNyYAlLtwjYdliOixxhAQEjPKbwFUB
+
+Шлюз Вчасно
+-------------------------
+http://10.1.0.56:3939/dm/vchasno-kasa/dashboard.html
+test
+jfvd8FC32a0pbT1dqBUSDWlV1I2bY8Jw

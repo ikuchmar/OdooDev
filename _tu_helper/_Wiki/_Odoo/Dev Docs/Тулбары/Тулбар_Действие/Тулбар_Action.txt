@@ -1,0 +1,46 @@
+Добавление процедуры в тулбар действий (Actions)
+
+====================================================
+class MyModel(models.Model):
+    _name = 'my.model'
+    _description = 'My Model'
+
+    @api.multi
+    def my_action(self):
+        # Код процедуры
+        return True
+
+    action_my_action = fields.Char(string='My Action')
+
+    @api.multi
+    def action_my_action_method(self):
+        return self.my_action()
+Здесь мы создаем модель MyModel и добавляем в нее метод my_action, который содержит код процедуры.
+Далее мы создаем поле action_my_action, которое будет использоваться для отображения наименования нашего действия в тулбаре.
+И, наконец, мы создаем метод action_my_action_method, который будет вызываться при нажатии на кнопку в тулбаре и вызывать метод my_action.
+
+====================================================
+добавить действие в тулбар (actions.xml)
+====================================================
+<record id="my_model_actions" model="ir.actions.act_window">
+    <field name="name">My Model</field>
+    <field name="res_model">my.model</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+            Click to create a new record.
+        </p>
+    </field>
+    <field name="context">{"search_default_my_field": 1}</field>
+    <field name="search_view_id" ref="my_model_search_view"/>
+    <field name="domain">[('my_field', '=', True)]</field>
+    <field name="view_type">form</field>
+    <field name="view_id" ref="my_model_form_view"/>
+    <field name="target">current</field>
+    <field name="auto_refresh">1</field>
+    <field name="limit">80</field>
+    <field name="toolbar" eval="'actions'"/>
+
+    <field name="actions" eval="[(0, 'action_my_action')]"/>
+</record>
+Здесь мы добавляем запись в actions и указываем ее имя (action_my_action). Затем мы указываем в поле toolbar значение 'actions', чтобы добавить наше действие в тулбар действий.

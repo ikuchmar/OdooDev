@@ -1,0 +1,7 @@
+Обновление модуля в Odoo.sh
+
+Shell - написать команду
+
+odoo-update base
+
+

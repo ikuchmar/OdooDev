@@ -1,0 +1,303 @@
+# ----------------------------------------------------------
+
+create (не метод recordset) *
+Створює нові записи та повертає їх.
+При создании объкта
+Якщо використовується з @api.model_create_multi отримує список словників та повертає рекордсет створених записів.
+Якщо використовується застаріла форма @api.model отримує словник і повертає створений об’єкт
+Поля, значення яких не були передані, будуть заповнені значеннями за замовчуванням.
+
+Важливо, якщо при виклику не були передані обов’язкові поля і вони не мають визначених значень за замовчуванням, це призвиде до помилки.
+
+Перевизначається для доповнення параметрів або виконання дій з новоствореними записами.
+@api.model
+def create(self, vals_list):
+   if 'payment_account_id' in vals_list:
+       account = self.env['account.account'].browse(vals_list['payment_account_id'])
+       if not account.reconcile:
+           account.reconcile = True
+   return super().create(vals_list)
+
+При создании объекта - создается новый объект в другой моделе
+@api.model
+    def create(self, vals_list):
+        new_record = super().create(vals_list)
+
+        if 'personal_doctor_id' not in  vals_list:
+            return new_record
+
+        self.env['personal.doctor.history'].create({
+            'doctor_id': vals_list['personal_doctor_id'],
+            'patient_id': new_record.id,
+            ' date_medication ': fields.date.today(),
+        })
+
+        return new_record
+
+copy *
+Створює копію вибраних записів. Новий запис буде мати дані визначені наступним пріоритетом:
+-	Значення передані в copy
+-	Значення полів, що не мають атрибиуту copy=False
+-	Значення полів за замовчуванням
+Як і у випадку з create - буде помилка, якщо обов’язкові поля не матимуть значення
+
+@api.returns('self', lambda value: value.id)
+def copy(self, default=None):
+   self.ensure_one()
+   default = dict(default or {}, name=_("%s (copy)") % (self.name))
+   return super(EventEvent, self).copy(default)
+
+Перевизначається для зміни значень, з якими створюється новий запис
+
+default_get *
+Повертає значення за замовчуванням для переданого списку полів. Обчислені у наступному пріоритеті:
+1.	Контекст
+2.	Значення в ir.default (визначені користувачем)
+3.	Значення за замовчуванням, що визначені в полях моделі
+4.	Значення для поля з батьківської моделі
+
+@api.model
+def default_get(self, fields):
+   vals = super(AccountBankStmtCashWizard, self).default_get(fields)
+   balance = self.env.context.get('balance')
+   statement_id = self.env.context.get('statement_id')
+   if 'start_bank_stmt_ids' in fields and not vals.get('start_bank_stmt_ids') \
+and statement_id and balance == 'start':
+       vals['start_bank_stmt_ids'] = [(6, 0, [statement_id])]
+   if 'end_bank_stmt_ids' in fields and not vals.get('end_bank_stmt_ids') \
+and statement_id and balance == 'close':
+       vals['end_bank_stmt_ids'] = [(6, 0, [statement_id])]
+
+   return vals
+
+Перевизначення використовується, наприклад, коли значення за замовчуванням мають залежності один від одного.
+ def default_get(self, fields_list):
+    res = super().default_get(fields_list)
+    res['patient_ids'] = [(6, 0, self._context_get("active_ids"))]
+    return res
+
+ def action_set(self):
+    self.ensure_one()
+    patient_for_set = self.env["patient"].browse(self._context.get("active_ids"))
+    for patient in patient_for_set:
+        patient.write({"personal_doctor_id": self.doctor_id.id})
+
+======================================
+ write (метод recordset) *
+Змінює значення полів. Приймає словник поле-значення, оновлює всі вибрані записи.
+
+check_records = env['mo.vchasnokasa.check'].search([], limit = 10)
+check_records.write({'display_name': '15'})
+======================================
+
+def write(self, vals):
+   if 'stage_id' in vals and 'kanban_state' not in vals:
+       # reset kanban state when changing stage
+       vals['kanban_state'] = 'normal'
+   res = super(EventEvent, self).write(vals)
+   if vals.get('organizer_id'):
+       self.message_subscribe([vals['organizer_id']])
+   return res
+
+Перевизначається для доповнення параметрів або виконання дій з оновленими записами.
+
+Вызов записи по созданным объектам
+def write(self, vals):
+    if 'personal_doctor_id' not in vals:
+        retrurn super().write(vals)
+    for obj in self:
+        if  obj.paresonal_doctor_id.id != vals.get('personal_doctor_id'):
+                self.env['parsonal.doctor.history'].create({
+                    'doctor_id': vals.get('personal_doctor_id'),
+                    'patient_id': obj.id, 'appointment_date': date.today(), })
+        super('Patient', obj).write(vals)
+    return True
+
+Изменение значений при записи
+def write(self, vals):
+    if 'persontal_doctor_id' not in vals:
+        return super().write(vals)
+    for obj.personal_doctor_id.id != vals.get('personal_doctor_id'):
+        self.env['personal.doctor.hestory'].create({
+            'doctor_id': vals.get('personal_doctor_id'),
+            'patient_id': obj.id, 'appointment_date': date.today(), })
+    val = vals.deepcopy()
+    val['passport_number'] = '1111'
+    super('Patient', obj).write(val)
+    return True
+        }
+
+update *
+Оновлює дані, має синтаксис, аналогічний write, але на відміну від write не записує у БД, а присвоює значення полям.
+
+values.update({
+   'acquirers': acquirers_sudo,
+   'tokens': tokens,
+   'fees_by_acquirer': fees_by_acquirer,
+   'show_tokenize_input': logged_in,
+   'amount': invoice.amount_residual,
+   'currency': invoice.currency_id,
+   'partner_id': partner_id,
+   'access_token': access_token,
+   'transaction_route': f'/invoice/transaction/{invoice.id}/',
+   'landing_route': _build_url_w_params(
+invoice.access_url, {'access_token': access_token})
+})
+
+Найчастіше використовується у методах с декоратором api.onchange
+
+browse *
+Отримує список id або один id і повертає рекордсет записів, що відповідають цим id
+
+acquirer = self.env['payment.acquirer'].browse(values['acquirer_id'])
+
+Використовується, щоб отримати об’єкт на цілочисельне значення id.
+
+unlink *
+Видаляє вибрані записи.
+
+def unlink(self):
+   for statement in self:
+       statement.line_ids.unlink()
+       next_statement = self.search([
+('previous_statement_id', '=', statement.id),
+('journal_id', '=', statement.journal_id.id)])
+       if next_statement:
+           next_statement.previous_statement_id = statement.previous_statement_id
+   return super(AccountBankStatement, self).unlink()
+
+Перевизначається для забезпечення цілісності даних, проведення додаткових дій с записами, що видаляються, обмеження видалення тощо.
+
+name_get *
+Метод визначає текст, який відображається в хлібних крихтах, в випадаючих списках тощо. Метод перевизначається, якщо алгоритм має не співпадати з полем name
+
+def name_get(self):
+   return [(tag.id, "%s: %s" % (tag.category_id.name, tag.name)) for tag in self]
+
+@api.constrains *
+Використовується для перевірки правильності введених даних. Є альтернативою до _sql_constraints, але не діє на рівні СУБД і може бути проігнорований
+
+@api.constrains('vat', 'country_id')
+def check_vat(self):
+   for partner in self:
+       country = partner.commercial_partner_id.country_id
+       if partner.vat and self._run_vat_test(partner.vat, country) is False:
+           partner_label = _("partner [%s]", partner.name)
+           msg = partner._build_vat_error_message(
+                country and country.code.lower() or None, partner.vat, partner_label)
+           raise ValidationError(msg)
+
+
+Важливо, таке обмеження спрацьовує лише за умови, якщо в вказані поля передаються значення. Тобто у викликах create або write ці поля є в переліку.
+
+@api.depends *
+Вказує зміни яких полів викликають переобчислення compute метода. Метод не буде працювати для інших полів, а також при зміні значень полів на бекенді.
+
+@api.depends('line_ids', 'line_ids.is_landed_costs_line')
+def _compute_landed_costs_visible(self):
+   for account_move in self:
+       if account_move.landed_costs_ids:
+           account_move.landed_costs_visible = False
+       else:
+           account_move.landed_costs_visible = any(
+line.is_landed_costs_line for line in account_move.line_ids)
+
+@api.model *
+Даний декоратор вказує, що метод відноситься до методів моделі, тобто параметр self не містить записів
+
+@api.model
+def _action_open_all_projects(self):
+   action = self.env['ir.actions.act_window']._for_xml_id(
+       'project.open_view_project_all' if not self.user_has_groups(
+'project.group_project_stages') else
+       'project.open_view_project_all_group_stage')
+   return action
+
+@api.model_create_multi *
+Спеціальний декоратор, для метода create. Після реалізації множинного створення (для збільшення швидкодії) потрібен для зворотної сумісності зі старим стилем, коли в create передається словник, а не список словників.
+
+@api.model_create_multi
+def create(self, values_list):
+   for values in values_list:
+       if 'acquirer_id' in values:
+           acquirer = self.env['payment.acquirer'].browse(values['acquirer_id'])
+
+           # Include acquirer-specific create values
+           values.update(self._get_specific_create_values(acquirer.provider, values))
+       else:
+           pass  # Let psycopg warn about the missing required field
+
+@api.ondelete *
+Альтернатива перевизначенню методу unlink. Має параметр at_uninstall, який визначає робити перевірки в залежності від того іде нормальна робота модуля чи модуль деінсталюється
+
+@api.ondelete(at_uninstall=False)
+def _unlink_only_if_open(self):
+   for statement in self:
+       if statement.state != 'open':
+           raise UserError(_(
+'In order to delete a bank statement, you must first cancel '
+'it to delete related journal items.'))
+
+@api.returns *
+Визначає записи якої моделі має повернути метод.
+
+@api.model
+@api.returns('ir.module.module')
+def get_module_list(self):
+   states = ['to upgrade', 'to remove', 'to install']
+   return self.env['ir.module.module'].search([('state', 'in', states)])
+
+@api.onchange *
+Декоратор для виклику методів при зміні значення полів на формі.
+Так це фронтенд метод.
+Працює лише на формах.
+Працює лише за умови наявності поля на формі.
+Працює лише з полями моделі.
+Не можна використовувати методи запису в БД create(),  write(), unlink().
+Поля типу one2many чи many2many не можуть змінювати себе.
+Можна викликати повідомлення (виглядають як діалог помилки)
+
+@api.onchange('posted_before', 'state', 'journal_id', 'date')
+def _onchange_journal_date(self):
+   if not self.move_id:
+       self.name = False
+
+@api.onchange('journal_id')
+def _onchange_journal(self):
+   self.move_id._onchange_journal()
+
+@api.onchange('tax_exigibility')
+def _onchange_tax_exigibility(self):
+   res = {}
+   tax = self.env['account.tax'].search([
+       ('company_id', '=', self.env.company.id),
+       ('tax_exigibility', '=', 'on_payment')
+   ], limit=1)
+   if not self.tax_exigibility and tax:
+       self.tax_exigibility = True
+       res['warning'] = {
+           'title': _('Error!'),
+           'message': _('You cannot disable this setting.') }
+   return res
+
+- в нем нельзя использовать create
+Нужно делать через поле о2м
+
+history_doctor_ids = fields.One2many('hr_hospital.history.doctor',
+                                        inverse_name='patient_id')
+
+@api.onchange('doctor_id')
+def onchange_doctor_id(self):
+    for rec in self:
+        lines = []
+        vals = {
+            'date': date.today(),
+            'patient_id': rec.id,
+            'doctor_id': rec.doctor_id
+        }
+        lines.append((0, 0, vals))
+        rec.history_doctor_ids = lines
+
+
+
+

@@ -1,0 +1,5 @@
+Обновление модуля в Odoo.sh
+Shell - написать команду
+odoo-update base
+
+turbo-ua-studio-9666823 [staging/16.0]:~$ odoosh-restart http

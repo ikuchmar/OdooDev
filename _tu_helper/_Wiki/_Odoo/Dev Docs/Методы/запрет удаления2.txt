@@ -1,0 +1,46 @@
+В Odoo можно переопределить метод unlink() в модели и добавить проверку на наличие ссылок перед удалением записи.
+ Если ссылки есть, то можно вызвать исключение, чтобы запретить удаление записи.
+
+--------------------------------------------------------
+from odoo.exceptions import UserError
+
+class MyModel(models.Model):
+    _name = 'my.model'
+
+    @api.multi
+    def unlink(self):
+        # Проверяем наличие ссылок на запись
+        if self.env['my.other.model'].search_count([('my_field', '=', self.id)]) > 0:
+            raise UserError(_('You cannot delete this record because it has related records in My Other Model.'))
+
+        # Вызываем оригинальную функцию unlink
+        return super(MyModel, self).unlink()
+
+--------------------------------------------------------
+
+from odoo import models, fields, api
+from odoo.exceptions import UserError
+
+class MyModel(models.Model):
+    _name = 'my.model'
+
+    name = fields.Char('Name')
+    related_model_ids = fields.One2many('related.model', 'my_model_id', 'Related Models')
+
+    @api.multi
+    def unlink(self):
+        for record in self:
+            if record.related_model_ids:
+                raise UserError("You cannot delete a record that has related models.")
+        return super(MyModel, self).unlink()
+Здесь мы добавляем проверку на наличие связанных записей в поле related_model_ids,
+которое является One2many отношением к модели related.model.
+Если в поле есть записи, то мы вызываем исключение UserError,
+которое предотвращает удаление записи. Если же ссылок нет, мы вызываем super().unlink() для удаления записи.
+
+--------------------------------------------------------
+@api.multi
+def unlink(self):
+    if self.env['other.model'].search([('my_model_id', 'in', self.ids)]):
+        raise UserError("Вы не можете удалить эту запись, так как на неё есть сс
+

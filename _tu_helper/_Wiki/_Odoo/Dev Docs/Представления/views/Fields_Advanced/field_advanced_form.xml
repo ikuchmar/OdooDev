@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="advanced_fields_form" model="ir.ui.view">
+        <field name="name">advanced.fields.view.form</field>
+        <field name="model">advanced.fields</field>
+        <field name="arch" type="xml">
+            <form>
+                <header></header>
+                <sheet>
+                    <group>
+                        <field name="field_html"/>
+                        <field name="field_binary"/>
+                        <field name="field_image"/>
+                        <field name="field_text"/>
+                        <field name="field_date"/>
+                        <field name="field_datetime"/>
+                        <field name="field_selection"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

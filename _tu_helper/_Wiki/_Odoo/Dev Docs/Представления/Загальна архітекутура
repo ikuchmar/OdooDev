@@ -1,0 +1,141 @@
+Загальна архітектура
+Див схему в файлі
+D:\odoo14_turbo\! Архив\_tu_helper\_tu_helper\_Odoo\Pictures\Загальна архітектура image.bmp
+Загальна архітектура image
+
+Загальна архітектура візуального представлення складається з дій (actions), меню (menus) та представлень (views). Меню посилаються на дії, які будуть виконані, а модель ir.actions.act_window.view забезпечує зв’язок між діями та представленнями.
+
+Дії
+Усі дії є спадковими моделями від ir.actions.actions. Ці моделі відповідають за візуальні і невізуальні дії Odoo. Дії можуть викликатись при виборі меню, контекстного меню Дії, натисканні кнопки або при виконанні коду методів моделі.
+Меню
+Меню є записами в моделі ir.ui.menu. Це є ієрархічна модель. Меню верхнього рівня виглядають як модулі і знаходяться у головному меню
+
+Розглянем код
+
+<menuitem id="kw_lib_main_menu"
+         web_icon="kw_lib,static/description/icon.png"
+         name="Library" sequence="300"/>
+
+<menuitem id="kw_lib_catalog_menu"
+         parent="kw_lib_main_menu"
+         name="Catalog" sequence="100"/>
+
+<menuitem id="kw_lib_settings_main_menu"
+         parent="kw_lib_main_menu"
+         name="Settings" sequence="9999"/>
+
+Головне меню kw_lib_main_menu не має атрибуту parent і тому є головним. Інші меню містять ID головного меню в атрибуті parent.
+
+Важливо! Немає зв’язку між модулем і головним меню. В модулі може бути декілька головних меню або не бути взагалі.
+
+Атрибут sequence визначає порядок, в якому буде відображатись меню.
+
+Атрибут web_icon визначає іконку, яка буде відображатись меню в ЕЕ версії або при встановленому модулі web_responsive.
+
+<record id="kw_lib_author_act_window" model="ir.actions.act_window">
+   <field name="name">Author</field>
+   <field name="type">ir.actions.act_window</field>
+   <field name="res_model">kw.lib.author</field>
+   <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="kw_lib_author_menu"
+         action="kw_lib_author_act_window"
+         parent="kw_lib_catalog_menu"
+         name="Author" sequence="200"/>
+
+Меню нижнього рівня мають мати атрибут action, який містить ID дії, яка буде виконуватись при виборі цього меню.
+
+Важливо! Будь який елемент має бути визначений до його використання, тому батьківське меню та дія мають бути визначені перед використанням в меню
+
+4.	Представлення
+Представлення описують відображення моделі у інтерфейсі
+
+<record id="kw_lib_author_tree" model="ir.ui.view">
+   <field name="name">kw.lib.author.tree (kw_library)</field>
+   <field name="model">kw.lib.author</field>
+   <field name="arch" type="xml">
+       <tree>
+           <field name="name"/>
+       </tree>
+   </field>
+</record>
+
+Важливою особливістю представлень є можливість наслідувати та перевизначати поведінку батьківських представлень
+
+<record id="view_partner_property_form" model="ir.ui.view">
+   <field name="name">res.partner.carrier.property.form.inherit</field>
+   <field name="model">res.partner</field>
+   <field name="inherit_id" ref="base.view_partner_form" />
+   <field name="arch" type="xml">
+       <group name="sale" position="inside">
+           <field name="property_delivery_carrier_id"/>
+       </group>
+   </field>
+</record>
+
+Для перевизначення можна використовувати тег, якщо він має атрибут name
+
+<field name="list_price" position="attributes">
+     <attribute name="invisible">True</attribute>
+</field>
+
+Або xpath (повний шлях)
+
+<xpath expr="/form/sheet/notebook/page/group/group/field[@name='list_price']" position="attributes">
+   <attribute name="invisible">True</attribute>
+</xpath>
+
+Або скорочений шлях
+
+<xpath expr="//field[@name='list_price']" position="attributes">
+  <attribute name="invisible">True</attribute>
+</xpath>
+
+Такий варіант також працює
+
+<xpath expr="field[@name='list_price']" position="attributes">
+  <attribute name="invisible">True</attribute>
+</xpath>
+
+
+Атрибут position вказує, де саме треба провести зміни
+
+
+<field name="list_price" position="after">
+     <field name="name">Author</field>
+</field>
+
+Значення after вказує, що елементи будуть додані після вказаного
+
+<field name="list_price" position="before">
+     <field name="name">Author</field>
+</field>
+
+Значення before вказує, що елементи будуть додані перед вказаним
+
+<group name="list_price" position="inside">
+     <field name="name">Author</field>
+</group>
+
+Значення inside вказує, що елементи будуть додані в середену вказаного, тобто після останнього дочірнього до вказаного елемента
+
+<field name="list_price"  position="attributes">
+  <attribute name="invisible">True</attribute>
+</field>
+
+Значення attributes вказує, що змінені мають бути атрибути елемент. В цьому випадку можна використовувати лише тег attribute
+
+
+<field name="list_price" position="replace">
+     <field name="name">Author</field>
+</field>
+
+Значення replace вказує, що вказаний елемент буде замінений на новий елемент.
+
+
+<field name="list_price" position="after">
+     <field name="name" position="move"/>
+</field>
+
+Значення move використовується для переміщення елемента у нове місце. На відміну від інших, він використовується не на елементі позиціонування, а на внутрішній елемент, який і буде переміщений.

@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+
+  Получение ифрейма.
+  <script>
+    window.addEventListener('message', function(event) {
+      alert(`Получено ${event.data} из ${event.origin}`);
+    });
+  </script>
+
+</body>
+</html>

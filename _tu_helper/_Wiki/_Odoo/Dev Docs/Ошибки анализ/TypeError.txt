@@ -1,0 +1,10 @@
+TypeError: Type of related field account.payment.journal_type is inconsistent with account.journal.type
+
+
+================================================================
+2023-04-19 13:25:44,685 7888 ERROR turbo odoo.modules.registry: Failed to load registry
+
+raise TypeError("Model %r does not exist in registry." % name)
+TypeError: Model 'account.payment' does not exist in registry.
+
+- проверить для наследуемых моделей - включены ли они в депенс в манифесте

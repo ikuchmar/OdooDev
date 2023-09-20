@@ -1,0 +1,130 @@
+===================================================
+1.	Загальний вигляд представлення
+
+<record id="kw_lib_book_kanban" model="ir.ui.view">
+   <field name="name">kw.lib.book.kanban (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <kanban class="o_kanban_mobile">
+           <templates>
+               <t t-name="kanban-box">
+                   <div>
+                       <field name="name"/>
+                   </div>
+               </t>
+           </templates>
+       </kanban>
+   </field>
+</record>
+
+Для створення представлення канбан створюється запис в моделі ir.ui.view для потрібної моделі та в поле arch додається xml опис даного представлення. Весь контент має бути огорнутий у тег kanban, а в ньому іде опис відображення, яке розміщується у тег templates.
+Відображення формується за допомогою розмітки QWeb, яка діє аналогічно створенню веб сторінки.
+ Важливим елементом є клас o_kanban_mobile, який вказує, що канбан буде переглядом за замовчуванням для мобільного відображення. Якщо не задані параметри групування, представлення канбан перетворюється і виглядає як набір плиток.
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення канбан, календар1.png
+При объявлении action  меню
+
+  <record id="action_window_doctors" model="ir.actions.act_window">
+        <field name="name">Doctors</field>
+        <field name="res_model">hr_hospital.doctor</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+===================================================
+2.	Параметри канбан
+
+<record id="kw_lib_book_kanban" model="ir.ui.view">
+   <field name="name">kw.lib.book.kanban (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <kanban class="o_kanban_mobile" default_group_by="category_id">
+           <field name="state"/>
+           <field name="qty"/>
+           <templates>
+               <progressbar field="state" sum_field="qty" colors='{"draft": "success", "posted": "danger"}'/>
+               <t t-name="kanban-box">
+                   <div>
+                       <field name="name"/>
+                   </div>
+               </t>
+           </templates>
+       </kanban>
+   </field>
+</record>
+
+default_group_by
+Представлення канбан набуває канонічного вигляду, коли здійснюється групування. Групування може бути зроблено користувачем, або може бути встановлене групування за замовчуванням. За допомогою атрибуту default_group_by для тегу kanban вказується поле, за яким буде проводитися групування. На малюнку вказано (1).
+
+Атрибут quick_create визначає, чи є можливість швидкого створення запису. На малюнку вказано (2). Включено за замовчуванням.
+
+Атрибут group_create визначає, чи є можливість швидкого створення нової групи. На малюнку вказано (3). Включено за замовчуванням.
+
+Атрибут group_delete визнача,є чи є можливість швидкого видалення групи. На малюнку вказано (4). Включено за замовчуванням.
+
+Атрибут group_edit визначає, чи є можливість швидкого редагування групи. На малюнку вказано (5). Включено за замовчуванням.
+
+Атрибут archivable визначає, чи є можливість швидкого архівування групи. На малюнку вказано (6). Включено за замовчуванням.
+
+Робота атрибутів group_create, group_delete, group_edit та archivable доступна лише для групуваня на основі поля Many2one.
+
+Атрибут records_draggable визначає, чи є можливість переносу мишкою записів з групи в групу. Включено за замовчуванням.
+
+Тег progressbar додає можливість відображати діаграму співвідношення на основі поля, вказаного в атрибуті field. На малютнку (7). Атрибут colors визначає кольори, які будуть відповідати значенню поля, вказаного у атрибуті field. Якщо встановлений атрибут sum_field, то замість кількості записів у підрахунок буде братись значення цього поля. На малюнку (8).
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення канбан, календар2.png
+===================================================
+3.	Кастомна форма швидкого створення
+
+<record id="kw_lib_book_quick_form" model="ir.ui.view">
+   <field name="name">kw.lib.book.quick.form (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <form>
+           <group>
+               <field name="name"/>
+               <field name="isbn"/>
+           </group>
+       </form>
+   </field>
+</record>
+
+<record id="kw_lib_book_kanban" model="ir.ui.view">
+   <field name="name">kw.lib.book.kanban (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <kanban class="o_kanban_mobile" default_group_by="category_id"
+               quick_create_view="kw_library.kw_lib_book_quick_form">
+           <field name="state"/>
+           <field name="qty"/>
+           <templates>
+               <progressbar field="state" sum_field="qty"
+                            colors='{"draft": "success", "posted": "danger"}'/>
+               <t t-name="kanban-box">
+                   <div>
+                       <field name="name"/>
+                   </div>
+               </t>
+           </templates>
+       </kanban>
+   </field>
+</record>
+
+quick_create_view
+За допомогою атрибуту quick_create_view можна змінити стандартну форму (яка відображає лише поле name), на іншу
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення канбан, календар3.png
+Вывод на форме - поля о2м в виде канбан
+    <record id="doctor_form" model="ir.ui.view">
+        <field name="name">Doctor form</field>
+        <field name="model">hr_hospital.doctor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                            <group>
+                                <field name="intern_ids" mode="kanban"/>
+                            </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+===================================================
+

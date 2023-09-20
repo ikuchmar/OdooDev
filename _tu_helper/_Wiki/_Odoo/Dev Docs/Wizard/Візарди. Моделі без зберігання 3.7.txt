@@ -1,0 +1,257 @@
+Один з типів моделей в Odoo -  це моделі з тимчасовим зберіганням у системі TransientModel.
+Особливостями їх є те, що записи цієї моделі зберігаються лише певний час (до однієї доби)
+та видаляються за допомогою системного cron завдання Base: Auto-vacuum internal data.
+
+Це обумовлено призначенням цієї моделі: створення додаткових представлень (діалогових вікон) для зручної роботи з системою, тобто для створення майстрів (wizards).
+Оскільки Odoo не має вбудованих механізмів взаємодії з користувачем, крім стандартних представлень (Form, Tree, Graph, Pivot та деяких інших у Enterprise версії),
+то було додано окрему модель Transient, котра як раз і надає такі можливості.
+Візарди зазвичай відображаються у вигляді спливаючого вікна, котре при натисканні будь- якої кнопки закривається. Ця поведінка нагадує покроковий майстер,
+де користувач взаємодіє з одним вікном, потім натискає на кнопку Далі і йому буде відображене інше вікно (або теж саме, але вже зі зміненою інформацією).
+По завершенні користувач натискає на Виконати або Завершити і вікно візарда буде закрито.
+
+Будь-яка дія (натискання на кнопку) - закриває поточне вікно візарда, перед цим відбувається зберігання даних форми до бази даних.
+Якщо потрібно просто завершити роботу візарда без зберігання, існує спеціальний атрибут, котрий потрібно додати до кнопки: special="cancel".
+
+Права доступу
+Починаючи з 13 версії системи, при створенні тимчасової моделі необхідно вказувати також права доступу до неї.
+У попередніх версіях, створювати візарди міг будь-який користувач, але після створення доступ до записів мав тільки той, хто їх створив.
+Адміністратори системи, користувачі з правами base.group_system, мали необмежений доступ до записів всіх візардів.
+
+Розташування файлів
+Файли візардів та їх представленень повинні бути розташовані у директорії wizard модуля.
+
+addons/school_lesson_3_7/
+|-- security/
+|   |-- ir.model.access.csv
+|-- wizard/
+|   |-- partner_multi_wizard.py
+|   |-- partner_multi_wizard_views.xml
+
+Особливості створення візардів
+При створенні візардів можна додавати поля, котрі посилаються на звичайні моделі (поля з типом Many2one або Many2many).
+Зворотне посилання, зі стандартних моделей до записів тимчасових моделей, не використовується.
+Не використовуйте поля з типом One2many у візардах.
+
+Давайте створимо візард для надання можливості створення декількох партнерів (записів моделі res.partner) зручним шляхом.
+
+Модуль розташований у репозиторії.
+
+from odoo import _, api, fields, models
+	from odoo.exceptions import ValidationError
+
+
+	class CreatePartnerMultiWizard(models.TransientModel):
+	    _name = 'create.partner.multi.wizard'
+	    _description = "Wizard to create partners in the fast way."
+
+	    names = fields.Char(
+	        string='Partner Names',
+	        required=True,
+	    )
+	    country_id = fields.Many2one(
+	        comodel_name='res.country',
+string='Country',
+	    )
+	    company_type = fields.Selection(
+	        selection=[('person', 'Individual'),
+	                   ('company', 'Company')],
+	        default='person',
+	    )
+
+	    def action_open_wizard(self):
+	        return {
+	            'name': _('Create Partners Wizard'),
+	            'type': 'ir.actions.act_window',
+	            'view_mode': 'form',
+	            'res_model': 'create.partner.multi.wizard',
+	            'target': 'new',
+	            'context': {'default_country_id': self.env.user.country_id.id},
+	        }
+
+	    def action_create(self):
+	        self.ensure_one()
+	        for name in self.names.split(','):
+	            self.env['res.partner'].create({
+	                'name': name,
+	                'company_type': self.company_type,
+	                'country_id': self.country_id.id,
+	            })
+
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	    <record id="create_partner_multi_wizard_view_form" model="ir.ui.view">
+	        <field name="name">create.partner.multi.wizard.view.form</field>
+	        <field name="model">create.partner.multi.wizard</field>
+	        <field name="arch" type="xml">
+	            <form>
+	                <sheet>
+	                    <div class="oe_title">
+	                        <label for="names" class="oe_edit_only"/>
+	                        <h3><field name="names" placeholder="Names separated by comma"/></h3>
+	                    </div>
+group>
+	                        <group>
+	                            <field name="company_type" widget="radio" options="{'horizontal': true}"/>
+	                            <field name="country_id" options="{'no_create': True}"/>
+	                        </group>
+	                    </group>
+	                </sheet>
+	                <footer>
+	                    <button name="action_create"
+	                            string="Create"
+	                            type="object"
+	                            icon="fa-plus"
+	                            class="btn-primary"/>
+	                    <button special="cancel" class="oe_link" string="Close"/>
+	                </footer>
+	            </form>
+	        </field>
+	    </record>
+
+	    <record id="action_create_partner_multi_wizard" model="ir.actions.act_window">
+	        <field name="name">Add Partners</field>
+	        <field name="res_model">create.partner.multi.wizard</field>
+	        <field name="view_mode">form</field>
+	        <field name="target">new</field>
+	        <field name="binding_model_id" ref="base.model_res_partner"/>
+	        <field name="binding_view_types">form</field>
+	        <field name="binding_type">action</field>
+	    </record>
+
+	    <record id="server_action_create_partner_multi_wizard" model="ir.actions.server">
+	        <field name="name">Add Partners</field>
+	        <field name="model_id" ref="model_create_partner_multi_wizard"/>
+	        <field name="state">code</field>
+	        <field name="code">
+	            action = model.action_open_wizard()
+	        </field>
+	    </record>
+<record id="menu_create_partner_multi_wizard" model="ir.ui.menu">
+	        <field name="name">Add Partners</field>
+	        <field name="parent_id" ref="contacts.res_partner_menu_config"/>
+	        <field name="action" ref="server_action_create_partner_multi_wizard"/>
+	        <field name="sequence" eval="3"/>
+	    </record>
+
+	</odoo>
+Додамо наступні поля до візарду:
+●	names - тип Char, список імен, або назв партнерів, розділених комою. Кома буде використовуватися, щоб відокремити кожне ім'я.
+●	country_id - тип Many2one, посилання на одну з записів моделі res.country.
+●	company_type - тип Selection, один з можливих типів партнера, або приватна особа або компанія.
+
+Також потрібно створити перегляд для візарду з типом Form, та дію і пункт меню для його виклику.
+
+До форми у футер додамо дві кнопки, перша буде виконувати дії по створенню нових партнерів, друга призначена для скасування операції та закриття вікна візарду.
+
+<form>
+    <sheet>
+        ...
+    </sheet>
+    <footer>
+        <button name="action_create"
+                string="Create"
+                type="object"
+                icon="fa-plus"
+                class="btn-primary"/>
+        <button special="cancel" class="oe_link" string="Close"/>
+    </footer>
+</form>
+Виклик візарда
+Для виклику візарду ми будемо використовувати дію з типом "ir.actions.server", котра буде викликатися з меню "Налаштування" із модуля "Contacts".
+
+<record id="server_action_create_partner_multi_wizard"
+        model="ir.actions.server">
+    <field name="name">Add Partners</field>
+    <field name="model_id" ref="model_create_partner_multi_wizard"/>
+    <field name="state">code</field>
+    <field name="code">
+        action = model.action_open_wizard()
+    </field>
+</record>
+
+<record id="menu_create_partner_multi_wizard" model="ir.ui.menu">
+    <field name="name">Add Partners</field>
+    <field name="parent_id" ref="contacts.res_partner_menu_config"/>
+    <field name="action"
+           ref="server_action_create_partner_multi_wizard"/>
+    <field name="sequence" eval="3"/>
+</record>
+
+======================================================================
+Інший шлях для виклику візарда - це додання його у пункт меню "Дія".
+======================================================================
+
+Для цього необхідно створити дію з типом ir.actions.act_window та додати до нього наступні атрибути:
+●	binding_model_id - модель, до котрої ми прив'язуємо виклик візарду, тобто у котрій буде відображатись пункт підменю "Add Partners" у меню Дія.
+●	binding_view_types - представлення, у котрих буде відображатися цей підпункт. За замовчуванням: "list,form".
+●	binding_type - вказує до якого саме меню потрібно додати виклик візарду, до меню Дія (action), або Друк (report).
+
+<record id="action_create_partner_multi" model="ir.actions.act_window">
+    <field name="name">Add Partners</field>
+    <field name="res_model">create.partner.multi.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="binding_model_id" ref="base.model_res_partner"/>
+    <field name="binding_view_types">form</field>
+    <field name="binding_type">action</field>
+</record>
+При доданні виклику візарду наведеним чином, додатково НЕ потрібно створювати запис з типом menuitem (ir.ui.menu) у XML файлах.
+
+----------------------------------------------------------------------
+Також ми додамо доступ на всі операції з записами візарду для всіх внутрішніх користувачів системи, додавши наступний рядок у файл ir.model.access.csv:
+----------------------------------------------------------------------
+
+
+Виклик візарда через меню "Action/Дія"
+<!--    menu action-->
+    <record id="action_set_doctor_for_patients_wizard" model="ir.actions.act_window">
+        <field name="name">Set Doctor</field>
+        <field name="res_model">hr_hospital.set.doctor.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_hr_hospital_patient"/>
+        <field name="binding_view_types">form</field>
+        <field name="binding_type">action</field>
+    </record>
+
+Обратить внимание на         <field name="binding_model_id" ref="model_hr_hospital_patient"/>
+Для модели hr_hospital.patient
+Виклик візарда через додати виклик через окремий пункт меню та server_action
+
+    <record id="server_action_create_partner_multi_wizard" model="ir.actions.server">
+
+        <field name="name">Add Partners</field>
+
+        <field name="model_id" ref="model_create_partner_multi_wizard"/>
+
+        <field name="state">code</field>
+
+        <field name="code">
+
+            action = model.action_open_wizard()
+
+        </field>
+
+    </record>
+
+    <record id="menu_create_partner_multi_wizard" model="ir.ui.menu">
+
+        <field name="name">Add Partners</field>
+
+        <field name="parent_id" ref="contacts.res_partner_menu_config"/>
+
+        <field name="action" ref="server_action_create_partner_multi_wizard"/>
+
+        <field name="sequence" eval="3"/>
+
+    </record>
+
+Виклик візарда по кнопке
+<button type="action" name="%(your_wizard_act_window_external_id)d"  string="Button name" />
+
+Додаткові матеріали до уроку
+
+●	ORM API - TransientModel: https://www.odoo.com/documentation/15.0/developer/reference/backend/orm.html#transientmodel
+●	Wizards: https://www.odoo.com/documentation/15.0/developer/howtos/backend.html#wizards
+●	File Naming: https://www.odoo.com/documentation/15.0/contributing/development/coding_guidelines.html#file-naming

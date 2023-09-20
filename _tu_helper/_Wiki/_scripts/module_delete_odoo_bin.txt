@@ -1,0 +1,14 @@
+cd \
+
+E:
+cd Work_Odoo\TurboUa\Odoo_14\venv\Include\odoo-14.0\addons\point_of_sale\tools\posbox\configuration\
+cd Work_Odoo\TurboUa\Odoo_14\venv\Include\odoo-14.0\addons\point_of_sale\tools\posbox\configuration\
+cd
+
+odoo-bin -d turbo -u _tu_helper
+
+
+
+# ./odoo-bin -d [имя_базы_данных] -u [имя_модуля] --stop-after-init
+
+# ./odoo-bin -d my_database -u my_module

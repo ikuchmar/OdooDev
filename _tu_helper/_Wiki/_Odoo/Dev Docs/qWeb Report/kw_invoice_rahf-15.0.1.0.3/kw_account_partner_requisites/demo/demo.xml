@@ -1,0 +1,202 @@
+<odoo noupdate="1">
+    <record id="kw_taxation_scheme_1" model="kw.taxation.scheme">
+        <field name="name">Платник податку на прибуток на загальних підставах і платник ПДВ</field>
+    </record>
+
+
+    <record id="kw_account_partner_requisites_res_bank_privat" model="res.bank">
+        <field name="name">АТ "Комерційний Банк "Приватбанк"</field>
+        <field name="bic">305299</field>
+    </record>
+    <record id="kw_account_partner_requisites_res_bank_aval" model="res.bank">
+        <field name="name">АТ "Райффайзен Банк"</field>
+        <field name="bic">300335</field>
+    </record>
+
+    <record id="kw_account_partner_requisites_main_partner_1" model="res.partner">
+        <field name="name">Васильєва Єлизавета Дмитрівна</field>
+        <field name="parent_id" ref="base.res_partner_1"/>
+        <field name="function">Директор</field>
+    </record>
+    <record id="kw_account_partner_requisites_main_partner_user_1" model="res.users">
+        <field name="partner_id" ref="kw_account_partner_requisites_main_partner_1"/>
+        <field name="login">lisa</field>
+        <field name="password">lisa</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="groups_id" eval="[(6,0,[ref('base.group_user'), ref('base.group_partner_manager'), ref('base.group_allow_export')])]"/>
+    </record>
+    <record id="kw_account_partner_requisites_main_partner_2" model="res.partner">
+        <field name="name">Ємельянов Дмитро Романович</field>
+        <field name="parent_id" ref="base.res_partner_1"/>
+        <field name="function">Головний бухгалтер</field>
+    </record>
+    <record id="kw_account_partner_requisites_main_partner_user_2" model="res.users">
+        <field name="partner_id" ref="kw_account_partner_requisites_main_partner_2"/>
+        <field name="login">dima</field>
+        <field name="password">dima</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="groups_id" eval="[(6,0,[ref('base.group_user'), ref('base.group_partner_manager'), ref('base.group_allow_export')])]"/>
+    </record>
+    <record id="kw_account_partner_requisites_main_partner_3" model="res.partner">
+        <field name="name">Аксьонов Кирило Максимович</field>
+        <field name="parent_id" ref="base.main_partner"/>
+        <field name="function">Продавець</field>
+    </record>
+    <record id="kw_account_partner_requisites_main_partner_user_3" model="res.users">
+        <field name="partner_id" ref="kw_account_partner_requisites_main_partner_3"/>
+        <field name="login">kir</field>
+        <field name="password">kir</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="groups_id" eval="[(6,0,[ref('base.group_user'), ref('base.group_partner_manager'), ref('base.group_allow_export')])]"/>
+    </record>
+    <record id="kw_account_partner_requisites_main_partner_4" model="res.partner">
+        <field name="name">02217, м. Київ, вул. Драйзера, 21, к. 107</field>
+        <field name="type">invoice</field>
+        <field name="parent_id" ref="base.main_partner"/>
+    </record>
+
+    <record id="base.main_partner" model="res.partner">
+        <field name="legal_name">Товариство з обмеженою відповідальністю "Май компані"</field>
+        <field name="legal_short_name">ТОВ "Май компані"</field>
+        <field name="tax_ident_number">7640816267296</field>
+        <field name="payer_certificate_number">4831602523337</field>
+        <field name="enterprise_code">32660868</field>
+        <field name="chief_reason">Статуту</field>
+        <field name="chief" ref="kw_account_partner_requisites.kw_account_partner_requisites_main_partner_1"/>
+        <field name="chief_accountant" ref="kw_account_partner_requisites.kw_account_partner_requisites_main_partner_2"/>
+        <field name="responsible_officer" ref="kw_account_partner_requisites.kw_account_partner_requisites_main_partner_3"/>
+        <field name="legal_address" ref="kw_account_partner_requisites.kw_account_partner_requisites_main_partner_4"/>
+        <field name="postal_address" ref="kw_account_partner_requisites.kw_account_partner_requisites_main_partner_4"/>
+        <field name="kw_taxation_scheme_id" ref="kw_taxation_scheme_1"/>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_bank_main" model="res.partner.bank">
+        <field name="acc_number">UA233000010000032001100701026</field>
+        <field name="partner_id" ref="base.main_partner"/>
+        <field name="bank_id" ref="kw_account_partner_requisites_res_bank_aval"/>
+    </record>
+
+    <record id="kw_account_partner_requisites_res_partner_1_1" model="res.partner">
+        <field name="name">Петров Данило Єгорович</field>
+        <field name="parent_id" ref="base.res_partner_1"/>
+        <field name="function">Директор</field>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_1_2" model="res.partner">
+        <field name="name">Крючкова Анна Іванівна</field>
+        <field name="parent_id" ref="base.res_partner_1"/>
+        <field name="function">Головний бухгалтер</field>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_1_3" model="res.partner">
+        <field name="name">Тарасов Тимофій Маркович</field>
+        <field name="parent_id" ref="base.res_partner_1"/>
+        <field name="function">Експедитор</field>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_1_4" model="res.partner">
+        <field name="name">04080, м. Київ, вул. Новокостянтинівська, 18</field>
+        <field name="type">invoice</field>
+        <field name="parent_id" ref="base.res_partner_1"/>
+    </record>
+    <record id="base.res_partner_1" model="res.partner">
+        <field name="legal_name">Товариство з обмеженою відповідальністю "Вуд Коннер"</field>
+        <field name="legal_short_name">ТОВ "Вуд Коннер"</field>
+        <field name="tax_ident_number">5136359741049</field>
+        <field name="payer_certificate_number">7195885032383</field>
+        <field name="enterprise_code">52446764</field>
+        <field name="chief_reason">Статуту</field>
+        <field name="chief" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_1_1"/>
+        <field name="chief_accountant" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_1_2"/>
+        <field name="responsible_officer" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_1_3"/>
+        <field name="legal_address" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_1_4"/>
+        <field name="postal_address" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_1_4"/>
+        <field name="kw_taxation_scheme_id" ref="kw_taxation_scheme_1"/>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_bank_1" model="res.partner.bank">
+        <field name="acc_number">UA233000010000032001100701021</field>
+        <field name="partner_id" ref="base.res_partner_1"/>
+        <field name="bank_id" ref="kw_account_partner_requisites_res_bank_privat"/>
+    </record>
+
+    <record id="kw_account_partner_requisites_res_partner_2_1" model="res.partner">
+        <field name="name">Черкасова Анна Давидівна</field>
+        <field name="parent_id" ref="base.res_partner_2"/>
+        <field name="function">Директор</field>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_2_2" model="res.partner">
+        <field name="name">Пономарьова Аделіна Давидівна</field>
+        <field name="parent_id" ref="base.res_partner_2"/>
+        <field name="function">Головний бухгалтер</field>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_2_3" model="res.partner">
+        <field name="name">Стариков Данило Тимофійович</field>
+        <field name="parent_id" ref="base.res_partner_2"/>
+        <field name="function">Бренд менеджер</field>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_2_4" model="res.partner">
+        <field name="name">79040, м. Львів, вул. Городоцька, 355</field>
+        <field name="type">invoice</field>
+        <field name="parent_id" ref="base.res_partner_2"/>
+    </record>
+    <record id="base.res_partner_2" model="res.partner">
+        <field name="legal_name">Товариство з обмеженою відповідальністю "Деко Аудит"</field>
+        <field name="legal_short_name">ТОВ "Деко Аудит"</field>
+        <field name="tax_ident_number">2640337274502</field>
+        <field name="payer_certificate_number">8262589062028</field>
+        <field name="enterprise_code">42120754</field>
+        <field name="chief_reason">Довіреності № 345</field>
+        <field name="chief" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_2_1"/>
+        <field name="chief_accountant" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_2_2"/>
+        <field name="responsible_officer" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_2_3"/>
+        <field name="legal_address" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_2_4"/>
+        <field name="postal_address" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_2_4"/>
+        <field name="kw_taxation_scheme_id" ref="kw_taxation_scheme_1"/>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_bank_2" model="res.partner.bank">
+        <field name="acc_number">UA233000010000032001100701022</field>
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="bank_id" ref="kw_account_partner_requisites_res_bank_privat"/>
+    </record>
+
+    <record id="kw_account_partner_requisites_res_partner_3_1" model="res.partner">
+        <field name="name">Богданов Тимофій Максимович</field>
+        <field name="parent_id" ref="base.res_partner_3"/>
+        <field name="function">Директор</field>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_3_2" model="res.partner">
+        <field name="name">Єгоров Лев Романович</field>
+        <field name="parent_id" ref="base.res_partner_3"/>
+        <field name="function">Головний бухгалтер</field>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_3_3" model="res.partner">
+        <field name="name">Старостіна Мілана Михайлівна</field>
+        <field name="parent_id" ref="base.res_partner_3"/>
+        <field name="function">Бренд менеджер</field>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_3_4" model="res.partner">
+        <field name="name">04071, м. Київ, вул. Ярославська, 28</field>
+        <field name="type">delivery</field>
+        <field name="parent_id" ref="base.res_partner_3"/>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_3_5" model="res.partner">
+        <field name="name">03142, м. Київ, а/с 132</field>
+        <field name="type">invoice</field>
+        <field name="parent_id" ref="base.res_partner_3"/>
+    </record>
+    <record id="base.res_partner_3" model="res.partner">
+        <field name="legal_name">Товариство з обмеженою відповідальністю "Джеміні Фрнітуре"</field>
+        <field name="legal_short_name">ТОВ "Джеміні Фрнітуре"</field>
+        <field name="tax_ident_number">2806205013732</field>
+        <field name="payer_certificate_number">7822051050152</field>
+        <field name="enterprise_code">42490552</field>
+        <field name="chief_reason">Довіреності № 56</field>
+        <field name="chief" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_3_1"/>
+        <field name="chief_accountant" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_3_2"/>
+        <field name="responsible_officer" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_3_3"/>
+        <field name="legal_address" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_3_4"/>
+        <field name="postal_address" ref="kw_account_partner_requisites.kw_account_partner_requisites_res_partner_3_5"/>
+        <field name="kw_taxation_scheme_id" ref="kw_taxation_scheme_1"/>
+    </record>
+    <record id="kw_account_partner_requisites_res_partner_bank_3" model="res.partner.bank">
+        <field name="acc_number">UA233000010000032001100701023</field>
+        <field name="partner_id" ref="base.res_partner_3"/>
+        <field name="bank_id" ref="kw_account_partner_requisites_res_bank_privat"/>
+    </record>
+</odoo>

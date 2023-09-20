@@ -1,0 +1,30 @@
+=====================================
+Из Pg Admin
+=====================================
+
+Delete FROM public.ir_ui_view WHERE model = 'sale.order' or model = 'purchase.order';
+
+
+SELECT id, name, model, key, priority, type, arch_db, arch_fs, arch_updated, arch_prev, inherit_id, field_parent, mode, active, create_uid, create_date, write_uid, write_date, customize_show, website_meta_title, website_meta_description, website_meta_keywords, website_meta_og_img, seo_name, website_id, track, visibility, visibility_password, theme_template_id
+	FROM public.ir_ui_view
+	where model = 'purchase.order';
+
+=====================================
+Из Крона
+=====================================
+env.cr.execute("""
+  DELETE FROM public.ir_ui_view_custom;
+  DELETE FROM public.ir_ui_view_group_rel;
+  DELETE FROM public.ir_ui_view WHERE model = 'sale.order' or model = 'purchase.order' or model = 'account.move' or model = 'purchase' ;
+""")
+
+env.cr.execute("""
+  DELETE FROM public.ir_ui_view_custom;
+  DELETE FROM public.ir_ui_view_group_rel;
+  DELETE FROM public.ir_ui_view WHERE model = 'sale.order' or model = 'purchase.order' or model = 'account.move' or model = 'purchase' or model = 'hr_employee' or model = 'stock.picking' or name = 'product_template_form_view_ds';
+""")
+
+stock.picking
+
+
+TRUNCATE TABLE имя_таблицы CASCADE;

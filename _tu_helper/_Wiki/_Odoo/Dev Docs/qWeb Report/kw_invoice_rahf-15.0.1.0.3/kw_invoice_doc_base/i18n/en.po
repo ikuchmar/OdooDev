@@ -1,0 +1,93 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* kw_invoice_doc_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-07 09:11+0000\n"
+"PO-Revision-Date: 2021-09-07 09:11+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_city_of_assembly
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_city_of_assembly
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_city_of_assembly
+msgid "City of assembly"
+msgstr "Місце складання"
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__id
+msgid "ID"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model,name:kw_invoice_doc_base.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_amount_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_amount_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_amount_ukr_text
+msgid "Kw Amount Ukr Text"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_amount_untaxed_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_amount_untaxed_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_amount_untaxed_ukr_text
+msgid "Kw Amount Untaxed Ukr Text"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_currency_cent_name
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_currency_cent_name
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_currency_cent_name
+msgid "Kw Currency Cent Name"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_currency_name
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_currency_name
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_currency_name
+msgid "Kw Currency Name"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_partner_invoice_id
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_partner_invoice_id
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_partner_invoice_id
+msgid "Kw Partner Invoice"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_taxed_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_taxed_ukr_text
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_taxed_ukr_text
+msgid "Kw Taxed Ukr Text"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: kw_invoice_doc_base
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_bank_statement_line__kw_responsible_person
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_move__kw_responsible_person
+#: model:ir.model.fields,field_description:kw_invoice_doc_base.field_account_payment__kw_responsible_person
+#: model_terms:ir.ui.view,arch_db:kw_invoice_doc_base.kw_invoice_doc_base_account_move_form
+msgid "Responsible person"
+msgstr "Відповідальна особа"

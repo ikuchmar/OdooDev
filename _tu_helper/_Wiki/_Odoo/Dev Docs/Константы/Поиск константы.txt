@@ -1,0 +1,6 @@
+
+from odoo.http import request
+
+get_param = request.env['ir.config_parameter'].sudo().get_param
+production = get_param('web.base.production_mode')
+   if production:

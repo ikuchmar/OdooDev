@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fields_one2many_tree" model="ir.ui.view">
+        <field name="name">fields.one2many.view.tree</field>
+        <field name="model">fields.one2many</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="field_one2many_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record  id="fields_one2many_list_action" model="ir.actions.act_window">
+        <field name="name">fields_one2many_list_action</field>
+        <field name="res_model">fields.one2many</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help">learn one2many.fields</field>
+    </record>
+
+</odoo>
+
+
+
+
+
+

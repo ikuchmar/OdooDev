@@ -1,0 +1,6 @@
+                   <group>
+                        <field name="is_fix_description"/>
+                    </group>
+                    <group attrs="{'invisible':[('is_fix_description', '=', False)]}">
+                        <field name="description"/>
+                    </group>

@@ -1,0 +1,71 @@
+Для того чтобы выдать окно с сообщением пользователю в Odoo можно использовать метод message_wizard() модели ir.ui.view.
+Например, если вы хотите выдать окно с сообщением при нажатии на кнопку, вы можете определить метод на вашей модели, который будет вызывать этот метод.
+
+Вот пример метода, который выдает окно с сообщением:
+
+from odoo import api, fields, models
+
+class YourModel(models.Model):
+    _name = 'your.model'
+
+    @api.multi
+    def show_message(self):
+        message = "Привет, это ваше сообщение!"
+        view_id = self.env.ref('your_module_name.message_wizard_view').id
+        return {
+            'name': 'Сообщение',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'views': [(view_id, 'form')],
+            'res_model': 'your.model.message.wizard',
+            'target': 'new',
+            'context': {
+                'default_message': message,
+            },
+        }
+В этом примере мы определяем метод show_message(), который вызывается при нажатии на кнопку. Мы определяем текст сообщения, которое мы хотим показать в окне, затем мы получаем идентификатор представления для нашего класса сообщения и передаем его в качестве параметра для создания действия окна.
+
+Теперь вам нужно создать модель для класса сообщения. Вот пример кода:
+
+python
+Copy code
+from odoo import api, fields, models
+
+class MessageWizard(models.TransientModel):
+    _name = 'your.model.message.wizard'
+
+    message = fields.Text('Сообщение', readonly=True)
+
+    @api.model
+    def default_get(self, fields):
+        res = super(MessageWizard, self).default_get(fields)
+        message = self._context.get('default_message', False)
+        res.update({
+            'message': message,
+        })
+        return res
+В этом примере мы создаем модель your.model.message.wizard для представления нашего сообщения. Мы определяем поле message, которое будет содержать текст сообщения, а затем мы определяем метод default_get(), который получает текст сообщения из контекста действия окна и заполняет поле message.
+
+Наконец, вам нужно создать файл представления для вашего класса сообщения. Вот пример кода:
+
+xml
+Copy code
+<odoo>
+    <record id="message_wizard_view" model="ir.ui.view">
+        <field name="name">Сообщение</field>
+        <field name="model">your.model.message.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Сообщение">
+                <div class="oe_title">
+                    <h1>
+                        <field name="message" readonly="1"/>
+                    </h1>
+                </div>
+                <footer>
+                    <button string="ОК" type="object" class="btn-primary"/>
+                    <button string="Отмена" type="object" class="btn-default" data-dismiss="modal"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo

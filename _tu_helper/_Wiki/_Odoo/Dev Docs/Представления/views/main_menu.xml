@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    главное меню (корневое)
+    отображается на главной странице
+    к нему должна быть картинка-->
+
+    <menuitem
+            id="menu_main"
+            web_icon="a_sample_ivan,static/description/icon.png"
+            name="Turbo Helper 23.03.10"
+            sequence="1"/>
+
+    <!--    меню первого уровня -->
+    <menuitem id="menu_field"
+              parent="menu_main"
+              name="Fields"
+              sequence="1"/>
+
+</odoo>

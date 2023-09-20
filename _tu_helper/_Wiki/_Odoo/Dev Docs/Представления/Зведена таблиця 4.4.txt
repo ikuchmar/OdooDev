@@ -1,0 +1,227 @@
+<pivot string="Sales Analysis" disable_linking="True" display_quantity="true" sample="1">
+<pivot position="attributes">
+<pivot position="inside">
+
+<pivot string="Sales Report" hide_summary="total" create="false">
+hide_summary, который указывает, что не нужно отображать сводные данные в конце строк и столбцов, и create, который указывает, можно ли создавать новые записи из отчета
+
+<field name="unit_amount" type="measure" widget="timesheet_uom"/>
+<field name="percentage" type="measure" widget="percentage"/>
+<field name="color" invisible="1"/>
+<field name="location_dest_id" groups="stock.group_stock_multi_locations" type="row"/>
+
+            <field name="price_total" type="measure" string="Total Sales"
+                options='{"scale": 2, "currency_field": "currency_id"}'/>
+            <field name="partner_id" type="filter"/>
+
+
+===================================================
+Представлення зведеної таблиці
+===================================================
+
+<record id="kw_lib_book_pivot" model="ir.ui.view">
+   <field name="name">kw.lib.book.pivot (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <pivot>
+           <field name="create_date" interval="day" type="row"/>
+           <field name="name" type="row"/>
+           <field name="state" type="col"/>
+           <field name="qty" type="measure"/>
+       </pivot>
+   </field>
+</record>
+
+Для створення представлення зведеної таблиці створюється запис в моделі ir.ui.view для потрібної моделі
+та в поле arch додається xml опис даного представлення.
+Весь контент має бути огорнутий у тег pivot, а в ньому іде опис полів, що будуть відображені на даному представлені.
+
+===================================================
+type="row" "col" "measure" "filter" Налаштування вимірів
+===================================================
+
+<record id="kw_lib_book_pivot" model="ir.ui.view">
+   <field name="name">kw.lib.book.pivot (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <pivot>
+           <field name="create_date" interval="day" type="row"/>
+           <field name="name" type="row"/>
+           <field name="state" type="col"/>
+           <field name="qty" type="measure"/>
+           <field name="partner_id" type="filter"/>
+
+       </pivot>
+   </field>
+</record>
+
+Поля, які створюють виміри
+у рядках мають тим row,
+у колонках відповідно - col,
+у зоні даних - measure. (чисельного типа: Integer, Float)
+
+Рівень вкладеності вимірів, та відображення даних залежить від їх порядку у xml,
+при чому поля різних типів можуть бути перемішені,
+значення мая лише порядок оголошення в межах типу.
+
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення зведеної таблиці1.png
+
+===================================================
+groupby
+===================================================
+
+Группировки:
+
+Группировка по полю (row)
+Группировка по дате (date)
+Группировка по периоду (period)
+Группировка по выбору (select)
+Группировка по отношению (relation)
+
+           <field name="field6" type="measure" function="count"/>
+            <groupby name="groupby1"/>
+            <groupby name="groupby2"/>
+
+===================================================
+group  expand="1"
+===================================================
+<pivot>
+    <field name="product_id" type="row"/>
+    <field name="date" type="col"/>
+    <field name="quantity" type="measure"/>
+    <group expand="1" string="Salesperson">
+        <field name="user_id"/>
+    </group>
+</pivot>
+
+В этом примере мы используем Operator Group для группировки данных по продукту и дате, а затем по продавцу.
+Это позволит нам быстро увидеть, какой продукт продавался каждым продавцом в определенные даты.
+
+атрибуты:
+ - string - задания имени группы
+ - expand -  расширять или сворачивать группу по умолчанию.
+
+===================================================
+option
+===================================================
+            <field name="field_for_filters"/>
+            <option name="aggregate" type="avg"/>
+            <option name="show_totals" type="True"/>
+
+
+===================================================
+function="average" "sum" "count"  Налаштування вимірів
+===================================================
+Функции:
+
+Сумма (sum)
+Количество (count)
+Среднее значение (average)
+Максимум (max)
+Минимум (min)
+Итог (total)
+Процент от общей суммы (percentage)
+
+
+      <field name="field3" type="measure" function="sum"/>
+      <field name="field4" type="measure" function="avg"/>
+
+            <field name="field4" type="measure" function="sum"/>
+            <field name="field5" type="measure" function="average"/>
+            <field name="field6" type="measure" function="count"/>
+
+
+===================================================
+operator="avg" "sum"  Налаштування вимірів
+===================================================
+
+      <field name="price_unit" type="measure" operator="avg"/>
+      <field name="price_subtotal" type="measure" operator="sum"/>
+
+
+===================================================
+Фильтры:
+===================================================
+
+<filter name="partner_id" domain="[('partner_id', '!=', False)]"/>
+
+Фильтр по полю (filter)
+Фильтр по диапазону (range_filter)
+Фильтр по дате (date_filter)
+Фильтр по отношению (relation_filter)
+Фильтр по условию (condition_filter)
+Фильтр по выбору (select_filter)
+
+===================================================
+measure widget="float_time"
+===================================================
+
+type="measure" widget="float_time"
+
+===================================================
+display_quantity   Відображати кількість записів
+===================================================
+
+Атрибут display_quantity визначає чи буде відображатись додаткове поле Підрахунок, яке містить кількість записів, що входять до відповідного виміру
+
+<record id="kw_lib_book_pivot" model="ir.ui.view">
+   <field name="name">kw.lib.book.pivot (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <pivot display_quantity="1">
+           <field name="create_date" interval="day" type="row"/>
+           <field name="state" type="col"/>
+           <field name="name" type="row"/>
+           <field name="qty" type="measure"/>
+       </pivot>
+   </field>
+</record>
+
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення зведеної таблиці2.png
+
+===================================================
+interval  Інтервали дат day, week, month, quarter or year
+===================================================
+Атрибут interval для полів типу Date або Datetime визначає на які кванти буде розбита часова шкала. Доступні варіанти від години до року hour, day, week, month, quarter or year
+
+<record id="kw_lib_book_pivot" model="ir.ui.view">
+   <field name="name">kw.lib.book.pivot (kw_library)</field>
+   <field name="model">kw.lib.book</field>
+   <field name="arch" type="xml">
+       <pivot>
+           <field name="create_date" interval="hour" type="row"/>
+           <field name="name" type="row"/>
+           <field name="state" type="col"/>
+           <field name="qty" type="measure"/>
+       </pivot>
+   </field>
+</record>
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення зведеної таблиці3.png
+
+===================================================
+group_operator Використання групового оператора поля
+===================================================
+Груповий оператор впливає на тип агрегуючої функції, у прикладі ми бачимо функцію avg, до дає нам у підсумку 51 = 102 / 2
+
+class Book(models.Model):
+   _name = 'kw.lib.book'
+   _description = 'Book'
+
+   name = fields.Char()
+
+   active = fields.Boolean(
+       default=True, )
+   isbn = fields.Char()
+
+   author_ids = fields.Many2many(
+       comodel_name='kw.lib.author', )
+
+   qty = fields.Integer(
+       group_operator='avg', )
+
+
+Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення зведеної таблиці4.png
+===================================================
