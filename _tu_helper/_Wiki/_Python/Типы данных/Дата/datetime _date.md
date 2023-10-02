@@ -20,3 +20,6 @@ print(date_obj)
 # сегодня
     date_to = fields.Date(string='Date to',
                           default=fields.Date.today())
+
+# дата от сегодняшней даты
+today_date = datetime.today().date()

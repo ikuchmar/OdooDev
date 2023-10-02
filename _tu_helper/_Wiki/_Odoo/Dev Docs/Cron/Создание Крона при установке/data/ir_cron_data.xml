@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<odoo noupdate="0">
+
+    <record id="cron_update_ordering_fields" model="ir.cron">
+        <field name="name">Daily update Prices and ordering fields</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="state">code</field>
+        <field name="code">
+model.search([('is_published', '=', True)])._compute_today_price()
+env['sale.order'].cron_check_today_price_order_draft_action()
+        </field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="nextcall" eval="(DateTime.now() + relativedelta(day=1)).strftime('%Y-%m-%d 04:00:00')"/>
+        <field name="numbercall">-1</field>
+    </record>
+
+    <data noupdate="1">
+
+        <record id="cron_clear_favorite_categories" model="ir.cron">
+            <field name="name">Clear Favorite Category</field>
+            <field name="model_id" ref="mo_openapi_catalog.model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model.clear_favorite_categories()</field>
+            <field name="active" eval="False"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="nextcall" eval="(DateTime.now().replace(day=1) + relativedelta(months=1)).strftime('%Y-%m-%d 03:00:00')"/>
+            <field name="numbercall">-1</field>
+        </record>
+
+    </data>
+
+    <data noupdate="1">
+        <record id="cron_check_new_arrivals" model="ir.cron">
+            <field name="name">Check new arrivals product</field>
+            <field name="model_id" ref="mo_openapi_catalog.model_product_template"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_check_new_arrivals_action()</field>
+            <field name="active" eval="False"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now() + relativedelta(day=1)).strftime('%Y-%m-%d 03:00:00')"/>
+            <field name="numbercall">-1</field>
+        </record>
+    </data>
+</odoo>
