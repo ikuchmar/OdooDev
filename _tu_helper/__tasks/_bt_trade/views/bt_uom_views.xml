@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_uom_view_tree">
+        <field name="name">bt.uom.view.tree</field>
+        <field name="model">bt.uom</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_uom_view_form">
+        <field name="name">bt.uom.view.form</field>
+        <field name="model">bt.uom</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" string="Name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

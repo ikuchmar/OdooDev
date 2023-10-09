@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="is_trade_sales_order_line_form" model="ir.ui.view">
+		<field name="name">is.trade.sales.order.line.form</field>
+		<field name="model">is.trade.sales.order.line</field>
+		<field name="arch" type="xml">
+			<form>
+				<group>
+					<field name="product_id" string="Product_id"/>
+					<field name="quantity" string="Quantity"/>
+					<field name="uom_id" string="uom"/>
+					<field name="price" string="Price"/>
+					<field name="amount" string="Amount"/>
+					<field name="coef_uom" string="UOM Coefficient"/>
+					<field name="quantity_basic_uom" string="Basic uom quantity"/>
+				</group>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_trade_sales_order_line_tree" model="ir.ui.view">
+		<field name="name">is.trade.sales.order.line.tree</field>
+		<field name="model">is.trade.sales.order.line</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="product_id" string="Product_id"/>
+				<field name="quantity" string="Quantity"/>
+				<field name="uom_id" string="uom"/>
+				<field name="price" string="Price"/>
+				<field name="amount" string="Amount"/>
+				<field name="coef_uom" string="UOM Coefficient"/>
+				<field name="quantity_basic_uom" string="Basic uom quantity"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="so_view_pivot" model="ir.ui.view">
+		<field name="name">sale_order_pivot</field>
+		<field name="model">is.trade.sales.order.line</field>
+		<field name="arch" type="xml">
+			<pivot string="Sales Report">
+				<field name="sales_order_id" type="row"/>
+				<field name="client_id" type="row"/>
+				<field name="product_id" type="row"/>
+			</pivot>
+		</field>
+	</record>
+
+	<record id="action_is_trade_sales_order_line" model="ir.actions.act_window">
+		<field name="name">Sales_order_line</field>
+		<field name="res_model">is.trade.sales.order.line</field>
+		<field name="view_mode">tree,form,pivot</field>
+	</record>
+
+	<menuitem id="menu_is_trade_sol"
+			  parent="menu_orders"
+			  name="Sales order line"
+			  action="action_is_trade_sales_order_line"
+			  sequence="10"/>
+
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_po_so_lines_wizard_form">
+        <field name="name">bt.po.so.lines.wizard.form</field>
+        <field name="model">bt.po.so.lines.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="product_id" string="Product"/>
+                        <field name="so_id" string="SO"/>
+                        <field name="so_line_id" string="SO line"/>
+                        <field name="from_date" string="From date"/>
+                        <field name="to_date" string="To date"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_create"
+                            string="Create"
+                            type="object"
+                            icon="fa-plus"
+                            class="btn-primary"/>
+                    <button special="cancel" class="oe_link" string="Close"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="bt_po_so_lines_wizard_action">
+        <field name="name">Create PO/SO</field>
+        <field name="res_model">bt.po.so.lines.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="_bt_trade.model_bt_po_line_so_line"/>
+        <field name="binding_view_types">list,form,pivot</field>
+        <field name="binding_type">action</field>
+    </record>
+
+    <menuitem
+            id="bt_po_so_lines_wizard"
+            parent="bt_orders_menu"
+            name="PO/SO wizard"
+            action="bt_po_so_lines_wizard_action"
+            sequence="5"
+    />
+</odoo>

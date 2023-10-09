@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_purchase_line_view_tree">
+        <field name="name">bt.purchase.line.view.tree</field>
+        <field name="model">bt.purchase.order.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id" string="Product"/>
+                <field name="quantity" string="Quantity"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_purchase_line_view_form">
+        <field name="name">bt.purchase.line.view.form</field>
+        <field name="model">bt.purchase.order.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="product_id" string="Product"/>
+                        <field name="quantity" string="Quantity"/>
+                        <field name="purchase_order_id" string="Purchase order"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_purchase_line_view_pivot">
+        <field name="name">bt.purchase.line.view.pivot</field>
+        <field name="model">bt.purchase.order.line</field>
+        <field name="type">pivot</field>
+        <field name="arch" type="xml">
+            <pivot string="Purchase report">
+                <field name="supplier_id" type="row"/>
+                <field name="purchase_order_id" type="row"/>
+                <field name="product_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+</odoo>

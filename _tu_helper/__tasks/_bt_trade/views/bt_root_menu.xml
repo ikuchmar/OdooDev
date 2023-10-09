@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+            id="bt_root_menu"
+            web_icon="_bt_trade,../static/img/icons/bt_icon.png"
+            name="Buy and Sell"
+            sequence="1"
+    />
+
+    <menuitem
+            id="bt_catalog_menu"
+            name="Catalogs"
+            parent="bt_root_menu"
+            sequence="1"
+    />
+
+    <menuitem
+            id="bt_orders_menu"
+            name="Orders"
+            parent="bt_root_menu"
+            sequence="2"
+    />
+
+    <menuitem
+            id="bt_moves_menu"
+            name="Moves"
+            parent="bt_root_menu"
+            sequence="3"
+    />
+
+    <menuitem
+            id="bt_warehouse_main_menu"
+            name="Warehouse"
+            parent="bt_root_menu"
+            sequence="4"
+    />
+
+</odoo>

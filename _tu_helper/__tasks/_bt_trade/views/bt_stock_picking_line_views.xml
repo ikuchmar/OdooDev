@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_stock_picking_line_view_tree">
+        <field name="name">bt.stock.picking.line.view.tree</field>
+        <field name="model">bt.stock.picking.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id" string="Product"/>
+                <field name="qty" string="Quantity"/>
+                <field name="uom_id" string="Uom"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_stock_picking_line_view_form">
+        <field name="name">bt.stock.picking.line.view.form</field>
+        <field name="model">bt.stock.picking.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="product_id" string="Product"/>
+                        <field name="qty" string="Quantity"/>
+                        <field name="uom_id" string="Uom"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_is_line_view_tree">
+        <field name="name">bt.is.line.view.tree</field>
+        <field name="model">bt.is.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id" string="Product"/>
+                <field name="qty" string="Quantity"/>
+                <field name="qty_basic_uom" string="Basic uom qty"/>
+                <field name="uom_id" string="Uom"/>
+                <field name="price" string="Price"/>
+                <field name="amount" string="Amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_is_line_view_form">
+        <field name="name">bt.is.line.view.form</field>
+        <field name="model">bt.is.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="product_id" string="Product"/>
+                        <field name="qty" string="Quantity"/>
+                        <field name="product_basic_uom_id" string="Basic uom"/>
+                        <field name="coeff_uom" string="Coefficient"/>
+                        <field name="qty_basic_uom" string="Basic uom qty"/>
+                        <field name="uom_id" string="Uom"/>
+                        <field name="price" string="Price"/>
+                        <field name="amount" string="Amount"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

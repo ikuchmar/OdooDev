@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="is_account_cor_line_views_form" model="ir.ui.view">
+		<field name="name">is.account.cor.line.views.form</field>
+		<field name="model">is.account.cor.line</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="account_account_id"/>
+						<field name="cor_account_id"/>
+						<field name="amount"/>
+						<field name="am_line"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_account_cor_line_views_tree" model="ir.ui.view">
+		<field name="name">is.account.cor.line.views.tree</field>
+		<field name="model">is.account.cor.line</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="account_account_id"/>
+				<field name="cor_account_id"/>
+				<field name="amount"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="is_account_cor_line_views_pivot" model="ir.ui.view">
+		<field name="name">is.account.cor.line.views.pivot</field>
+		<field name="model">is.account.cor.line</field>
+		<field name="type">pivot</field>
+		<field name="arch" type="xml">
+			<pivot>
+				<field name="account_account_id" type="row"/>
+				<field name="cor_account_id" type="row"/>
+				<field name="amount" type="column"/>
+			</pivot>
+		</field>
+	</record>
+
+	<record id="action_is_account_cor_line" model="ir.actions.act_window">
+		<field name="name">Account cor lines</field>
+		<field name="res_model">is.account.cor.line</field>
+		<field name="view_mode">tree,form,pivot</field>
+		<field name="view_id" ref="is_account_cor_line_views_tree"/>
+	</record>
+
+	<menuitem id="menu_is_account_cor_line"
+			  parent="menu_moves"
+			  name="Account cor line"
+			  action="action_is_account_cor_line"
+			  sequence="10"/>
+</odoo>

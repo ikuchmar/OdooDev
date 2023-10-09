@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<template id="print_is_customer_invoice">
+		<t t-call="web.basic_layout">
+			<t t-foreach="docs" t-as="o">
+				<div class="page" style="page-break-after:always;">
+					<link rel="stylesheet" type="text/css"
+						  href="/_is_trade/static/src/css/is_trade_purchase_order_report_style.css"/>
+					<table class="main">
+						<thead>
+							<tr class="head_h">
+								<td colspan="36">
+									<span>Customer Invoice №</span>
+									<span t-field="o.name"/>
+									<span>from</span>
+									<span t-field="o.date"/>
+								</td>
+							</tr>
+							<tr></tr>
+							<tr></tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="6">
+									<span>Customer:</span>
+								</td>
+								<td colspan="5">
+									<span t-field="o.customer"/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="6">
+									<span>Sales order №:</span>
+								</td>
+								<td colspan="5">
+									<span t-field="o.sales_order_id"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="main">
+						<thead>
+							<tr class="theader">
+								<td colspan="2" class="tdata">
+									<span>№</span>
+								</td>
+								<td colspan="4" class="tdata">
+									<span>Product</span>
+								</td>
+								<td colspan="7" class="tdata">
+									<span>Q-ty</span>
+								</td>
+								<td colspan="7" class="tdata">
+									<span>uom</span>
+								</td>
+								<td colspan="7" class="tdata">
+									<span>Price</span>
+								</td>
+								<td colspan="7" class="tdata">
+									<span>Amount</span>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<t t-foreach="o.line_ids" t-as="line">
+								<tr>
+									<td colspan="2" class="tdata">
+										<span t-esc="line_index + 1"/>
+									</td>
+									<td colspan="4" class="tdata">
+										<span t-field="line.product_id"/>
+									</td>
+									<td colspan="7" class="tdata right">
+										<span t-field="line.quantity"/>
+									</td>
+									<td colspan="7" class="tdata right">
+										<span t-field="line.uom_id"/>
+									</td>
+									<td colspan="7" class="tdata right">
+										<span t-field="line.price"/>
+									</td>
+									<td colspan="7" class="tdata right">
+										<span t-field="line.amount"/>
+									</td>
+								</tr>
+							</t>
+						</tbody>
+					</table>
+					<td colspan="6">
+						<span>Total amount:</span>
+					</td>
+					<td colspan="5">
+						<span t-field="o.total_amount"/>
+					</td>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>

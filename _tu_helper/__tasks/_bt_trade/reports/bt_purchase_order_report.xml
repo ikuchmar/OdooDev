@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <record model="report.paperformat" id="bt_purchase_report_paperformat">
+        <field name="name">Bt purchase report paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">1</field>
+        <field name="margin_left">1</field>
+        <field name="margin_right">1</field>
+        <field name="header_line" eval="False"/>
+        <field name="dpi">90</field>
+    </record>
+
+    <report
+            id="bt_purchase_order_report"
+            string="Purchase Order Report"
+            model="bt.purchase.order"
+            report_type="qweb-pdf"
+            file="_bt_trade.bt_purchase_order_report_template"
+            name="_bt_trade.bt_purchase_order_report_template"
+            paperformat="bt_purchase_report_paperformat"
+            print_report_name="'Report for purchase order %s' % (object.name).replace('/', '')"
+    />
+
+    <report
+            id="bt_purchase_order_report_html"
+            string="Purchase Order Report HTML"
+            model="bt.purchase.order"
+            report_type="qweb-html"
+            file="_bt_trade.bt_purchase_order_report_template"
+            name="_bt_trade.bt_purchase_order_report_template"
+            paperformat="bt_purchase_report_paperformat"
+            print_report_name="'Report for purchase order %s' % (object.name).replace('/', '')"
+    />
+</odoo>

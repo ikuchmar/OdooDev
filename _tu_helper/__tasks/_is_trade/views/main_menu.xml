@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<menuitem
+		id="menu_main"
+		web_icon="_is_trade,static/description/icon.png"
+		name="IS Trade"
+		sequence="1"/>
+
+	<menuitem id="menu_catalog"
+			  parent="menu_main"
+			  name="Catalogs"
+			  sequence="1"/>
+
+	<menuitem id="menu_orders"
+			  parent="menu_main"
+			  name="Orders"
+			  sequence="2"/>
+
+	<menuitem id="menu_moves"
+			  parent="menu_main"
+			  name="Account moves"
+			  sequence="3"/>
+</odoo>

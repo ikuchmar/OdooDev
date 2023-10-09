@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_partner_view_tree">
+        <field name="name">bt.partner.view.tree</field>
+        <field name="model">bt.partner</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_partner_view_form">
+        <field name="name">bt.partner.view.form</field>
+        <field name="model">bt.partner</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" string="Name"/>
+                        <field name="tags_ids" string="Tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        <field name="group_id" string="Group"/>
+                        <field name="parent_id" string="Parent"/>
+                        <notebook>
+                            <page string="Subordinates">
+                                <field name="child_ids" nolabel="1">
+                                    <kanban>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click">
+                                                    <field name="name"/>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_partner_view_kanban">
+        <field name="name">bt.partner.view.kanban</field>
+        <field name="model">bt.partner</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <field name="name"/>
+                            <field name="tags_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_partner_view_search">
+        <field name="name">bt_partner_view_search</field>
+        <field name="model">bt.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="group_id"/>
+                <filter name="group_id_filter" string="Group" context="{'group_by':'group_id'}"/>
+            </search>
+        </field>
+    </record>
+</odoo>

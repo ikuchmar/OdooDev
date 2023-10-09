@@ -1,0 +1,35 @@
+.main-table {
+    width: 100%;
+    table-layout: fixed;
+    font-size: 20px;
+}
+
+.header {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.table-header {
+    background-color: lightgray;
+    text-align: center;
+    border: 1px solid black;
+    font-weight: bold;
+}
+
+.index-col {
+    border: 1px solid black;
+    text-align: center;
+}
+
+.col-number {
+    border: 1px solid black;
+    text-align: right;
+}
+
+.col {
+    border: 1px solid black;
+}
+
+.total-amount {
+    font-weight: bold;
+}

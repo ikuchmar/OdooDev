@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_warehouse_view_tree">
+        <field name="name">bt.warehouse.view.tree</field>
+        <field name="model">bt.warehouse</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name" string="Name"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

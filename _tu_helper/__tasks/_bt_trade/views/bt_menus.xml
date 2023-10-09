@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.actions.act_window" id="bt_partner_action">
+        <field name="res_model">bt.partner</field>
+        <field name="name">Partner</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_id" ref="bt_partner_view_tree"/>
+        <field name="context">{'search_default_group_id_filter': 1}</field>
+    </record>
+
+    <menuitem
+            id="bt_partner_menu"
+            parent="bt_catalog_menu"
+            name="Partner"
+            action="bt_partner_action"
+            sequence="1"
+    />
+
+    <record model="ir.actions.act_window" id="bt_product_action">
+        <field name="res_model">bt.product</field>
+        <field name="name">Product</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_id" ref="bt_product_view_tree"/>
+        <field name="context">{'search_default_category_id_filter': 1}</field>
+    </record>
+
+    <menuitem
+            id="bt_product_menu"
+            parent="bt_catalog_menu"
+            name="Product"
+            action="bt_product_action"
+            sequence="3"
+    />
+
+    <record model="ir.actions.act_window" id="bt_uom_action">
+        <field name="res_model">bt.uom</field>
+        <field name="name">Trade uom</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_uom_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_uom_menu"
+            parent="bt_catalog_menu"
+            name="Uom"
+            action="bt_uom_action"
+            sequence="5"
+    />
+
+    <record model="ir.actions.act_window" id="bt_purchase_action">
+        <field name="res_model">bt.purchase.order</field>
+        <field name="name">Purchase Order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_purchase_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_purchase_menu"
+            name="Purchase order"
+            parent="bt_orders_menu"
+            action="bt_purchase_action"
+            sequence="2"
+    />
+
+    <record model="ir.actions.act_window" id="bt_sale_action">
+        <field name="res_model">bt.sale.order</field>
+        <field name="name">Sale Order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_sale_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_sale_menu"
+            name="Sale order"
+            parent="bt_orders_menu"
+            action="bt_sale_action"
+            sequence="1"
+    />
+
+    <record model="ir.actions.act_window" id="bt_purchase_line_action">
+        <field name="res_model">bt.purchase.order.line</field>
+        <field name="name">Purchase order line</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="view_id" ref="bt_purchase_line_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_purchase_line_menu"
+            name="Purchase order line"
+            parent="bt_orders_menu"
+            action="bt_purchase_line_action"
+            sequence="4"
+    />
+
+    <record model="ir.actions.act_window" id="bt_sale_line_action">
+        <field name="res_model">bt.sale.order.line</field>
+        <field name="name">Sale order line</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="view_id" ref="bt_sale_line_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_sale_line_menu"
+            name="Sale order line"
+            parent="bt_orders_menu"
+            action="bt_sale_line_action"
+            sequence="3"
+    />
+
+    <record model="ir.actions.act_window" id="bt_tags_action">
+        <field name="name">Tags</field>
+        <field name="res_model">bt.tags</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_tags_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_tags_menu"
+            name="Tags"
+            parent="bt_catalog_menu"
+            action="bt_tags_action"
+            sequence="6"
+    />
+
+    <record model="ir.actions.act_window" id="bt_partner_group_action">
+        <field name="name">Partner groups</field>
+        <field name="res_model">bt.partner.group</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_partner_group_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_partner_group_menu"
+            name="Partner groups"
+            parent="bt_catalog_menu"
+            action="bt_partner_group_action"
+            sequence="2"
+    />
+
+    <record model="ir.actions.act_window" id="bt_product_category_action">
+        <field name="name">Product category</field>
+        <field name="res_model">bt.product.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_product_category_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_product_category_menu"
+            name="Product category"
+            parent="bt_catalog_menu"
+            action="bt_product_category_action"
+            sequence="4"
+    />
+
+    <record model="ir.actions.act_window" id="bt_po_line_so_line_action">
+        <field name="name">PO SO lines</field>
+        <field name="res_model">bt.po.line.so.line</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="view_id" ref="bt_po_line_so_line_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_po_so_line_menu"
+            name="PO/SO lines"
+            parent="bt_orders_menu"
+            action="bt_po_line_so_line_action"
+            sequence="4"
+    />
+
+    <record model="ir.actions.act_window" id="bt_payment_customer_action">
+        <field name="name">Payment customer</field>
+        <field name="res_model">bt.payment.customer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_payment_customer_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_payment_customer_menu"
+            name="Payment customer"
+            parent="bt_orders_menu"
+            action="bt_payment_customer_action"
+            sequence="5"
+    />
+
+    <record model="ir.actions.act_window" id="bt_payment_supplier_action">
+        <field name="name">Payment supplier</field>
+        <field name="res_model">bt.payment.supplier</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_payment_supplier_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_payment_supplier_menu"
+            name="Payment supplier"
+            parent="bt_orders_menu"
+            action="bt_payment_supplier_action"
+            sequence="5"
+    />
+
+    <record model="ir.actions.act_window" id="bt_customer_invoice_action">
+        <field name="name">Customer invoice</field>
+        <field name="res_model">bt.customer.invoice</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_customer_invoice_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_customer_invoice_menu"
+            name="Customer invoice"
+            parent="bt_orders_menu"
+            action="bt_customer_invoice_action"
+    />
+
+    <record model="ir.actions.act_window" id="bt_account_cor_line_action">
+        <field name="name">Cor lines</field>
+        <field name="res_model">bt.account.cor.line</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="view_id" ref="bt_account_cor_line_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_account_cor_line_menu"
+            name="Cor lines"
+            parent="bt_moves_menu"
+            action="bt_account_cor_line_action"
+    />
+
+    <record model="ir.actions.act_window" id="bt_warehouse_action">
+        <field name="name">Warehouses</field>
+        <field name="res_model">bt.warehouse</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="bt_warehouse_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_warehouse_menu"
+            name="Warehouses"
+            parent="bt_warehouse_main_menu"
+            action="bt_warehouse_action"
+    />
+
+    <record model="ir.actions.act_window" id="bt_stock_picking_action">
+        <field name="name">Stock picking</field>
+        <field name="res_model">bt.stock.picking</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_stock_picking_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_stock_picking_menu"
+            name="Stock picking"
+            parent="bt_warehouse_main_menu"
+            action="bt_stock_picking_action"
+    />
+
+    <record model="ir.actions.act_window" id="bt_stock_move_line_action">
+        <field name="name">Stock move line</field>
+        <field name="res_model">bt.stock.move.line</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="view_id" ref="bt_stock_move_line_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_stock_move_line_menu"
+            name="Stock move lines"
+            parent="bt_warehouse_main_menu"
+            action="bt_stock_move_line_action"
+    />
+
+    <record model="ir.actions.act_window" id="bt_ci_refund_action">
+        <field name="name">Customer invoice refund</field>
+        <field name="res_model">bt.customer.invoice.refund</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_ci_refund_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_ci_refund_menu"
+            parent="bt_warehouse_main_menu"
+            name="Ci refund"
+            action="bt_ci_refund_action"
+    />
+
+    <record model="ir.actions.act_window" id="bt_is_refund_action">
+        <field name="name">In stock refund</field>
+        <field name="res_model">bt.in.stock.refund</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_is_refund_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_is_refund_menu"
+            parent="bt_warehouse_main_menu"
+            name="Is refund"
+            action="bt_is_refund_action"
+    />
+
+    <record model="ir.actions.act_window" id="bt_inventory_action">
+        <field name="name">Inventory</field>
+        <field name="res_model">bt.inventory</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="bt_inventory_view_tree"/>
+    </record>
+
+    <menuitem
+            id="bt_inventory_menu"
+            parent="bt_warehouse_main_menu"
+            name="Inventory"
+            action="bt_inventory_action"
+    />
+</odoo>

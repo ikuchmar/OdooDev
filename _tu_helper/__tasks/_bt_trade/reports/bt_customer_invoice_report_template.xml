@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="bt_customer_invoice_report_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="page-break-after:always;">
+                    <link rel="stylesheet" type="text/css" href="/turbo.ua/_bt_trade_bt_trade/static/src/css/customer_invoice_style.css"/>
+                    <table class="main-table">
+                        <thead>
+                            <tr>
+                                <td class="header" colspan="24">
+                                    <span>Customer invoice №</span><span t-field="o.name"></span>
+                                    <span> from </span><span t-field="o.date"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span>Client:</span>
+                                </td>
+                                <td colspan="22">
+                                    <span t-field="o.client_id"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span>Sale order:</span>
+                                </td>
+                                <td colspan="22">
+                                    <span t-field="o.sale_order_id"></span>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="table-header" colspan="1">
+                                   №
+                                </td>
+                                <td class="table-header" colspan="4">
+                                    Product
+                                </td>
+                                <td class="table-header" colspan="2">
+                                    Qty
+                                </td>
+                                <td class="table-header" colspan="1">
+                                    Uom
+                                </td>
+                                <td class="table-header" colspan="2">
+                                    Price
+                                </td>
+                                <td class="table-header" colspan="2">
+                                    Amount
+                                </td>
+                            </tr>
+                            <t t-foreach="o.line_ids" t-as="line">
+                                <tr>
+                                    <td class="index-col" colspan="1">
+                                        <span t-esc="line_index + 1"/>
+                                    </td>
+                                    <td class="col" colspan="4">
+                                        <span t-field="line.product_id"></span>
+                                    </td>
+                                    <td class="col-number" colspan="2">
+                                        <span t-field="line.qty_basic_uom"></span>
+                                    </td>
+                                    <td class="col" colspan="1">
+                                        <span t-field="line.uom_id"></span>
+                                    </td>
+                                    <td class="col-number" colspan="2">
+                                        <span t-field="line.price"></span>
+                                    </td>
+                                    <td class="col-number" colspan="2">
+                                        <span t-field="line.amount"></span>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr></tr>
+                            <tr>
+                                <td class="total-amount" colspan="2">
+                                    <span>Total amount:</span>
+                                </td>
+                                <td class="total-amount" colspan="22">
+                                    <span t-field="o.total_amount"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

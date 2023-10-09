@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_in_stock_view_tree">
+        <field name="name">bt.in.stock.view.tree</field>
+        <field name="model">bt.in.stock</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Name"/>
+                <field name="purchase_order_id" string="Purchase order"/>
+                <field name="date" string="Date"/>
+                <field name="total_amount" string="Total amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_in_stock_view_form">
+        <field name="name">bt.in.stock.view.form</field>
+        <field name="model">bt.in.stock</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="create_payment" string="Create payment" type="object"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box" style="text-align:left">
+                        <button name="get_payment_supplier" class="oe_stat_button" icon="fa-usd" type="object">
+                            <field name="payment_supplier_count" string="Payments" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" string="Name"/>
+                        <field name="date" string="Date"/>
+                        <field name="supplier_id" string="Supplier"/>
+                        <field name="warehouse_id" string="Warehouse" readonly="True"/>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="line_ids" nolabel="1" widget="one2many"/>
+                            <field name="total_amount" string="Total amount"/>
+                        </page>
+                        <page string="Stock move">
+                            <field name="stock_move_id" string="Stock move"/>
+                            <field name="stock_move_line_ids" nolabel="1" readonly="False"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

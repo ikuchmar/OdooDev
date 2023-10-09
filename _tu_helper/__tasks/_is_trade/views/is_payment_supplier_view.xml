@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="is_payment_supplier_view_tree" model="ir.ui.view">
+		<field name="name">is.payment.supplier.view.tree</field>
+		<field name="model">is.payment.supplier</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" string="Name"/>
+				<field name="partner" string="Partner"/>
+				<field name="instock_id" string="Instock"/>
+				<field name="total_amount" string="Total amount"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="is_payment_supplier_view_form" model="ir.ui.view">
+		<field name="name">is.payment.supplier.view.form</field>
+		<field name="model">is.payment.supplier</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="name" string="Name"/>
+						<field name="partner" string="Partner"/>
+						<field name="instock_id" string="Instock"/>
+						<field name="total_amount" string="Total amount"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_is_payment_supplier" model="ir.actions.act_window">
+		<field name="name">Payment Supplier</field>
+		<field name="res_model">is.payment.supplier</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">Enter the target</p>
+		</field>
+	</record>
+
+	<menuitem id="menu_is_payment_supplier"
+			  parent="menu_orders"
+			  name="Payment Supplier"
+			  action="action_is_payment_supplier"
+			  sequence="10"/>
+</odoo>

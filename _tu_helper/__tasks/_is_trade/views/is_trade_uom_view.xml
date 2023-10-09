@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="is_trade_uom_tree_view" model="ir.ui.view">
+		<field name="name">is.trade.uom.tree</field>
+		<field name="model">is.trade.uom</field>
+		<field name="arch" type="xml">
+			<tree string="Units of Measure">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="is_trade_uom_form_view" model="ir.ui.view">
+		<field name="name">is.trade.uom.form</field>
+		<field name="model">is.trade.uom</field>
+		<field name="arch" type="xml">
+			<form string="Units of Measure">
+				<sheet>
+					<group>
+						<field name="name"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_trade_uom_action" model="ir.actions.act_window">
+		<field name="name">Units of Measure</field>
+		<field name="view_mode">tree,form</field>
+		<field name="res_model">is.trade.uom</field>
+	</record>
+
+	    <menuitem id="menu_is_trade_uom"
+              parent="menu_catalog"
+              name="uom"
+              action="is_trade_uom_action"
+              sequence="10"/>
+</odoo>

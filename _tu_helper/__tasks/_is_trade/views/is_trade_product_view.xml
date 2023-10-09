@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="is_trade_product_form" model="ir.ui.view">
+		<field name="name">is.trade.product.form</field>
+		<field name="model">is.trade.product</field>
+		<field name="arch" type="xml">
+			<form>
+				<group>
+					<group>
+						<field name="product_img" class="oe_avatar" widget="image"/>
+					</group>
+					<group>
+						<field name="name"/>
+						<field name="basic_uom_id" string="Basic UOM"/>
+						<field name="category_id"/>
+						<field name="tags_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+						<field name="parent_id"/>
+					</group>
+				</group>
+				<sheet>
+					<field name="child_ids" mode="kanban"/>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_trade_product_tree" model="ir.ui.view">
+		<field name="name">is.trade.product.tree</field>
+		<field name="model">is.trade.product</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" string="Product Name"/>
+				<field name="basic_uom_id" string="Basic UOM"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="is_product_search_view" model="ir.ui.view">
+		<field name="name">is.product.search.view</field>
+		<field name="model">is.trade.product</field>
+		<field name="arch" type="xml">
+			<search>
+				<group string="Group By">
+					<filter name="category_id"
+							string="Category"
+							context="{'group_by': 'category_id'}"
+					/>
+					<filter name="parent_id"
+							string="Parent"
+							context="{'group_by': 'parent_id'}"
+					/>
+				</group>
+			</search>
+		</field>
+	</record>
+
+	<record id="is_trade_product_kanban" model="ir.ui.view">
+		<field name="name">is.trade.product.kanban</field>
+		<field name="model">is.trade.product</field>
+		<field name="arch" type="xml">
+			<kanban class="o_kanban_mobile">
+				<field name="id"/>
+				<field name="product_img"/>
+				<templates>
+					<t t-name="kanban-box">
+						<div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+							<div class="o_kanban_image d-none d-md-block"
+								 t-attf-style="background-image:url('#{kanban_image('is.trade.product', 'product_img', record.id.raw_value)}')">
+							</div>
+							<div>
+								<field name="name"/>
+								<field name="tags_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+							</div>
+							<field name="tags_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+						</div>
+					</t>
+				</templates>
+			</kanban>
+		</field>
+	</record>
+
+	<record id="action_is_trade_product" model="ir.actions.act_window">
+		<field name="name">Product</field>
+		<field name="res_model">is.trade.product</field>
+		<field name="view_mode">tree,form,kanban</field>
+	</record>
+
+
+	<menuitem id="menu_is_trade_product"
+			  parent="menu_catalog"
+			  name="Product"
+			  action="action_is_trade_product"
+			  sequence="10"/>
+
+</odoo>

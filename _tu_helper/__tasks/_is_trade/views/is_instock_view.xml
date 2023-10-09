@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="is_in_stock_form" model="ir.ui.view">
+		<field name="name">is.in.stock.form</field>
+		<field name="model">is.instock</field>
+		<field name="arch" type="xml">
+			<form>
+				<header>
+					<button name="create_payment_supplier" string="Create Payment Supplier"
+							type="object" class="btn-primary"/>
+					<field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" name="action_payment_supplier_count" type="object"
+								icon="fa-money" attrs="{'invisible': [('payment_supplier_count', '=', 0)]}">
+							<field name="payment_supplier_count" widget="statinfo" string="Payment Supplier"/>
+						</button>
+					</div>
+					<group>
+						<group>
+							<field name="name" string="Name"/>
+						</group>
+						<group>
+							<field name="date" string="Date"/>
+						</group>
+					</group>
+					<group>
+						<field name="partner" string="Partner"/>
+					</group>
+					<group>
+						<field name="total_amount" string="Total Amount"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_in_stock_tree" model="ir.ui.view">
+		<field name="name">is.in.stock.tree</field>
+		<field name="model">is.instock</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" string="Name"/>
+				<field name="date" string="Date"/>
+				<field name="partner" string="Partner"/>
+				<field name="total_amount" string="Total Amount"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_is_in_stock" model="ir.actions.act_window">
+		<field name="name">In Stock</field>
+		<field name="res_model">is.instock</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">Enter the target</p>
+		</field>
+	</record>
+
+	<menuitem id="menu_is_in_stock"
+			  parent="menu_orders"
+			  name="In Stock"
+			  action="action_is_in_stock"
+			  sequence="10"/>
+
+</odoo>

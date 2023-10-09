@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <template id="bt_purchase_order_report_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <link rel="stylesheet" type="text/css" href="/turbo.ua/_bt_trade_bt_trade/static/src/css/purchase_report_style.css"/>
+                    <table class="main-table">
+                        <thead>
+                            <tr>
+                                <td class="header" colspan="24">
+                                    <span>Purchase order №</span><span t-field="o.name"></span>
+                                    <span> from </span><span t-field="o.date"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span>Supplier:</span>
+                                </td>
+                                <td colspan="22">
+                                    <span t-field="o.supplier_id"></span>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="table-header" colspan="1">
+                                    №
+                                </td>
+                                <td class="table-header" colspan="4">
+                                    Product
+                                </td>
+                                <td class="table-header" colspan="2">
+                                    Q-ty
+                                </td>
+                            </tr>
+                            <t t-foreach="o.line_ids" t-as="line_id">
+                                <tr>
+                                    <td class="index_col" colspan="1">
+                                        <span t-esc="line_id_index + 1"/>
+                                    </td>
+                                    <td class="col" colspan="4">
+                                        <span t-field="line_id.product_id"></span>
+                                    </td>
+                                    <td class="qty_col" colspan="2">
+                                        <span t-field="line_id.quantity"></span>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

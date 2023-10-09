@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_tags_view_tree">
+        <field name="name">bt.tags.view.tree</field>
+        <field name="model">bt.tags</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Name"/>
+                <field name="color" string="Color"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="bt_tags_view_form">
+        <field name="name">bt.tags.view.form</field>
+        <field name="model">bt.tags</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" string="Name"/>
+                        <field name="color" string="Color index"/>
+                        <field name="partner_ids" widget="many2many" string="Partners"/>
+                        <field name="product_ids" widget="many2many" string="Products"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

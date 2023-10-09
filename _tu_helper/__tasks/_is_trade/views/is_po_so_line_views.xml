@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<record id="is_po_so_lines_view_tree" model="ir.ui.view">
+		<field name="name">is.po.so.lines.view.tree</field>
+		<field name="model">is.po.so.lines</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="po_id" string="Purchase Order"/>
+				<field name="po_line_id" string="Purchase Order Line"/>
+				<field name="po_quantity" string="PO quantity"/>
+				<field name="po_product_id" string="PO product"/>
+				<field name="so_id" string="Sales Order"/>
+				<field name="so_quantity" string="SO quantity"/>
+				<field name="so_line_id" string="Sales Order Line"/>
+				<field name="so_product_id" string="SO product"/>
+				<field name="quantity" string="Quantity"/>
+				<field name="po_amount" string="Cost amount"/>
+				<field name="so_amount" string="Revenue amount"/>
+				<field name="profit" string="Profit"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="is_po_so_lines_view_form" model="ir.ui.view">
+		<field name="name">is.po.so.lines.view.form</field>
+		<field name="model">is.po.so.lines</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form>
+				<group>
+					<group>
+						<field name="po_id" string="Purchase Order"/>
+						<field name="po_line_id" string="Purchase Order Line"/>
+						<field name="po_quantity" string="PO quantity"/>
+						<field name="po_product_id" string="PO product"/>
+						<field name="po_amount" string="Cost amount"/>
+					</group>
+					<group>
+						<field name="so_id" string="Sales Order"/>
+						<field name="so_line_id" string="Sales Order Line"/>
+						<field name="so_quantity" string="SO quantity"/>
+						<field name="so_product_id" string="SO product"/>
+						<field name="so_amount" string="Revenue amount"/>
+					</group>
+					<group>
+						<field name="quantity" string="Quantity"/>
+						<field name="profit" string="Profit"/>
+					</group>
+				</group>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_po_so_lines_view_pivot" model="ir.ui.view">
+		<field name="name">is.po.so.lines.view.pivot</field>
+		<field name="model">is.po.so.lines</field>
+		<field name="type">pivot</field>
+		<field name="arch" type="xml">
+			<pivot string="PO-SO Report">
+				<field name="so_id" type="row"/>
+				<field name="quantity" type="measure"/>
+				<field name="po_amount" type="measure"/>
+				<field name="so_amount" type="measure"/>
+				<field name="profit" type="measure"/>
+			</pivot>
+		</field>
+	</record>
+
+	<record id="action_is_po_so_lines" model="ir.actions.act_window">
+		<field name="name">Po So Lines</field>
+		<field name="res_model">is.po.so.lines</field>
+		<field name="view_mode">tree,form,pivot</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">Enter the target</p>
+		</field>
+	</record>
+
+	<menuitem id="menu_po_so_lines"
+			  parent="menu_orders"
+			  name="Po So Lines"
+			  action="action_is_po_so_lines"
+			  sequence="10"/>
+</odoo>

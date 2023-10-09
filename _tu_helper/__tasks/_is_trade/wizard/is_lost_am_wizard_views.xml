@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record model="ir.ui.view" id="is_lost_am_wizard_form">
+		<field name="name">is.lost.am.wizard.form</field>
+		<field name="model">is.lost.am.wizard</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form>
+				<header>
+					<button name="find_lost_am"
+							string="Find lost moves"
+							type="object"
+							icon="fa-binoculars"
+							class="btn-primary"/>
+					<button name="delete_lost_moves"
+							string="Remove AM without CI"
+							type="object"
+							icon="fa-ban"
+							class="btn-primary"/>
+					<button name="find_lost_aml"
+							string="Find lost move lines"
+							type="object"
+							icon="fa-search"
+							class="btn-primary"/>
+					<button name="delete_lost_move_lines"
+							string="Remove AML without AM"
+							type="object"
+							icon="fa-trash"
+							class="btn-primary"/>
+				</header>
+				<sheet>
+					<notebook>
+						<page string="AM without CI" name="lost_am">
+							<field name="am_without_ci_ids" widget="one2many" nolabel="1"/>
+						</page>
+						<page string="AML without AM" name="lost_am">
+							<field name="aml_without_am_ids" widget="one2many" nolabel="1"/>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_lost_am_wizard_action" model="ir.actions.act_window">
+		<field name="name">Remove AM without CI</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">is.lost.am.wizard</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="is_lost_am_wizard_form"/>
+		<field name="context">{}</field>
+		<field name="target">new</field>
+	</record>
+</odoo>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="is_in_customer_invoice_form" model="ir.ui.view">
+		<field name="name">is.customer.invoice.form</field>
+		<field name="model">is.customer.invoice</field>
+		<field name="arch" type="xml">
+			<form>
+				<header>
+					<button name="create_payment_customer" string="Create Payment Customer"
+							type="object" class="btn-primary"/>
+					<button type="action" name="%(_is_trade.is_lost_am_wizard_action)d"
+							string="AM without CI" class="oe_highlight"/>
+					<field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" name="action_payment_customer_count" type="object"
+								icon="fa-money" attrs="{'invisible': [('payment_customer_count', '=', 0)]}">
+							<field name="payment_customer_count" widget="statinfo" string="Payment Customer"/>
+						</button>
+					</div>
+					<group>
+						<group>
+							<field name="name" string="Name"/>
+						</group>
+						<group>
+							<field name="date" string="Date"/>
+							<field name="total_amount" string="Total Amount"/>
+						</group>
+					</group>
+					<group>
+						<field name="customer" string="Customer"/>
+						<field name="sales_order_id" string="Sale order"/>
+						<field name="account_move_id" string="Account move"/>
+					</group>
+					<notebook>
+						<page string="CI Lines">
+							<field name="line_ids" widget="one2many"/>
+						</page>
+<!--						<page string="Account cor lines">-->
+<!--							<field name="account_cor_line_ids" nolabel="1" widget="many2many" readonly="True">-->
+<!--								<tree decoration-danger="amount &lt; 0">-->
+<!--									<field name="account_account_id" string="Account account" readonly="True"/>-->
+<!--									<field name="cor_account_id" string="Correspodence account"/>-->
+<!--									<field name="amount" string="Amount"/>-->
+<!--								</tree>-->
+<!--							</field>-->
+<!--						</page>-->
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_customer_invoice_tree" model="ir.ui.view">
+		<field name="name">is.customer.invoice.tree</field>
+		<field name="model">is.customer.invoice</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" string="Name"/>
+				<field name="date" string="Date"/>
+				<field name="customer" string="Customer"/>
+				<field name="sales_order_id" string="Sale order"/>
+				<field name="total_amount" string="Total Amount"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_is_customer_invoice" model="ir.actions.act_window">
+		<field name="name">Customer invoice</field>
+		<field name="res_model">is.customer.invoice</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">Enter the target</p>
+		</field>
+	</record>
+
+	<menuitem id="menu_is_customer_invoice"
+			  parent="menu_orders"
+			  name="Customer Invoice"
+			  action="action_is_customer_invoice"
+			  sequence="10"/>
+
+</odoo>

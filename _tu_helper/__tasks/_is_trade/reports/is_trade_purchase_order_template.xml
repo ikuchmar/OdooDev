@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<template id="print_is_trade_purchase_order">
+		<t t-call="web.basic_layout">
+			<t t-foreach="docs" t-as="o">
+				<div class="page" style="page-break-after:always;">
+					<link rel="stylesheet" type="text/css" href="/_is_trade/static/src/css/is_trade_purchase_order_report_style.css"/>
+					<table class="main">
+						<thead>
+							<tr class="head_h">
+								<td colspan="36">
+									<span>Purchase order №</span>
+									<span t-field="o.name"/>
+									<span> from </span>
+									<span t-field="o.date"/>
+								</td>
+							</tr>
+							<tr></tr>
+							<tr></tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="3">
+									<span>Vendor:</span>
+								</td>
+								<td colspan="5">
+									<span t-field="o.partner"/>
+								</td>
+							</tr>
+							<thead>
+								<tr class="theader">
+									<td colspan="2" class="tdata">
+										<span>№</span>
+									</td>
+									<td colspan="4" class="tdata">
+										<span>Product</span>
+									</td>
+									<td colspan="5" class="tdata">
+										<span>Q-ty</span>
+									</td>
+								</tr>
+							</thead>
+							<tbody>
+								<t t-foreach="o.line_ids" t-as="line">
+									<tr>
+										<td colspan="2" class="tdata">
+											<span t-esc="line_index + 1"/>
+										</td>
+										<td colspan="4" class="tdata">
+											<span t-field="line.product_id"/>
+										</td>
+										<td colspan="5" class="tdata right">
+											<span t-field="line.quantity"/>
+										</td>
+									</tr>
+								</t>
+							</tbody>
+						</tbody>
+					</table>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>

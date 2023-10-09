@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_inventory_view_tree">
+        <field name="name">bt.inventory.view.tree</field>
+        <field name="model">bt.inventory</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="warehouse_id" string="Warehouse"/>
+                <field name="date" string="Date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_inventory_view_form">
+        <field name="name">bt.inventory.view.form</field>
+        <field name="model">bt.inventory</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="make_inventory" string="Make inventory" type="object"/>
+                    <button name="cancel_inventory" string="Cancel inventory" type="object"/>
+                    <field name="state" widget="statusbar" readonly="True"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="warehouse_id" string="Warehouse"/>
+                        <field name="date" string="Date"/>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="line_ids" widget="one2many" string="Products">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Stock move">
+                            <field name="stock_move_id" string="Stock move" readonly="True"/>
+                            <field name="stock_move_line_ids" nolabel="1" widget="one2many"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

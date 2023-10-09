@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_lost_am_wizard_form">
+        <field name="name">bt.lost.am.wizard.form</field>
+        <field name="model">bt.lost.am.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="check_lost"
+                            string="Check lost moves"
+                            type="object"
+                            icon="fa-search"
+                            class="btn-primary"/>
+                    <button name="delete_lost_moves"
+                            string="Delete lost moves"
+                            type="object"
+                            icon="fa-trash"
+                            class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <span>Detected lost account moves</span>
+                        <field name="lost_move_ids" widget="one2many" nolabel="1"/>
+                    </group>
+                </sheet>
+<!--                <footer>-->
+<!--                    -->
+<!--                    &lt;!&ndash;<button special="cancel" class="oe_link" string="Close"/>&ndash;&gt;-->
+<!--                </footer>-->
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="bt_lost_am_wizard_action">
+        <field name="name">Delete lost moves</field>
+        <field name="res_model">bt.lost.am.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="_bt_trade.model_bt_customer_invoice"/>
+        <field name="binding_view_types">list,form,pivot</field>
+        <field name="binding_type">action</field>
+    </record>
+
+    <menuitem
+            id="bt_lost_am_wizard_menu"
+            parent="bt_root_menu"
+            name="Lost moves"
+            action="bt_lost_am_wizard_action"
+    />
+</odoo>

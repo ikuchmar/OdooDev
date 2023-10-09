@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_customer_invoice_view_tree">
+        <field name="name">bt.customer.invoice.view.tree</field>
+        <field name="model">bt.customer.invoice</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Name"/>
+                <field name="sale_order_id" string="Sale order"/>
+                <field name="date" string="Date"/>
+                <field name="total_amount" string="Total amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_customer_invoice_view_form">
+        <field name="name">bt.customer.invoice.view.form</field>
+        <field name="model">bt.customer.invoice</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="create_payment" string="Create payment" type="object"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box" style="text-align:left">
+                        <button name="get_payment_customer" class="oe_stat_button" icon="fa-usd" type="object">
+                            <field name="payment_customer_count" string="Payments" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" string="Name"/>
+                        <field name="date" string="Date"/>
+                        <field name="client_id" string="Client"/>
+                        <field name="warehouse_id" string="Warehouse" readonly="True"/>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="line_ids" nolabel="1" widget="one2many"/>
+                            <field name="total_amount" string="Total amount"/>
+                        </page>
+                        <page string="Account move">
+                            <field name="account_move_id" string="Account move" readonly="True"/>
+                            <field name="account_move_line_ids" nolabel="1" widget="one2many"/>
+                        </page>
+                        <page string="Cor lines">
+                            <field name="account_cor_line_ids" nolabel="1" widget="many2many" readonly="True">
+                                <tree>
+                                    <field name="account_id"/>
+                                    <field name="cor_account_id"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Stock move">
+                            <field name="stock_move_id" string="Stock move" readonly="True"/>
+                            <field name="stock_move_line_ids" nolabel="1" widget="one2many" readonly="False"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_customer_invoice_view_form_readonly">
+        <field name="name">bt.customer.invoice.view.form</field>
+        <field name="model">bt.customer.invoice</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div name="button_box" class="oe_button_box" style="text-align:left">
+                        <button name="get_payment_customer" class="oe_stat_button" icon="fa-usd" type="object">
+                            <field name="payment_customer_count" string="Payments" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" string="Name"/>
+                        <field name="date" string="Date"/>
+                        <field name="client_id" string="Client"/>
+                        <field name="warehouse_id" string="Warehouse" readonly="True"/>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="line_ids" nolabel="1" widget="one2many"/>
+                            <field name="total_amount" string="Total amount"/>
+                        </page>
+                        <page string="Account move">
+                            <field name="account_move_id" string="Account move" readonly="True"/>
+                            <field name="account_move_line_ids" nolabel="1" widget="one2many"/>
+                        </page>
+                        <page string="Cor lines">
+                            <field name="account_cor_line_ids" nolabel="1" widget="many2many" readonly="True">
+                                <tree>
+                                    <field name="account_id"/>
+                                    <field name="cor_account_id"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Stock move">
+                            <field name="stock_move_id" string="Stock move" readonly="True"/>
+                            <field name="stock_move_line_ids" nolabel="1" widget="one2many"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

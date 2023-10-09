@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="is_account_move_form" model="ir.ui.view">
+		<field name="name">is.account.move.form</field>
+		<field name="model">is.account.move</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="name" string="Name"/>
+<!--							<field name="customer_invoice" string="Customer invoice"/>-->
+						</group>
+						<group>
+							<field name="date" string="Date"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="AM Lines" name="am_lines">
+							<field name="account_move_line_ids" widget="one2many_list" readonly="1">
+								<tree decoration-danger="amount &lt;= 0">
+<!--								<tree editable="bottom" decoration-danger="amount &lt;= 0">-->
+									<field name="name" string="Name"/>
+									<field name="debet" string="Debet"/>
+									<field name="credit" string="Credit"/>
+									<field name="amount" string="Amount"/>
+								</tree>
+							</field>
+						</page>
+<!--						<page string="Cor Lines">-->
+<!--							<field name="cor_line_ids" widget="one2many_list">-->
+<!--								<tree decoration-danger="amount &lt; 0">-->
+<!--									<field name="account_account_id"/>-->
+<!--									<field name="cor_account_id"/>-->
+<!--									<field name="amount"/>-->
+<!--								</tree>-->
+<!--							</field>-->
+<!--						</page>-->
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_account_move_tree" model="ir.ui.view">
+		<field name="name">is.account.move.tree</field>
+		<field name="model">is.account.move</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" string="Name"/>
+<!--				<field name="customer_invoice" string="Customer invoice"/>-->
+				<field name="date" string="Date"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_is_account_move" model="ir.actions.act_window">
+		<field name="name">Account move</field>
+		<field name="res_model">is.account.move</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="menu_is_account_move"
+			  parent="menu_moves"
+			  name="Account move"
+			  action="action_is_account_move"
+			  sequence="10"/>
+
+</odoo>

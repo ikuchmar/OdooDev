@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data noupdate="1">
+		<record model="is.account.account" id="aa_281">
+			<field name="code">281</field>
+			<field name="name">Товары на складе</field>
+		</record>
+
+		<record model="is.account.account" id="aa_311">
+			<field name="code">311</field>
+			<field name="name">Деньги на расчётном счету</field>
+		</record>
+
+		<record model="is.account.account" id="aa_361">
+			<field name="code">361</field>
+			<field name="name">Взаиморасчёты с клиентами</field>
+		</record>
+
+		<record model="is.account.account" id="aa_631">
+			<field name="code">631</field>
+			<field name="name">Взаиморасчёты с поставщиками</field>
+		</record>
+
+		<record model="is.account.account" id="aa_702">
+			<field name="code">702</field>
+			<field name="name">Доход от продажи</field>
+		</record>
+
+		<record model="is.account.account" id="aa_902">
+			<field name="code">902</field>
+			<field name="name">Себестоимость продажи товара</field>
+		</record>
+
+		<record model="is.account.account" id="aa_6431">
+			<field name="code">6431</field>
+			<field name="name">НДС?</field>
+		</record>
+
+	</data>
+</odoo>

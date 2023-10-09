@@ -1,0 +1,26 @@
+.main{
+    width:100%;
+    border-collapse: collapse;
+    table-layout:fixed;
+    font-size:12pt;
+}
+.head_h {
+    color: blue;
+    font-size: 24px;
+    font-weight: bold;
+    text-align:center;
+}
+.theader {
+    height:36px;
+    text-align:center;
+    background-color:rgb(238,238,238);
+    font-size:14pt;
+    font-weight: bold;
+}
+.tdata{
+    border: 1px solid black;
+}
+
+.right{
+    text-align:right;
+}

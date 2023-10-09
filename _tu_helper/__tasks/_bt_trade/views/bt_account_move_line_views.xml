@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_account_move_line_view_form">
+        <field name="name">bt.account.move.line.view.form</field>
+        <field name="model">bt.account.move.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="account_move_id" string="Account move"/>
+                        <field name="debit" string="Debit"/>
+                        <field name="credit" string="Credit"/>
+                        <field name="amount" string="Amount"/>
+                        <field name="cor_account_line_ids" widget="one2many">
+                            <tree>
+                                <field name="account_id"/>
+                                <field name="cor_account_id"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_account_move_line_view_tree">
+        <field name="name">bt.account.move.line.view.tree</field>
+        <field name="model">bt.account.move.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="account_move_id" string="Account move"/>
+                <field name="debit" string="Debit"/>
+                <field name="credit" string="Credit"/>
+                <field name="amount" string="Amount"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

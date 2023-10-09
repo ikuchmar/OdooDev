@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="is_product_category_tree">
+		<field name="name">is.product.category.tree</field>
+		<field name="model">is.product.category</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="is_product_category_form" model="ir.ui.view">
+		<field name="name">is.product.category.form</field>
+		<field name="model">is.product.category</field>
+		<field name="arch" type="xml">
+			<form>
+				<group>
+					<field name="name"/>
+				</group>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_is_product_category" model="ir.actions.act_window">
+		<field name="name">Product</field>
+		<field name="res_model">is.product.category</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+
+	<menuitem id="menu_is_product_category"
+			  parent="menu_catalog"
+			  name="Product Category"
+			  action="action_is_product_category"
+			  sequence="10"/>
+
+</odoo>

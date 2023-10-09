@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="report.paperformat" id="bt_customer_invoice_paperformat">
+        <field name="name">Customer invoice report paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">1</field>
+        <field name="margin_left">1</field>
+        <field name="margin_right">1</field>
+        <field name="header_line" eval="False"/>
+        <field name="dpi">90</field>
+    </record>
+    <report
+        id="bt_customer_invoice_report_pdf"
+        string="Customer invoice report PDF"
+        model="bt.customer.invoice"
+        report_type="qweb-pdf"
+        file="_bt_trade.bt_customer_invoice_report_template"
+        name="_bt_trade.bt_customer_invoice_report_template"
+        paperformat="bt_customer_invoice_paperformat"
+        print_report_name="'Report for customer invoice %s' % (object.name).replace('/', '')"
+    />
+    <report
+        id="bt_customer_invoice_report_html"
+        string="Customer invoice report HTML"
+        model="bt.customer.invoice"
+        report_type="qweb-html"
+        file="_bt_trade.bt_customer_invoice_report_template"
+        name="_bt_trade.bt_customer_invoice_report_template"
+        paperformat="bt_customer_invoice_paperformat"
+        print_report_name="'Report for customer invoice %s' % (object.name).replace('/', '')"
+    />
+</odoo>

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_purchase_view_tree">
+        <field name="name">bt.purchase.view.tree</field>
+        <field name="model">bt.purchase.order</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Order name"/>
+                <field name="date" string="Date"/>
+                <field name="supplier_id" string="Supplier"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_purchase_view_form">
+        <field name="name">bt.purchase.view.form</field>
+        <field name="model">bt.purchase.order</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="create_is" string="Create IS" type="object"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box" style="text-align:left">
+                        <button name="get_is" class="oe_stat_button" icon="fa-shopping-cart" type="object">
+                            <field name="in_stock_count" string="IS" widget="statinfo"/>
+                        </button>
+                        <button name="get_po_so" class="oe_stat_button" icon="fa-shopping-cart" type="object">
+                            <field name="po_so_line_count" string="PO/SO" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" string="Order name" class="oe_inline"/>
+                        </group>
+                        <group>
+                            <field name="date" string="Date" class="oe_inline"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="supplier_id" string="Supplier"/>
+                        <field name="warehouse_id" string="Warehouse"/>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="line_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="product_basic_uom_id" string="Basic uom"/>
+                                    <field name="purchase_order_id"/>
+                                    <field name="quantity"/>
+                                    <field name="qty_basic_uom"/>
+                                    <field name="uom_id"/>
+                                    <field name="coeff_uom"/>
+                                    <field name="price"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <field name="total_amount" string="Total amount"/>
+                            </group>
+                        </page>
+                        <page string="PO SO line">
+                            <field name="po_so_line_id">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="po_line_id"/>
+                                    <field name="po_cost_amount"/>
+                                    <field name="so_line_id"/>
+                                    <field name="so_revenue_amount"/>
+                                    <field name="profit"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

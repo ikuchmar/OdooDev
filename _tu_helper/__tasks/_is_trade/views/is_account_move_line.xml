@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="is_account_move_line_form" model="ir.ui.view">
+		<field name="name">is.account.move.line.form</field>
+		<field name="model">is.account.move.line</field>
+		<field name="arch" type="xml">
+			<form>
+				<field name="name" string="Name"/>
+				<group>
+					<field name="date" string="Date"/>
+					<field name="account_move_id" string="Account move"/>
+					<field name="debet" string="Debet"/>
+					<field name="credit" string="Credit"/>
+					<field name="amount" string="Amount"/>
+				</group>
+				<notebook>
+					<page string="Cor Lines">
+						<field name="cor_line_ids" widget="one2many_list">
+							<tree decoration-danger="amount &lt; 0">
+								<field name="account_account_id"/>
+								<field name="cor_account_id"/>
+								<field name="amount"/>
+							</tree>
+						</field>
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_account_move_line_tree" model="ir.ui.view">
+		<field name="name">is.account.move.line.tree</field>
+		<field name="model">is.account.move.line</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" string="Name"/>
+				<field name="date" string="Date"/>
+				<field name="account_move_id" string="Account move"/>
+				<field name="debet" string="Debet"/>
+				<field name="credit" string="Credit"/>
+				<field name="amount" string="Amount"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_is_account_move_line" model="ir.actions.act_window">
+		<field name="name">Account move line</field>
+		<field name="res_model">is.account.move.line</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="menu_is_account_move_line"
+			  parent="menu_moves"
+			  name="Account move line"
+			  action="action_is_account_move_line"
+			  sequence="11"/>
+
+</odoo>

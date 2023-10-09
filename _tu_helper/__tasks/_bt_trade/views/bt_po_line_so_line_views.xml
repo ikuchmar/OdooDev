@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_po_line_so_line_view_tree">
+        <field name="name">bt.po.line.so.line.view.tree</field>
+        <field name="model">bt.po.line.so.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Name"/>
+                <field name="product_id" string="Product"/>
+                <field name="po_id" string="PO"/>
+                <field name="so_id" string="SO"/>
+                <field name="profit" string="Profit"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_po_line_so_line_view_form">
+        <field name="name">bt.po.line.so.line.view.form</field>
+        <field name="model">bt.po.line.so.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" string="Name"/>
+                        <field name="product_id" string="Product"/>
+                        <field name="po_id" string="PO"/>
+                        <field name="po_line_id" string="PO line"/>
+                        <field name="so_id" string="SO"/>
+                        <field name="so_line_id" string="SO line"/>
+                        <field name="qty" string="Quantity"/>
+                        <field name="po_cost_amount" string="Cost amount"/>
+                        <field name="so_revenue_amount" string="Revenue amount"/>
+                        <field name="profit" string="Profit"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_po_line_so_line_view_pivot">
+        <field name="name">bt.po.line.so.line.view.pivot</field>
+        <field name="model">bt.po.line.so.line</field>
+        <field name="type">pivot</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="product_id" type="row"/>
+                <field name="so_id" type="row"/>
+                <field name="qty" type="column"/>
+                <field name="po_cost_amount" type="column"/>
+                <field name="so_revenue_amount" type="column"/>
+                <field name="profit" type="column"/>
+            </pivot>
+        </field>
+    </record>
+</odoo>

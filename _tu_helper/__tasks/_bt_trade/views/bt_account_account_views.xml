@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bt_account_account_view_form">
+        <field name="name">bt.account.account.view.form</field>
+        <field name="model">bt.account.account</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" string="Name"/>
+                        <field name="description" string="Description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="bt_account_account_view_tree">
+        <field name="name">bt.account.account.view.tree</field>
+        <field name="model">bt.account.account</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Name"/>
+                <field name="description" string="Description"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

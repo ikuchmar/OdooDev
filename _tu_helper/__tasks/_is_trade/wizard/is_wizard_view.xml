@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="is_po_so_wizard_view_form" model="ir.ui.view">
+		<field name="name">is.po_so_wizard.view.form</field>
+		<field name="model">is.po_so_wizard</field>
+		<field name="arch" type="xml">
+			<form>
+				<group>
+					<group>
+						<field name="product_id" widget="many2one"/>
+						<field name="start_date"/>
+						<field name="end_date"/>
+						<field name="sale_order" widget="many2one"/>
+						<field name="so_line" widget="many2one"/>
+					</group>
+				</group>
+				<footer>
+					<group>
+						<button name="quantity_distribution" type="object" string="Distribute Quantity" class="btn-primary"/>
+						<button string="Cancel" class="btn-default" special="cancel"/>
+					</group>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_calculate_quantity_po_so_lines"
+			model="ir.actions.act_window">
+		<field name="name">Calculate line quantity</field>
+		<field name="res_model">is.po_so_wizard</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+		<field name="binding_model_id" ref="model_is_po_so_lines"/>
+		<field name="binding_view_types">form</field>
+		<field name="binding_type">action</field>
+	</record>
+
+	<record id="server_action_calculate_quantity_po_so_lines" model="ir.actions.act_window">
+		<field name="name">Quantity calculation</field>
+		<field name="res_model">is.po_so_wizard</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+
+
+	<menuitem id="menu_quantity_calculations"
+			  parent="menu_orders"
+			  name="Calculate PO SO Quantity"
+			  action="server_action_calculate_quantity_po_so_lines"
+			  sequence="10"/>
+
+</odoo>

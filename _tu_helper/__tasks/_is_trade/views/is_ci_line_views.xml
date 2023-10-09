@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="is_customer_invoice_line_form" model="ir.ui.view">
+		<field name="name">is.ci.line.form</field>
+		<field name="model">is.ci.line</field>
+		<field name="arch" type="xml">
+			<form>
+				<group>
+					<field name="product_id" string="Product_id"/>
+					<field name="quantity" string="Quantity"/>
+					<field name="uom_id" string="uom"/>
+					<field name="coef_uom" string="UOM Coefficient"/>
+					<field name="quantity_basic_uom" string="Basic uom quantity"/>
+					<field name="price" string="Price"/>
+					<field name="amount" string="Amount"/>
+				</group>
+			</form>
+		</field>
+	</record>
+
+	<record id="is_customer_invoice_line_tree" model="ir.ui.view">
+		<field name="name">is.ci.line.tree</field>
+		<field name="model">is.ci.line</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="product_id" string="Product_id"/>
+				<field name="quantity" string="Quantity"/>
+				<field name="uom_id" string="uom"/>
+				<field name="coef_uom" string="UOM Coefficient"/>
+				<field name="quantity_basic_uom" string="Basic uom quantity"/>
+				<field name="price" string="Price"/>
+				<field name="amount" string="Amount"/>
+			</tree>
+		</field>
+	</record>
+
+
+</odoo>

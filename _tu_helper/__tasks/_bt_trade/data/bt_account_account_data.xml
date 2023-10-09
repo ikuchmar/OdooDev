@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record model="bt.account.account" id="902_account">
+            <field name="name">902</field>
+            <field name="description">Себестоимость продажи товара</field>
+        </record>
+
+        <record model="bt.account.account" id="281_account">
+            <field name="name">281</field>
+            <field name="description">Товары на складе</field>
+        </record>
+
+        <record model="bt.account.account" id="361_account">
+            <field name="name">361</field>
+            <field name="description">Взаиморасчёты с клиентами</field>
+        </record>
+
+        <record model="bt.account.account" id="702_account">
+            <field name="name">702</field>
+            <field name="description">Доход от продажи</field>
+        </record>
+
+        <record model="bt.account.account" id="311_account">
+            <field name="name">311</field>
+            <field name="description">Деньги на расчётном счету</field>
+        </record>
+
+        <record model="bt.account.account" id="631_account">
+            <field name="name">631</field>
+            <field name="description">Взаиморасчёты с поставщиками</field>
+        </record>
+    </data>
+</odoo>
