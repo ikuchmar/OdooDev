@@ -22,6 +22,16 @@ class ComputedFields(models.Model):
                                 compute_sudo=True)
 
 
+    date = fields.Date(
+        string='Date',
+        index=True,
+        compute='_compute_date', store=True, required=True, readonly=False, precompute=True,
+        states={'posted': [('readonly', True)], 'cancel': [('readonly', True)]},
+        copy=False,
+        tracking=True,
+    )
+    
+    
 
     # =================================================================
     @api.depends('field_float', 'field_float2')

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mo_view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//notebook//page//field[@name='move_ids_without_package']" position="before">
+                    <header attrs="{'invisible': [('state', '=', 'done')]}">
+                        <button name="button_fill_move_ids_by_stock_quant" string="Заповнити"
+                                type="object" attrs="{'invisible': [('state', '=', 'done')]}" groups="base.group_no_one"/>
+                        <button name="button_clean_move_ids" string="Очистити" type="object" attrs="{'invisible': [('state', '=', 'done')]}" groups="base.group_no_one"/>
+                    </header>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
