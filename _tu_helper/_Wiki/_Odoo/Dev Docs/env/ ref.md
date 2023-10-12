@@ -22,16 +22,16 @@ XML ID - это уникальное имя, которое присваивае
 используется для получения ID записи аналитического тега по умолчанию для складов, используя его уникальный внешний идентификатор (XML ID).
 
 
-default_analytic_tag_id = self.env.ref('mo_accounting.default_wh_analytic_tag').id
+    default_analytic_tag_id = self.env.ref('mo_accounting.default_wh_analytic_tag').id
 
 
 data/account_analytic_tag_data.xml
 
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data noupdate="1">
-        <record id="default_wh_analytic_tag" model="account.analytic.tag">
-            <field name="name">Default analytic tag</field>
-        </record>
-    </data>
-</odoo>
+    <?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data noupdate="1">
+            <record id="default_wh_analytic_tag" model="account.analytic.tag">
+                <field name="name">Default analytic tag</field>
+            </record>
+        </data>
+    </odoo>
