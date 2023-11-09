@@ -1,6 +1,6 @@
     <xpath expr="//page[@id='invoice_tab']//tree" position="inside">
 
-Подмена атрибутов form 
+Подмена атрибутов form
 ===============================================
 
     <xpath expr="//form" position="attributes">
@@ -14,3 +14,11 @@
     <xpath expr="//page[@id='invoice_tab']//tree//field[@name='price_subtotal']" position="attributes">
         <attribute name="sum">"Total price_subtotal"</attribute>
     </xpath>
+
+Удалить атрибут editable
+===============================================
+xpath чтобы <tree string="Pricelist Rules" editable="bottom">  превратить в <tree string="Pricelist Rules">
+
+    <xpath expr='//tree' position="attributes">
+                      <attribute name="editable"/>
+                    </xpath>

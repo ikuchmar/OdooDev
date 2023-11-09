@@ -35,7 +35,9 @@ class Partner(models.Model):
     name = fields.Char(string='Name')
     is_company = fields.Boolean(string='Is a Company')
     country_id = fields.Many2one('res.country', string='Country')
+
     country_code = fields.Related('country_id', 'code', string='Country Code')
+
 В этом примере, мы создаем новое поле "country_code" в модели "res.partner", которое связано с полем "code" модели "res.country" через поле "country_id".
 
 Теперь, когда мы получаем данные из модели "res.partner", мы можем использовать поле "country_code", чтобы получить код страны, связанной с этой моделью.
