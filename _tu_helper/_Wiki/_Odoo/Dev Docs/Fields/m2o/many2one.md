@@ -1,9 +1,4 @@
 
-from odoo import fields, models
-
-
-class Many2oneFields(models.Model):
-    _name = 'field.many2one'
 
     field_many2one_id = fields.Many2one(string='Many2one field',
                                         comodel_name='basic.fields',
@@ -11,9 +6,15 @@ class Many2oneFields(models.Model):
                                         check_company=True,
                                         auto_join=True,
                                         ondelete='cascade')
-    # --------------------------------------------------------------------------------------
-    #    string – the label of the field seen by users; if not set, the ORM takes the field name in the class (capitalized).
+
+string
+=======================================================================
+    – the label of the field seen by users; if not set, the ORM takes the field name in the class (capitalized).
     #    (метка поля, видимая пользователями; если не установлено, ORM берет имя поля в классе (с заглавной буквы).
+
+domain="[('usage', '=', 'internal'), ('company_id', '=', company_id)]",
+=======================================================================
+    (обмежує перелік об’єктів, що можуть бути вибрані. Список кортежів або метод моделі, що повертає список кортежів.)
 
     #    comodel_name – name of the target model Mandatory except for related or extended fields.
     #    (имя целевой модели Обязательно, за исключением связанных или расширенных полей.)
@@ -43,8 +44,7 @@ class Many2oneFields(models.Model):
     #    ondelete – what to do when the referred record is deleted; possible values are: 'set null', 'restrict', 'cascade'
     #    (что делать, когда упомянутая запись удалена; возможные значения: 'установить ноль', 'ограничить', 'каскад')
 
-    #    domain="[('usage', '=', 'internal'), ('company_id', '=', company_id)]",
-    #    (обмежує перелік об’єктів, що можуть бути вибрані. Список кортежів або метод моделі, що повертає список кортежів.)
+
 
     #    states
     #   Словник правил, що змінюють значення параметрів readonly, required, invisible в залежності від значення у полі state.
