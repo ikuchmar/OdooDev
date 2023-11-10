@@ -7,7 +7,7 @@ import datetime
 
 datetime_obj = datetime.datetime.now()
 
-# Форматирование объекта datetime в строку
+# strftime - Дата в Строку
 
 formatted_string = datetime_obj.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -21,7 +21,7 @@ print(formatted_string)
 Вы можете выбрать нужный вам формат, сочетая различные символы формата. Более подробную информацию о символах формата
 можно найти в документации Python: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
 
-#  преобразовать строку в дату:
+#  strptime Строку в Дату :
     from datetime import datetime
     
     # Исходная строка с датой и временем
