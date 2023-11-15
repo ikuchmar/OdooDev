@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_mo_vchasnokasa_device_user,mo.vchasnokasa.device.user,model_mo_vchasnokasa_device,mo_vchasnokasa.group_mo_vchasnokasa_user,1,0,0,0
+access_mo_vchasnokasa_device_admin,mo.vchasnokasa.device.admin,model_mo_vchasnokasa_device,mo_vchasnokasa.group_mo_vchasnokasa_admin,1,1,1,1
+
+access_mo_vchasnokasa_log_user,mo.vchasnokasa.log.user,model_mo_vchasnokasa_log,mo_vchasnokasa.group_mo_vchasnokasa_user,1,1,1,1
+access_mo_vchasnokasa_log_admin,mo.vchasnokasa.log.admin,model_mo_vchasnokasa_log,mo_vchasnokasa.group_mo_vchasnokasa_admin,1,1,1,1
+
+access_mo_vchasnokasa_check_user,mo.vchasnokasa.check.user,model_mo_vchasnokasa_check,mo_vchasnokasa.group_mo_vchasnokasa_user,1,1,1,1
+access_mo_vchasnokasa_check_admin,mo.vchasnokasa.check.admin,model_mo_vchasnokasa_check,mo_vchasnokasa.group_mo_vchasnokasa_admin,1,1,1,1
+access_mo_vchasnokasa_check_all,mo.vchasnokasa.check.all,model_mo_vchasnokasa_check,,1,1,1,1
+
+access_mo_vchasnokasa_wizard_deposit_admin,mo.vchasnokasa.wizard.deposit.admin,model_mo_vchasnokasa_wizard_deposit,mo_vchasnokasa.group_mo_vchasnokasa_admin,1,1,1,1
+
+access_mo_vchasnokasa_wizard_takeaway_admin,mo.vchasnokasa.wizard.takeaway.admin,model_mo_vchasnokasa_wizard_takeaway,mo_vchasnokasa.group_mo_vchasnokasa_admin,1,1,1,1
+
+access_mo_vchasnokasa_multi_wizard_admin,mo.vchasnokasa.multi_wizard.admin,model_mo_vchasnokasa_multi_wizard,mo_vchasnokasa.group_mo_vchasnokasa_admin,1,1,1,1

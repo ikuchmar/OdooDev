@@ -48,3 +48,5 @@ env['sale.order'].cron_check_today_price_order_draft_action()
         </record>
     </data>
 </odoo>
+
+<!--        <field name="active" eval="False"/>-->
