@@ -1,16 +1,14 @@
-==========================================
-преобразовать объект типа datetime в тип date - использовать атрибут .date() объекта datetime.
-==========================================
+# преобразовать объект типа datetime в тип date 
+    использовать атрибут .date() объекта datetime.
 
-from datetime import datetime
+# import datetime
+    from datetime import datetime
 
 # Создание объекта datetime
-datetime_obj = datetime(2023, 5, 19, 10, 30, 0)
+    datetime_obj = datetime(2023, 5, 19, 10, 30, 0)
 
 # Преобразование объекта datetime в тип date
-date_obj = datetime_obj.date()
-
-print(date_obj)
+    date_obj = datetime_obj.date()
 
 
 # начало месяца
@@ -22,4 +20,4 @@ print(date_obj)
                           default=fields.Date.today())
 
 # дата от сегодняшней даты
-today_date = datetime.today().date()
+    today_date = datetime.today().date()
