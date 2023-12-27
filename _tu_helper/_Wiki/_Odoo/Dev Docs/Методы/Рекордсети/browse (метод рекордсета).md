@@ -5,7 +5,6 @@
 
 Використовується, щоб отримати об’єкт на цілочисельне значення id.
 
-
     analytic_account_id = self.env['account.analytic.account'].browse(int(dict_key))
 
 
