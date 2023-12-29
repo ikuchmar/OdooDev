@@ -1,17 +1,17 @@
-====================================================
+
 тега <search>:
 ====================================================
 Загальний вигляд представлення
 
-<record id="kw_lib_book_search" model="ir.ui.view">
-   <field name="name">kw.lib.book.search (kw_library)</field>
-   <field name="model">kw.lib.book</field>
-   <field name="arch" type="xml">
-       <search>
-           <field name="name"/>
-       </search>
-   </field>
-</record>
+    <record id="kw_lib_book_search" model="ir.ui.view">
+       <field name="name">kw.lib.book.search (kw_library)</field>
+       <field name="model">kw.lib.book</field>
+       <field name="arch" type="xml">
+           <search>
+               <field name="name"/>
+           </search>
+       </field>
+    </record>
 
 Для створення представлення пошуку створюється запис в моделі ir.ui.view для потрібної моделі та в поле arch додається xml опис даного представлення.
 Весь контент має бути огорнутий у тег search, а в ньому іде опис полів, фільтрів, групувань, пошукова панель.
@@ -23,65 +23,67 @@
 Порядок полів для пошуку в стандартному поле search
 Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення пошуку2.png
 ===================================================
-<record id="kw_lib_book_search" model="ir.ui.view">
-   <field name="name">kw.lib.book.search (kw_library)</field>
-   <field name="model">kw.lib.book</field>
-   <field name="arch" type="xml">
-       <search>
-           <field name="name" filter_domain="['|',('state','ilike',self),('name','ilike',self)]"/>
-           <field name="qty" operator=">"/>
-           <field name="state"/>
-           <field name="author_ids" domain="[('name','ilike','info')]"/>
-       </search>
-   </field>
-</record>
+
+        <record id="kw_lib_book_search" model="ir.ui.view">
+           <field name="name">kw.lib.book.search (kw_library)</field>
+           <field name="model">kw.lib.book</field>
+           <field name="arch" type="xml">
+               <search>
+                   <field name="name" filter_domain="['|',('state','ilike',self),('name','ilike',self)]"/>
+                   <field name="qty" operator=">"/>
+                   <field name="state"/>
+                   <field name="author_ids" domain="[('name','ilike','info')]"/>
+               </search>
+           </field>
+        </record>
 
 Пошук по полю автоматично запускається, коли користувач починає набирати в елементі пошуку, пропозиції пошуку будуть відображатись у порядку, визначеному в xml.
 
 
 Поиск по имени:
-<record model="ir.ui.view" id="view_name_search">
-  <field name="name">Name Search</field>
-  <field name="model">res.partner</field>
-  <field name="arch" type="xml">
-    <search>
-      <field name="name"/>
-    </search>
-  </field>
-</record>
+===============================
+    <record model="ir.ui.view" id="view_name_search">
+      <field name="name">Name Search</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+        </search>
+      </field>
+    </record>
 
 ---------------------------------------------------
 оператор OR:
 ---------------------------------------------------
-<record model="ir.ui.view" id="view_name_email_search">
-  <field name="name">Name and Email Search</field>
-  <field name="model">res.partner</field>
-  <field name="arch" type="xml">
-    <search>
-      <field name="name"/>
-      <field name="email"/>
-      <operator string="OR"/>
-    </search>
-  </field>
-</record>
+    <record model="ir.ui.view" id="view_name_email_search">
+      <field name="name">Name and Email Search</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <field name="email"/>
+          <operator string="OR"/>
+        </search>
+      </field>
+    </record>
 
-=====================================================
+
 Встановлений фільтр (filter)
 =====================================================
 
 Використувуеться filter а не field
 
-<record id="kw_lib_book_search" model="ir.ui.view">
-   <field name="name">kw.lib.book.search (kw_library)</field>
-   <field name="model">kw.lib.book</field>
-   <field name="arch" type="xml">
-       <search>
-           <filter name="qty_gt_2" string="Greater then 2" domain="[('qty','>',2)]"/>
-           <filter name="author_info" string="By Info author" domain="[('author_ids.name','ilike','info')]"/>
-           <filter name="created_last_week" string="Last week" domain="[('create_date', '&gt;', (context_today() - relativedelta(weeks=1)).strftime('%Y-%m-%d') )]"/>
-       </search>
-   </field>
-</record>
+    <record id="kw_lib_book_search" model="ir.ui.view">
+       <field name="name">kw.lib.book.search (kw_library)</field>
+       <field name="model">kw.lib.book</field>
+       <field name="arch" type="xml">
+           <search>
+               <filter name="qty_gt_2" string="Greater then 2" domain="[('qty','>',2)]"/>
+               <filter name="author_info" string="By Info author" domain="[('author_ids.name','ilike','info')]"/>
+               <filter name="created_last_week" string="Last week" domain="[('create_date', '&gt;', (context_today() - relativedelta(weeks=1)).strftime('%Y-%m-%d') )]"/>
+           </search>
+       </field>
+    </record>
 
 Фільтр, на відміну від поля, не використовує введене значення, а використовує попередньо встановлені умови. Для цього є атрибут domain,
  який може використовувати контекстні змінні та функції, наприклад функції роботи з датою context_today або relativedelta.
@@ -92,30 +94,30 @@
 ---------------------------------------------------
 Поиск по дате истечения срока действия контракта:
 
-<record model="ir.ui.view" id="view_contract_expiry_search">
-  <field name="name">Contract Expiry Search</field>
-  <field name="model">account.analytic.account</field>
-  <field name="arch" type="xml">
-    <search>
-      <field name="date"/>
-      <field name="date_expiry"/>
-      <filter name="expiry" string="Expiry Soon">
-        ['|', ('date_expiry', '<=', (context_today() + relativedelta(days=15)).strftime('%Y-%m-%d')), ('date_expiry', '=', False)]
-      </filter>
-    </search>
-  </field>
-</record>
-
-
-<record id="kw_lib_book_search" model="ir.ui.view">
-   <field name="name">kw.lib.book.search (kw_library)</field>
-   <field name="model">kw.lib.book</field>
-   <field name="arch" type="xml">
-       <search>
-           <filter name="filter_create_date" date="create_date" string="Creation Date"/>
-       </search>
-   </field>
-</record>
+    <record model="ir.ui.view" id="view_contract_expiry_search">
+      <field name="name">Contract Expiry Search</field>
+      <field name="model">account.analytic.account</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="date"/>
+          <field name="date_expiry"/>
+          <filter name="expiry" string="Expiry Soon">
+            ['|', ('date_expiry', '<=', (context_today() + relativedelta(days=15)).strftime('%Y-%m-%d')), ('date_expiry', '=', False)]
+          </filter>
+        </search>
+      </field>
+    </record>
+    
+    
+    <record id="kw_lib_book_search" model="ir.ui.view">
+       <field name="name">kw.lib.book.search (kw_library)</field>
+       <field name="model">kw.lib.book</field>
+       <field name="arch" type="xml">
+           <search>
+               <filter name="filter_create_date" date="create_date" string="Creation Date"/>
+           </search>
+       </field>
+    </record>
 
 Поля типу Date або Datetime без вказаного домену мають специфічний фільтр, який дозволяє обрати один з трьох найближчих місяціі, кварталів, років.
 Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення пошуку4.png
@@ -124,163 +126,36 @@
 ---------------------------------------------------
 оператор "ilike".  фильтрацию по подстроке, то есть ищет все записи, в которых значение поля содержит указанную строку.
 ---------------------------------------------------
-<record model="ir.ui.view" id="view_name_contains_search">
-  <field name="name">Name Contains Search</field>
-  <field name="model">res.partner</field>
-  <field name="arch" type="xml">
-    <search>
-      <field name="name" operator="ilike"/>
-    </search>
-  </field>
-</record>
+    <record model="ir.ui.view" id="view_name_contains_search">
+      <field name="name">Name Contains Search</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name" operator="ilike"/>
+        </search>
+      </field>
+    </record>
 
 ---------------------------------------------------
 "заполнен"  "!=". Этот оператор выполняет фильтрацию по отсутствию пустого значения в поле, то есть ищет все записи, в которых значение поля не равно пустому значению.
 ---------------------------------------------------
-<record model="ir.ui.view" id="view_email_not_empty_search">
-  <field name="name">Email Not Empty Search</field>
-  <field name="model">res.partner</field>
-  <field name="arch" type="xml">
-    <search>
-      <field name="email" operator="!="/>
-    </search>
-  </field>
-</record>
+    <record model="ir.ui.view" id="view_email_not_empty_search">
+      <field name="name">Email Not Empty Search</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="email" operator="!="/>
+        </search>
+      </field>
+    </record>
+
+
+
+
 
 ===================================================
-Групування
-
-<record id="kw_lib_book_search" model="ir.ui.view">
-   <field name="name">kw.lib.book.search (kw_library)</field>
-   <field name="model">kw.lib.book</field>
-   <field name="arch" type="xml">
-       <search>
-           <filter name="groupby_name" string="Name" context="{'group_by': 'name'}"/>
-           <filter name="groupby_state" string="State" context="{'group_by': 'state'}"/>
-       </search>
-   </field>
-</record>
-
-За допомогою ключа group_by в атрибуті context фільтр створює в меню “Групувати за” групування за обраним полем. Прийнято починати назву такого фільтру з префіксу groupby_
-Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення пошуку5.png
-===================================================
-Сепаратор
-
-<record id="kw_lib_book_search" model="ir.ui.view">
-   <field name="name">kw.lib.book.search (kw_library)</field>
-   <field name="model">kw.lib.book</field>
-   <field name="arch" type="xml">
-       <search>
-           <filter name="author_info" string="By Info author" domain="[('author_ids.name','ilike','info')]"/>
-           <filter name="qty_gt_2" string="Greater then 2" domain="[('qty','>',2)]" />
-           <separator/>
-           <filter name="created_last_week" string="Last week" domain="[('create_date', '&gt;', (context_today() - relativedelta(weeks=1)).strftime('%Y-%m-%d') )]"/>
-           <filter name="filter_create_date" date="create_date" string="Creation Date" default_period="last_month"/>
-           <filter name="groupby_name" string="Name" context="{'group_by': 'name'}"/>
-           <filter name="groupby_state" string="State" context="{'group_by': 'state'}"/>
-       </search>
-   </field>
-</record>
-Тег separator створює лінію в меню, що дозволяє створити візуальне групування фільтрів. Це розділення є суто візуальним і ніяк не впливає на роботу.
-Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення пошуку6.png
-===================================================
-Панель пошуку
-
-<record id="kw_lib_book_search" model="ir.ui.view">
-   <field name="name">kw.lib.book.search (kw_library)</field>
-   <field name="model">kw.lib.book</field>
-   <field name="arch" type="xml">
-       <search>
-           <searchpanel view_types="tree,pivot">
-               <field name="state"/>
-           </searchpanel>
-       </search>
-   </field>
-</record>
-
-Панель пошуку - швидкий інструмент для фільтрації даних, створюється за допомогою тегу searchpanel і доступний для представлень з багатьма записами,
- такими як список, канбан тощо і відповідно недоступний для форми і аналогічних представлень.
- За замовчанням відкритий для представлень список та канбан, але може бути відкритим до інших представлень за допомогою атрибута view_types, де через кому перелічуються потрібні представлення.
-Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення пошуку7.png
-===================================================
-Іконка
-
-<record id="kw_lib_book_search" model="ir.ui.view">
-   <field name="name">kw.lib.book.search (kw_library)</field>
-   <field name="model">kw.lib.book</field>
-   <field name="arch" type="xml">
-       <search>
-           <searchpanel view_types="tree,pivot">
-               <field name="state" icon="fa-ticket" color="red"/>
-           </searchpanel>
-       </search>
-   </field>
-</record>
-
-Атрибут icon для тегу поля дозволяє замінити іконку за замовчанням, а атрибут color замінити її колір.
-Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення пошуку8.png
-===================================================
-Множинний вибір
-
-
-<record id="kw_lib_book_search" model="ir.ui.view">
-   <field name="name">kw.lib.book.search (kw_library)</field>
-   <field name="model">kw.lib.book</field>
-   <field name="arch" type="xml">
-       <search>
-           <searchpanel view_types="tree,pivot">
-               <field name="state" select="multi" enable_counters="1"/>
-           </searchpanel>
-       </search>
-   </field>
-</record>
-
-
-За допомогою атрибута select можна переключати одиничний вибір one чи множинний multi.
-За допомогою атрибуту enable_counters можна додати обчислення кількості записів, які відповідають
-Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення пошуку9.png
-===================================================
-Ієрархія
-
-<record id="kw_lib_book_search" model="ir.ui.view">
-   <field name="name">kw.lib.book.search (kw_library)</field>
-   <field name="model">kw.lib.book</field>
-   <field name="arch" type="xml">
-       <search>
-           <searchpanel view_types="tree,pivot">
-               <field name="category_id" hierarchize="1" enable_counters="1"/>
-               <field name="state" select="one" enable_counters="1"/>
-           </searchpanel>
-       </search>
-   </field>
-</record>
-
-За допомогою атрибута hierarchize для Many2one полів, що посилаються на ієрархічну модель можна переключати відображення у вигляді дерева.
-Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення пошуку10.png
-===================================================
-11.	Фільтрація за замовчуванням
-
-   <record id="kw_lib_book_act_window" model="ir.actions.act_window">
-       <field name="name">Book</field>
-       <field name="type">ir.actions.act_window</field>
-       <field name="res_model">kw.lib.book</field>
-       <field name="view_mode">tree,form,pivot,graph</field>
-       <field name="context">{
- 'search_default_author_info': 2,
- 'search_default_groupby_name': 2,
- 'search_default_qty_gt_2': 3,
- 'search_default_groupby_state': 1,
-}</field>
-   </record>
-
-Для кожної дії можна прописати фільтри за замовчуванням, в словник поля context треба додати ключі, що починаються з search_default_ і імені фільтра.
-Це можуть бути як фільтри для вибірки, так і фільтри для групування, значення задає порядок, в якому фільтри будуть застосовуватись.
-Приклад в _tu_helper\_Wiki\_Odoo\Pictures\Представлення пошуку11.png
-===================================================
-
-
-
 =
+
 Важливо! Якщо явно не вказаний атрибут operator чи filter_domain, для числових полів буде використовуватись оператор рівності, що еквівалентно
 
 [('qty','=',self)]

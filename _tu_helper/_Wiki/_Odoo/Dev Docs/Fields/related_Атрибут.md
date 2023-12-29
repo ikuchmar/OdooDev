@@ -7,10 +7,10 @@
 Поле через точку с поля м2о
 Можно куча точек
 После такого объявление в ру файле - их можно показывать на хмл
-
-  sick_type_color = fields.Integer(related='sick_id.sick_type_id.color')
-
-  sick_type_id = fields.Many2one(related='sick_id.sick_type_id')
+    
+      sick_type_color = fields.Integer(related='sick_id.sick_type_id.color')
+    
+      sick_type_id = fields.Many2one(related='sick_id.sick_type_id')
 
 с опцией сторедж - они будут сохраняться
 

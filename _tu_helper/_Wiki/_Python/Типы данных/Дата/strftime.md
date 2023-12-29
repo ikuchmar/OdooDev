@@ -21,7 +21,8 @@ print(formatted_string)
 Вы можете выбрать нужный вам формат, сочетая различные символы формата. Более подробную информацию о символах формата
 можно найти в документации Python: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
 
-#  strptime Строку в Дату :
+"2023-09-12 14:30:00" в datetime 
+=====================================
     from datetime import datetime
     
     # Исходная строка с датой и временем
@@ -34,3 +35,14 @@ print(formatted_string)
     date_object = datetime.strptime(date_string, date_format)
     
     print(date_object)
+
+ '20231114074453179' в datetime 
+========================================
+    def str_to_datetime(date_string):
+        try:
+            # Преобразование строки в объект datetime
+            date_object = datetime.strptime(date_string, '%Y%m%d%H%M%S%f')
+            return date_object
+        except ValueError:
+            # В случае ошибки возвращаем None или можно обработать исключение по вашему усмотрению
+            return None
