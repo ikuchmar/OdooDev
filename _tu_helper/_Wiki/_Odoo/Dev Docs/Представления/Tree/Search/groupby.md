@@ -6,7 +6,10 @@
        <field name="model">kw.lib.book</field>
        <field name="arch" type="xml">
            <search>
-               <filter name="groupby_name" string="Name" context="{'group_by': 'name'}"/>
+               <filter name="groupby_name" 
+                        string="Name" 
+                        context="{'group_by': 'name'}"/>
+
                <filter name="groupby_state" string="State" context="{'group_by': 'state'}"/>
            </search>
        </field>

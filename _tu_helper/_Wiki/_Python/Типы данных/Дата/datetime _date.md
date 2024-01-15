@@ -14,7 +14,13 @@
 # начало месяца
     date_from = fields.Date(string='Date from',
                             default=lambda self: datetime.now().replace(day=1, hour=0, minute=0, second=0))
-                            
+               
+# Получаем начало дня
+    start_of_day = specified_date.replace(hour=0, minute=0, second=0, microsecond=0)
+   
+# Получаем конец дня
+    end_of_day = specified_date.replace(hour=23, minute=59, second=59, microsecond=999999)
+          
 # сегодня
     date_to = fields.Date(string='Date to',
                           default=fields.Date.today())
