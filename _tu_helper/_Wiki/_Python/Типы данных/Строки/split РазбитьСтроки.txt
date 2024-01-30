@@ -6,7 +6,8 @@ text = """
 """
 
 # Разбиваем текст на отдельные строки
-lines = text.split('\n')
+lines = text.split(' unexpected indent
+')
 
 # Используем цикл for для итерации по каждой строке
 for line in lines:
