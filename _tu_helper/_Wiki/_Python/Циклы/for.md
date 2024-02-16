@@ -1,5 +1,4 @@
 # Цикл for для обхода элементов списка:
-
     my_list = [1, 2, 3, 4, 5]
     for i in my_list:
         print(i)
@@ -10,7 +9,6 @@
         print(key, value)
 
 # Цикл for для генерации нового списка на основе существующего:
-
     my_list = [1, 2, 3, 4, 5]
     new_list = [i*2 for i in my_list]
     print(new_list)
