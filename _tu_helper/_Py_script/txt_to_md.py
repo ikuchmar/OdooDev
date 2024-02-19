@@ -10,7 +10,7 @@ def change_extension_to_md(folder):
                 print(f"Файл {file} переименован в {os.path.basename(new_path)}")
 
 # Путь к корневой папке
-folder_path = "D:\Odoo\OdooDev\_tu_helper\_Wiki\_Python"
+folder_path = "D:\Odoo\OdooDev\_tu_helper\_Wiki\_Odoo\Dev Docs\Методы"
 
 # Вызываем функцию для изменения расширения файлов в указанной папке и ее подпапках
 change_extension_to_md(folder_path)

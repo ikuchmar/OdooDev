@@ -62,3 +62,13 @@ xpath чтобы <tree string="Pricelist Rules" editable="bottom">  превра
                 <attribute name="groups" add="darkstore_role.group_darkstore"/>
             </xpath>
         </data>
+
+# Добавить поля в tree
+==============================================
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id" optional="hide"/>
+                <field name="temp_account_id" optional="hide"/>
+                <field name="warehouse_id" optional="hide"/>
+            </tree>
+        </field>
