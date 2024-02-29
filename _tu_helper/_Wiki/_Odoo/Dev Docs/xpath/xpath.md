@@ -15,6 +15,11 @@
         <attribute name="sum">"Total price_subtotal"</attribute>
     </xpath>
 
+
+    <xpath expr="//button[@name='button_draft']" position="attributes">
+        <attribute name="attrs">{'invisible' : [('show_reset_to_draft_button', '=', False), ('state', '=', 'verified')]}</attribute>
+    </xpath>
+
 Удалить атрибут editable
 ===============================================
 xpath чтобы <tree string="Pricelist Rules" editable="bottom">  превратить в <tree string="Pricelist Rules">
