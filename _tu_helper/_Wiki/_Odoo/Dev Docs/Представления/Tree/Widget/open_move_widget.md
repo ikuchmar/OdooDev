@@ -1,2 +1,2 @@
-<tree string="Journal Items" create="false" edit="true" expand="context.get('expand', False)" multi_edit="1" sample="1">
-                    <field name="move_name" string="Journal Entry" widget="open_move_widget"/>
+    <tree string="Journal Items" create="false" edit="true" expand="context.get('expand', False)" multi_edit="1" sample="1">
+        <field name="move_name" string="Journal Entry" widget="open_move_widget"/>

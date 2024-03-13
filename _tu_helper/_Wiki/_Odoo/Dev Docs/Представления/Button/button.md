@@ -17,5 +17,9 @@ class="fa fa-arrow-right" - стрелка вправо
 class="fa fa-arrow-left" - стрелка влево
 class="fa fa-arrow-up" - стрелка вверх
 class="fa fa-arrow-down" - стрелка вниз
+
+class="fa fa-ticket" - стрелка вниз
+![img.png](img.png)
+
 Это только небольшой набор доступных иконок. Вы можете найти полный список доступных иконок Font Awesome на их официальном сайте: 
 https://fontawesome.com/icons.
