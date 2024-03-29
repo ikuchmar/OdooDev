@@ -28,15 +28,15 @@ class FieldBasic(models.Model):
     # Обчислювальні параметри
     # Деякі параметри можуть бути обчислені динамічно. Наприклад, default, domain тощо. Часто при визначені таких параметрів допускають помилку:
     #
-    # a_field = fields.Date(default=fields.Date.today())
+    a_field = fields.Date(default=fields.Date.today())
     #
     # Важливо: в параметр default буде передано результат виконання функції, а не саму функцію, наприклад
     #
-    # a_field = fields.Date(default=fields.Date.today)
+    a_field = fields.Date(default=fields.Date.today)
     #
     # Але для параметрів, які обчислюються, слід використовувати лямбда функцію:
     #
-    # a_field = fields.Char(default=lambda self: self._default_a_field_get())
+    a_field = fields.Char(default=lambda self: self._default_a_field_get())
     #
     # Це дозволить успадковувати, розширювати або перевизначати функцію.
     #

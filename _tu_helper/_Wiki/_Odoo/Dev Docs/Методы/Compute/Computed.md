@@ -1,23 +1,17 @@
 
 https://www.odoo.com/documentation/15.0/developer/tutorials/getting_started/09_compute_onchange.html?highlight=compute
 
-=====================================
+
 Computed Fields
+=====================================
 
 !!!! Вычислительные поля НЕ СОХРАНЯЮТСЯ в базе данных по умолчанию
 (Другое решение — хранить поле с store=True атрибутом)
 
 !!!! поле нужно заполнить обязательно (нельзя в методе оставить исходное поле без значения
 
-=====================================
-
-from odoo import api, fields, models
-
-class TestComputed(models.Model):
-    _name = "test.computed"
 
     total = fields.Float(compute="_compute_total")
-    amount = fields.Float()
 
     @api.depends("amount")
     def _compute_total(self):
@@ -26,8 +20,9 @@ class TestComputed(models.Model):
 
 
 
-------------------------------------
+
 Inverse Function
+------------------------------------
 
 Метод вычисления устанавливает поле, а обратный метод устанавливает зависимости поля.
 Обратите внимание, что inverse метод вызывается при сохранении записи, а compute метод вызывается при каждом изменении ее зависимостей.
