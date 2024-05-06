@@ -80,3 +80,5 @@ https://github.com/odoo/odoo
 pip install pysftp
 
 Ветка Гита - поставить Студио
+
+!!! Запуск Одуу через cmd python C:\Odoo\Odoo_17_Myasin\include\odoo-17.0\odoo-bin -c "C:\Odoo\Odoo_17_Myasin\include\odoo17.conf" --dev=all
