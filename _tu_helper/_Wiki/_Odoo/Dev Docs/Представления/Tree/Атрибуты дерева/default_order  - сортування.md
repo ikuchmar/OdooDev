@@ -15,3 +15,5 @@ default_order  - сортування
     
     
     default_order="date asc, id asc" editable="top">
+    
+    <tree string="Move Lines" create="0" default_order="id desc" action="action_open_reference" type="object">
