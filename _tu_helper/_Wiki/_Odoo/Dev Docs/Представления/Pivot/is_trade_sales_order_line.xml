@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="so_view_pivot" model="ir.ui.view">
+		<field name="name">sale_order_pivot</field>
+		<field name="model">is.trade.sales.order.line</field>
+		<field name="arch" type="xml">
+			<pivot string="Sales Report">
+				<field name="sales_order_id" type="row"/>
+				<field name="client_id" type="row"/>
+				<field name="product_id" type="row"/>
+			</pivot>
+		</field>
+	</record>
+</odoo>

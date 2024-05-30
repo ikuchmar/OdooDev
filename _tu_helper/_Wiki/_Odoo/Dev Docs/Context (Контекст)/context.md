@@ -4,16 +4,14 @@
 
 Вот пример того, как вы можете добавить или изменить контекст в методе _stock_account_prepare_anglo_saxon_out_lines_vals:
 
-python
-Copy code
-def _stock_account_prepare_anglo_saxon_out_lines_vals(self):
-    # Вы можете добавить новые ключи в контекст или изменить существующие
-    new_context = self.env.context.copy()
-    new_context.update({
-        'new_key': 'value',  # Добавляете новый ключ или изменяете существующий
-        'another_key': 123   # Можно добавить любые данные, важные для логики
-    })
-    
+    def _stock_account_prepare_anglo_saxon_out_lines_vals(self):
+        # Вы можете добавить новые ключи в контекст или изменить существующие
+        new_context = self.env.context.copy()
+        new_context.update({
+            'new_key': 'value',  # Добавляете новый ключ или изменяете существующий
+            'another_key': 123   # Можно добавить любые данные, важные для логики
+        })
+        
     # Применяем изменённый контекст к текущему объекту
     self = self.with_context(new_context)
     

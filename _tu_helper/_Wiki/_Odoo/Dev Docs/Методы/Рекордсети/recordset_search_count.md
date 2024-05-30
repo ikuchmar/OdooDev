@@ -1,3 +1,9 @@
+# Получение количества записей, соответствующих домену
+    record_count = self.env['stock.move.line'].search_count(domen)
+
+
+
+
 from odoo import fields, models, api
 
 class AModel(models.Model):
@@ -16,3 +22,5 @@ class AModel(models.Model):
     #
     #
     #
+
+
