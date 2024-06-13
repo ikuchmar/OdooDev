@@ -18,6 +18,21 @@
         <attribute name="attrs">{'invisible' : [('show_reset_to_draft_button', '=', False), ('state', '=', 'verified')]}</attribute>
     </xpath>
 
+
+
+    <xpath expr="//notebook//page[@name='order_lines']//field[@name='order_line']//tree//field[@name='product_template_id']"
+           position="attributes">
+        <attribute
+                name="options">{'always_reload':True, 'no_create':True, 'no_quick_create':True, 'no_create_edit':True}</attribute>
+    </xpath>
+
+    <xpath expr="//notebook//page[@name='order_lines']//field[@name='order_line']//tree//field[@name='product_id']"
+           position="attributes">
+        <attribute
+                name="options">{'always_reload':True, 'no_create':True, 'no_quick_create':True, 'no_create_edit':True}</attribute>
+    </xpath>
+
+
 Удалить атрибут editable
 ===============================================
 xpath чтобы <tree string="Pricelist Rules" editable="bottom">  превратить в <tree string="Pricelist Rules">
