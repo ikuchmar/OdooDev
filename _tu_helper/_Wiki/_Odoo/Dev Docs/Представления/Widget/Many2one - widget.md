@@ -6,7 +6,9 @@ https://odoo-ua.com/blog/programuvannia-2/vidzheti-dlia-poliv-tipu-many2one-23
 
 По замовчанню він має деякі налаштування, що призводить до поведінки яка ... дратує. Часом сильно.
 
-1. Швидке створення.
+Швидке створення.
+============================================================
+
    Набираємо текст пошуку натискаємо Enter і ось у нас новий абсолютно непотрібний об'єкт в базі. А як клікнути мишкою -
    вилазить ось таке віконце
 
@@ -14,18 +16,24 @@ https://odoo-ua.com/blog/programuvannia-2/vidzheti-dlia-poliv-tipu-many2one-23
 
 Відключається опцією no_quick_create
 
-<field name="m2o_field" widget="Many2one" options="{'no_quick_create': True}"/>
-2. Створення (1) та Створення в режимі редагування (2).
+   <field name="m2o_field" widget="Many2one" options="{'no_quick_create': True}"/>
+
+Створення (1) та Створення в режимі редагування (2).
+============================================================
+
 Треба зауважити, що якщо в пов'язаній моделі є обов'язкові поля без значень за замовчанням окрім name, то перша опція не доступна.
 
 
 
 Відключаються опціями no_create та no_create_edit відповідно. Причому no_create відключає будь-яке створення
 
-<field name="m2o_field" widget="Many2one" options="{'no_create':True}"/>
+   <field name="m2o_field" widget="Many2one" options="{'no_create':True}"/>
 
-<field name="m2o_field" widget="Many2one" options="{'no_create_edit':True}"/>
-3. Редагування
+   <field name="m2o_field" widget="Many2one" options="{'no_create_edit':True}"/>
+
+Редагування
+============================================================
+
 Відкриття вікна для редагування кнопкою зліва від поля
 
 
@@ -34,31 +42,31 @@ https://odoo-ua.com/blog/programuvannia-2/vidzheti-dlia-poliv-tipu-many2one-23
 <field name="m2o_field" widget="Many2one" options="{'no_open':True}"/>
 Це ми поговорили про стандартний віджет. А що ще можна застосувати до цих полів
 
-Віджет selection
+# Віджет selection
 <field name="m2o_field" widget="selection"/>
 Виглядає як Many2one за опціями no_create та no_open, але не дає можливості пошуку і відображає всі значення (що може
 бути проблемою, якщо їх багато)
 
-Віджет selection_badge
+# Віджет selection_badge
 <field name="m2o_field" widget="selection_badge"/>
 В режимі редагування має вигляд кнопок, які можна вибрати. В стандартній темі альтернативні значення погано видно, а
 якщо значено багато - розтягується на декілька рядків
 
-Віджет statusbar
+# Віджет statusbar
 <field name="m2o_field" widget="statusbar" options="{'clickable': '1'}"/>
 Так віджет можна застосовувати не лише в хедері, а з опцією clickable - працює подібно до selection_bage, але
 альтернативні значення не пропадають, і нормально читаються
 
 Так само: красиво и зручно, лише коли значень декілька (3-5 приблизно)
 
-Віджет many2one_avatar
+# Віджет many2one_avatar
 <field name="m2o_field" widget="many2one_avatar"/>
 Щоб віджет працював коректно, в пов'язаній моделі має буди поле image_128 (от саме так, через параметри його змінити не
 вийде)
 
 В режимі перегляду додає маленький сабнейл зліва від назви
 
-Віджет radio
+# Віджет radio
 <field name="m2o_field" widget="radio"/>
 Видає значення як радіо інпути. Має проблеми з виглядом, якщо значень багато
 
