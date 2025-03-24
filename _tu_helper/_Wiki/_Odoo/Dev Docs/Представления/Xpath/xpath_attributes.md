@@ -6,6 +6,20 @@
         <attribute name="edit">1</attribute>
     </xpath>
 
+Вставка атрибута невидимости поля
+===============================================
+
+     <xpath expr="//field[@name='partner_id']" position="attributes">
+        <attribute name="invisible">1</attribute>
+     </xpath>
+
+Вставка атрибута style 
+===============================================
+    <xpath expr="//field[@name='name']" position="attributes">
+        <attribute name="style">background-color: green; color: white;</attribute>
+    </xpath>
+
+
 Подмена атрибутов field
 ===============================================
 
@@ -31,7 +45,6 @@
         <attribute
                 name="options">{'always_reload':True, 'no_create':True, 'no_quick_create':True, 'no_create_edit':True}</attribute>
     </xpath>
-
 
 Удалить атрибут editable
 ===============================================
