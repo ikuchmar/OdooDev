@@ -32,12 +32,15 @@ Name: Open Doc
 
 Program: путь к Python (например, python или полный путь C:\Python311\python.exe)
 
+Python 3.10 (Odoo_17) D:\Odoo_17\venv\Scripts\python.exe
+
 Arguments:
 --------------------
 "ПУТЬ_К_ПРОЕКТУ/tools/open_doc.py" $SelectedText$
 (замени ПУТЬ_К_ПРОЕКТУ на путь к папке context-docs)
 
 "D:\Work_Odoo\OdooDev\_tu_helper\_Wiki\context-docs\tools\context_doc.py" $SelectedText$
+"D:\Odoo\OdooDev\_tu_helper\_Wiki\context-docs\tools\context_doc.py" $SelectedText$
 
 Working directory:
 --------------------

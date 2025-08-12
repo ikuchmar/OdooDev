@@ -11,7 +11,7 @@ def add_prefix_to_files(folder_path, prefix):
             print(f"Переименован: {filename} → {new_name}")
 
 # Пример использования
-folder = r'D:\Entertaiment\Три мушкетера часть2'  # замените на нужный путь
-prefix = 'Mush32_'              # замените на нужный префикс
+folder = r'D:\Entertaimant\Три_мушкетера_трилогия\Dvadtsat_let_spustya'  # замените на нужный путь
+prefix = 'Mush361_'              # замените на нужный префикс
 
 add_prefix_to_files(folder, prefix)
