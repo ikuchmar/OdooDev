@@ -1,27 +1,18 @@
-==========================
 ## live-templates
-==========================
-PyCharm - Productivity - Шаблоны (Live Templates)
---------------------------------------------
-Шаблоны позволяют разворачивать аббревиатуры в код. Пример докстринга для Python.
-
+categories: Tools - PyCharm - Productivity
+aliases: templates, snippets
+Live Templates — автоподстановка кода по шаблонам.
 ```text
-Abbreviation: doc
-Template text:
-"""
-${DESCRIPTION}
-:param ${PARAM}: 
-:return: 
-"""
-Applicable: Python
+Key: 'def'
+Template: 'def $NAME$($PARAMS$):\n    $END$'
 ```
-## run-configuration
-PyCharm - Запуск - Конфигурации
-Создание конфигурации запуска скрипта с аргументами.
 
+---
+
+## debugger
+categories: Tools - PyCharm - Debug
+aliases: breakpoints
+Отладчик: точки остановок, инспекция переменных.
 ```text
-Run → Edit Configurations → + Python
-Script path: /path/to/app.py
-Parameters: --env=dev --debug
-Working dir: $ProjectFileDir$
+Use Shift+F9 to start debugging
 ```

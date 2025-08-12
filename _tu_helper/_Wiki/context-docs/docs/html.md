@@ -1,80 +1,32 @@
-
+===
+## ul-ol-li
 ---
-## html
-========================
-HTML - Базовые теги
-------------------------
-Тег `<html>` является корневым элементом HTML-документа. Он содержит все остальные элементы страницы.
-
+categories: Web - HTML - Списки
+aliases: lists, bullets
+HTML списки: маркированные (`ul`), нумерованные (`ol`) и элементы (`li`).
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+<ul><li>HTML</li><li>CSS</li></ul>
+```
+```html
+<ol><li>One</li><li>Two</li></ol>
 ```
 
 ---
-## head
-========================
-HTML - Базовые теги - Метаинформация
-Тег `<head>` содержит метаинформацию о документе: заголовок, кодировку, стили и скрипты.
 
+## <a> ссылки
+categories: Web - HTML - Текст
+aliases: link, anchor
+Тег ссылки `<a>` используется для переходов.
 ```html
-<head>
-    <meta charset="UTF-8">
-    <title>Заголовок страницы</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+<a href="https://example.com">пример</a>
 ```
 
-## body
-HTML - Базовые теги - Структура
-Тег `<body>` представляет основное содержимое HTML-документа, видимое пользователю на странице.
-
-```html
-<body>
-    <h1>Заголовок</h1>
-    <p>Текст страницы</p>
-</body>
-```
+---
 
 ## img
-HTML - Базовые теги - Изображения
-Тег `<img>` используется для отображения изображений. Он должен содержать атрибут `src`.
-
+categories: Web - HTML - Медиа
+aliases: image, picture
+Тег изображения `<img>` встраивает картинку.
 ```html
-<img src="image.jpg" alt="Описание изображения">
-```
-
-## a
-HTML - Базовые теги - Ссылки
-Тег `<a>` используется для создания гиперссылок.
-
-```html
-<a href="https://example.com">Перейти на сайт</a>
-```
-
-## form
-HTML - Формы - Базовое
-Тег `<form>` используется для создания формы, которая может отправлять данные на сервер.
-
-```html
-<form action="/submit" method="post">
-    <input type="text" name="username" placeholder="Имя">
-    <button type="submit">Отправить</button>
-</form>
-```
-
-## input
-HTML - Формы - Поля ввода
-Тег `<input>` представляет поле ввода данных.
-
-```html
-<input type="text" name="username" placeholder="Введите имя">
+<img src="logo.png" alt="Логотип">
 ```

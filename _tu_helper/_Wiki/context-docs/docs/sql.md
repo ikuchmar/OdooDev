@@ -1,24 +1,20 @@
-==========================
-## create-table
-==========================
-SQL - DDL - Создание таблиц
---------------------------------------------
-Пример создания таблицы.
-
+===
+## join-types
+---
+categories: DB - SQL - JOIN
+aliases: inner left right
+Типы соединений: INNER, LEFT, RIGHT, FULL.
 ```sql
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL,
-  created_at TIMESTAMP DEFAULT now()
-);
+SELECT * FROM a INNER JOIN b ON a.id=b.a_id
 ```
-## select-join
-SQL - DQL - Запросы
-Соединение таблиц.
 
+---
+
+## window-functions
+categories: DB - SQL - Window
+aliases: over, partition
+Оконные функции позволяют вычислять агрегаты по окнам.
 ```sql
-SELECT u.name, o.total
-FROM users u
-JOIN orders o ON o.user_id = u.id
-WHERE o.total > 100;
+SELECT id, value, SUM(value) OVER (PARTITION BY grp ORDER BY id)
+FROM t
 ```

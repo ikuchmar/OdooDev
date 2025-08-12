@@ -1,41 +1,23 @@
-==========================
-## readme
-==========================
-GitHub - Репозиторий - README
---------------------------------------------
-Шаблон минимального README.
-
-```markdown
-# Project Name
-Short description.
-
-## Setup
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+## pull-request
+categories: Dev - GitHub - Workflow
+aliases: pr, merge request
+Pull Request — предложение изменений с обсуждением.
+```text
+Open PR -> request reviews -> fix -> merge
 ```
 
-## Usage
-```bash
-python app.py
-```
-```
-## actions-ci
-GitHub - CI - Actions
-Пример workflow для Python.
+---
 
+## actions
+categories: Dev - GitHub - CI
+aliases: workflow, gha
+GitHub Actions — CI/CD на основе workflow-файлов.
 ```yaml
 name: CI
-on: [push, pull_request]
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - run: pip install -r requirements.txt
-      - run: pytest -q
 ```

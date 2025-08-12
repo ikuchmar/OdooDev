@@ -1,30 +1,22 @@
-==========================
-## selectors
-==========================
-CSS - Основы - Селекторы
---------------------------------------------
-Селекторы определяют, к каким элементам применять стили.
-
+## flexbox
+categories: Web - CSS - Макеты
+aliases: flex, flex-box
+Flexbox — система раскладки для одномерных макетов.
 ```css
-/* По тегу */
-p { margin: 0; }
-/* По классу */
-.card { padding: 1rem; }
-/* По id */
-#main { max-width: 960px; }
-/* Атрибутный */
-input[type="text"] { border: 1px solid #ccc; }
+container { display: flex; gap: 8px; }
 ```
-## flex
-CSS - Макеты - Flexbox
-Flexbox упрощает построение одномерных макетов.
-
 ```css
-.container {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-}
-.container > .item { flex: 1; }
+.item { flex: 1 1 auto; }
+```
+
+---
+
+===
+## grid
+---
+categories: Web - CSS - Макеты
+aliases: css grid
+CSS Grid — мощная двумерная раскладка.
+```css
+container { display: grid; grid-template-columns: 1fr 1fr; }
 ```

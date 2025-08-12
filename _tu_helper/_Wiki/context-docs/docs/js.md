@@ -1,28 +1,20 @@
+## array-methods
+categories: Web - JavaScript - Массивы
+aliases: map, filter, reduce
+Частые методы массивов: map, filter, reduce.
+```javascript
+[1,2,3].map(x=>x*2)
+```
+```javascript
+[1,2,3].filter(x=>x%2===0)
+```
+
 ---
 
-## fetch
-==========================
-JavaScript - Сеть - HTTP
---------------------------------------------
-Функция `fetch` отправляет HTTP-запрос и возвращает промис с ответом.
-
+## this
+categories: Web - JavaScript - Контекст
+aliases: context
+Ключевое слово `this` зависит от способа вызова функции.
 ```javascript
-async function loadUsers() {
-  const res = await fetch("/api/users");
-  if (!res.ok) throw new Error(res.statusText);
-  const data = await res.json();
-  console.log(data);
-}
+function f(){ console.log(this); }
 ```
-## addEventListener
-JavaScript - DOM - События
-Регистрирует обработчик события у элемента.
-
-```javascript
-const btn = document.querySelector("#save");
-btn.addEventListener("click", (e) => {
-  e.preventDefault();
-  console.log("Saved!");
-});
-```
-

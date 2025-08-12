@@ -1,19 +1,19 @@
-==========================
-## def
-==========================
-Python - Синтаксис - Функции
---------------------------------------------
-Определение функции с аннотациями типов и докстрингом.
-
+===
+## dict-comprehension
+---
+categories: Backend - Python - Коллекции
+aliases: dictcomp
+Словарные включения позволяют строить словари из итерируемых.
 ```python
-def greet(name: str) -> str:
-    """Возвращает приветствие для пользователя."""
-    return f"Hello, {name}!"
+{x: x*x for x in range(5)}
 ```
-## list-comprehension
-Python - Синтаксис - Коллекции
-Короткая запись создания списков.
 
+---
+
+## typing
+categories: Backend - Python - Типизация
+aliases: type hints
+Подсказки типов помогают статическому анализу.
 ```python
-squares = [x*x for x in range(10) if x % 2 == 0]
+from typing import List, Dict
 ```
