@@ -2,6 +2,7 @@
 ## ul-ol-li
 ---
 categories: Web - HTML - Списки
+categories: Web - HTML - Теги
 aliases: lists, bullets
 HTML списки: маркированные (`ul`), нумерованные (`ol`) и элементы (`li`).
 ```html
