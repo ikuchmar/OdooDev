@@ -1,12 +1,13 @@
+# ui_app.py
 # -*- coding: utf-8 -*-
 """
 Tkinter-интерфейс: одно дерево категорий, справа markdown+путь и кодовые блоки,
-сверху поиск через Combobox.
+сверху поиск через Combobox + кнопки истории (◀ ▶).
 """
 
 from __future__ import annotations
 import webbrowser
-from typing import Dict, List, Optional
+from typing import Dict, Optional, List
 
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -28,7 +29,7 @@ class App:
         root.geometry("1150x780")
         root.minsize(900, 600)
 
-        # 1) читаем корни и собираем секции
+        # корни и секции
         self.doc_roots = read_doc_roots()
         self.all_files, self.sections = collect_sections_from_roots(self.doc_roots)
 
@@ -44,26 +45,32 @@ class App:
                 "Проверьте, что заголовки начинаются с '#' или '##'."
             )
 
-        # 2) индекс для поиска
+        # индекс
         self.index = SearchIndex(self.sections)
 
-        # текущее состояние
+        # состояние: текущая секция и ИСТОРИЯ поиска/открытий
         self.current_section: Optional[Section] = None
+        self.history: List[str] = []     # храним КЛЮЧИ
+        self.hist_idx: int = -1          # -1 = пусто
 
-        # 3) UI
         self._build_topbar()
         self._build_body()
         self._fill_categories_tree()
 
-        # 4) стартовый запрос из аргумента
         if initial_query:
             self.search_combo.set(initial_query)
-            self.open_best_from_combo()
+            self.open_best_from_combo()  # это добавит запись в историю
 
-    # ---------------- верхняя панель (поиск) ----------------
+    # ---------------- верхняя панель (поиск + история) ----------------
     def _build_topbar(self) -> None:
         top = ttk.Frame(self.root, padding=6)
         top.pack(side=tk.TOP, fill=tk.X)
+
+        # кнопки истории
+        self.btn_back = ttk.Button(top, text="◀", width=3, command=self.nav_back)
+        self.btn_back.pack(side=tk.LEFT, padx=(0, 4))
+        self.btn_fwd  = ttk.Button(top, text="▶", width=3, command=self.nav_forward)
+        self.btn_fwd.pack(side=tk.LEFT, padx=(0, 10))
 
         ttk.Label(top, text="Поиск по ключу:").pack(side=tk.LEFT, padx=(0, 6))
 
@@ -78,6 +85,8 @@ class App:
 
         ttk.Button(top, text="Открыть", command=self.open_best_from_combo).pack(side=tk.LEFT, padx=6)
         ttk.Button(top, text="Найти в дереве", command=self.locate_in_tree).pack(side=tk.LEFT)
+
+        self._update_hist_buttons()
 
     # ---------------- тело окна ----------------
     def _build_body(self) -> None:
@@ -158,7 +167,6 @@ class App:
         else:
             ordered = keys
 
-        # человеко-читаемые подписи
         out = []
         for k in ordered:
             sec = self.index.by_key.get(k)
@@ -176,6 +184,7 @@ class App:
         return raw
 
     def open_best_from_combo(self) -> None:
+        """Открыть лучшую секцию под введённый текст + добавить в историю."""
         q = self._extract_key_from_combo()
         if not q:
             messagebox.showinfo("Поиск", "Введите ключ для поиска.")
@@ -184,7 +193,7 @@ class App:
         if not sec:
             messagebox.showinfo("Поиск", f"Ничего не найдено для: {q}")
             return
-        self.open_section(sec)
+        self.open_section(sec, add_to_history=True)
 
     # ---------------- открытие секции ----------------
     def _on_tree_activate(self, event=None) -> None:
@@ -197,9 +206,10 @@ class App:
         key = text[2:].strip()
         sec = self.index.by_key.get(key)
         if sec:
-            self.open_section(sec)
+            self.open_section(sec, add_to_history=True)
 
-    def open_section(self, sec: Section) -> None:
+    def open_section(self, sec: Section, add_to_history: bool) -> None:
+        """Показать секцию и при необходимости добавить запись в историю."""
         self.current_section = sec
 
         header = f"# {sec.display_key}"
@@ -210,7 +220,7 @@ class App:
             self.md_text.insert("end", sec.markdown)
         self.md_text.configure(state="disabled")
 
-        # Путь к файлу
+        # путь к файлу
         try:
             self.path_value.configure(state="normal")
             self.path_value.delete(0, "end")
@@ -218,7 +228,7 @@ class App:
         finally:
             self.path_value.configure(state="readonly")
 
-        # Код-блоки
+        # код-блоки
         if sec.codes:
             items = [f"Блок #{i+1} — {len(c.splitlines())} строк" for i, c in enumerate(sec.codes)]
             self.code_combo["values"] = items
@@ -227,6 +237,17 @@ class App:
             self.code_combo["values"] = ["— нет кода —"]
             self.code_combo.current(0)
         self._update_code_view()
+
+        # история
+        if add_to_history:
+            # если мы были «внутри истории» (не на последнем элементе) — обрежем хвост
+            if self.hist_idx < len(self.history) - 1:
+                self.history = self.history[: self.hist_idx + 1]
+            # кладём ключ; если предыдущий совпадает — не дублируем
+            if not self.history or self.history[-1] != sec.key:
+                self.history.append(sec.key)
+            self.hist_idx = len(self.history) - 1
+            self._update_hist_buttons()
 
     # ---------------- кодовые блоки / буфер ----------------
     def _update_code_view(self) -> None:
@@ -267,7 +288,7 @@ class App:
             return
         webbrowser.open(self.current_section.file_path.resolve().as_uri())
 
-    # ---------------- позиционирование в дереве ----------------
+    # ---------------- позиционирование и история ----------------
     def locate_in_tree(self) -> None:
         if not self.current_section:
             messagebox.showinfo("Навигация", "Сначала откройте секцию.")
@@ -293,3 +314,30 @@ class App:
             return False
 
         walk("")
+
+    def nav_back(self) -> None:
+        """Шаг назад по истории (если есть)."""
+        if self.hist_idx > 0:
+            self.hist_idx -= 1
+            key = self.history[self.hist_idx]
+            sec = self.index.by_key.get(key)
+            if sec:
+                # при навигации по истории НЕ добавляем запись в историю
+                self.open_section(sec, add_to_history=False)
+            self._update_hist_buttons()
+
+    def nav_forward(self) -> None:
+        """Шаг вперёд по истории (если есть)."""
+        if 0 <= self.hist_idx < len(self.history) - 1:
+            self.hist_idx += 1
+            key = self.history[self.hist_idx]
+            sec = self.index.by_key.get(key)
+            if sec:
+                self.open_section(sec, add_to_history=False)
+            self._update_hist_buttons()
+
+    def _update_hist_buttons(self) -> None:
+        """Активировать/деактивировать кнопки ◀ ▶ в зависимости от позиции."""
+        self.btn_back.configure(state=("normal" if self.hist_idx > 0 else "disabled"))
+        enable_fwd = (0 <= self.hist_idx < len(self.history) - 1)
+        self.btn_fwd.configure(state=("normal" if enable_fwd else "disabled"))
