@@ -1,634 +1,700 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Context Docs Viewer — локальный просмотрщик документации из Markdown с расширенным поиском.
-Один файл. Только стандартная библиотека. Python 3.8+.
+Context Docs Viewer — простой локальный просмотрщик документации из Markdown.
 
-СТРУКТУРА КОДА (соблюдена как в задании):
-1) Докстринг (вы здесь)
-2) Импорты
-3) Константы
-4) Парсинг Markdown (.md)
-5) Поиск (точный, подстрочный, "fuzzy" + токенизация)
-6) Построение деревьев (категории, файлы)
-7) Утилиты (нормализация, открытие файла, буфер обмена)
-8) Класс App_UI (UI по точной схеме)
-9) main()
-10) if __name__ == '__main__': main()
+ОСОБЕННОСТИ:
+- Папки с документациями перечисляются в файле doc_roots.txt (рядом со скриптом), по ОДНОЙ на строку.
+  Пустые строки и строки, начинающиеся с '#', игнорируются. Пути можно указывать относительные (относительно doc_roots.txt).
+  Если валидных путей нет — используем ../docs (относительно папки со скриптом).
 
-Как пользоваться:
-- Запуск без аргумента: python context_doc.py
-- Запуск с автопоиском: python context_doc.py "ul-ol-li"
-- По умолчанию сканируем папку docs/, которая должна быть НА УРОВЕНЬ ВЫШЕ скрипта.
-  Т.е. структура: <project>/tools/context_doc.py и <project>/docs/*.md
+- Формат .md (упрощённый, «терпимый»):
+    ---
+    # или ## (любой уровень)  <ключ>
+    ==========================
+    aliases: a1, a2, a3       (необязательно, можно где-то после заголовка)
+    categories: A - B - C     (может быть несколько строк categories:)
+    categories: X - Y
+    (можно пустые/---/=== строки)
+    <Произвольный markdown до следующего заголовка #...>
+
+  Разделители (===/---) и пустые строки игнорируются парсером.
+  Кодовые блоки в ```...``` извлекаются в список «сниппетов» (без тройных бэктиков).
+
+- Поиск через Combobox (state="normal"):
+  Подсказки обновляются на каждый ввод; порядок: Точное совпадение → Подстроки → Fuzzy.
+  Пункт отображается как: "<ключ>    —    <имя_файла.md>".
+
+- Дерево категорий:
+  ОДНА и та же секция может появляться несколько раз (если categories: несколько).
+  Для каждой вставки генерируется уникальный iid: "sec::<key>::<abs_path>::<instance>".
+
+- Справа показывается: Markdown секции и ПУТЬ к файлу (под Markdown), ниже — список код-блоков и текст кода.
+
+Зависимости: стандартная библиотека (tkinter, pathlib, re, difflib, webbrowser).
+Python 3.8+
 """
 
-# =======================
-# 2) ИМПОРТЫ
-# =======================
-import os
-import re
+from __future__ import annotations
 import sys
-import json
-import math
+import re
 import difflib
+import webbrowser
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import List, Dict, Optional, Tuple
+
 import tkinter as tk
 from tkinter import ttk, messagebox
-from dataclasses import dataclass, field
-from typing import List, Dict, Tuple, Optional
+from tkinter.scrolledtext import ScrolledText
 
-# =======================
-# 3) КОНСТАНТЫ
-# =======================
+# --------------------------------------------------------------------
+# ПУТИ/НАСТРОЙКИ
+# --------------------------------------------------------------------
 
-DEFAULT_DOCS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, "docs"))
-IGNORE_DIRS = {"node_modules", ".git", "site", ".venv", "venv", "__pycache__"}
+APP_TITLE = "Context Docs Viewer"
 
-RE_HEADER = re.compile(r'^##\s+(.+?)\s*$', re.IGNORECASE)
-RE_SEPARATOR = re.compile(r'^\s*(?:={3,}|-{3,})\s*$')
-RE_CATEGORIES = re.compile(r'^\s*categories\s*:\s*(.+)$', re.IGNORECASE)
-RE_ALIASES = re.compile(r'^\s*aliases\s*:\s*(.+)$', re.IGNORECASE)
-RE_CODE_FENCE = re.compile(r'^```([\w#+.-]*)\s*$')
+# Файл со списком корней документаций (рядом со скриптом)
+DOC_ROOTS_FILE = Path(__file__).resolve().parent / "doc_roots.txt"
+# Запасной путь (если файл не найден или пуст)
+DEFAULT_FALLBACK_DOCS = (Path(__file__).resolve().parent.parent / "docs")
 
-# =======================
-# 4) СТРУКТУРЫ ДАННЫХ
-# =======================
+# Папки, которые не сканируем
+IGNORE_DIRS = {"site", "node_modules", ".git", ".venv", "venv", "__pycache__"}
 
-@dataclass
-class CodeBlock:
-    lang: str
-    code: str
+# Регулярные выражения (простые и «терпимые»)
+SEP_LINE_RE       = re.compile(r"^\s*[=\-]{3,}\s*$")          # строки из === или --- (любая длина, пробелы ок)
+HEADER_RE         = re.compile(r"^\s*#{1,6}\s+(.+?)\s*$")     # заголовок секции: #, ##, ..., ###### + текст
+ALIASES_RE        = re.compile(r"^\s*aliases\s*:\s*(.+)\s*$", re.I)     # aliases: a, b, c
+CATEGORIES_RE     = re.compile(r"^\s*categories\s*:\s*(.+)\s*$", re.I)  # categories: A - B - C
+FENCE_START_RE    = re.compile(r"^\s*```([^\s`]+)?\s*$")      # начало код-блока: ```lang (lang опционален)
+FENCE_END_RE      = re.compile(r"^\s*```\s*$")                # конец код-блока: ```
+TOKEN_SPLIT_RE    = re.compile(r"[^a-z0-9_]+")                # разбиение на токены для поиска
+
+
+# --------------------------------------------------------------------
+# МОДЕЛИ ДАННЫХ
+# --------------------------------------------------------------------
 
 @dataclass
 class Section:
-    display_key: str
-    key: str
-    tokens: List[str]
-    categories: List[str]
-    aliases: List[str]
-    file_path: str
-    rel_path: str
-    start_line: int
-    markdown: str
-    code_blocks: List[CodeBlock] = field(default_factory=list)
+    """
+    Одна секция документации.
+    """
+    key: str                         # нормализованный ключ (lower)
+    display_key: str                 # «как написано» в заголовке (для показа)
+    aliases: List[str]               # алиасы (lower)
+    categories_list: List[List[str]] # список путей категорий (каждый путь = список уровней)
+    markdown: str                    # ПОЛНЫЙ markdown ТЕКСТ секции (без строк aliases/categories)
+    codes: List[str]                 # кодовые блоки (без тройных бэктиков)
+    file_path: Path                  # исходный .md
+    start_line: int                  # строка в файле (для отладки)
 
-Sections = List[Section]
 
-# =======================
-# 4) ПАРСИНГ
-# =======================
+# --------------------------------------------------------------------
+# ПОЛЕЗНЫЕ ФУНКЦИИ
+# --------------------------------------------------------------------
 
-def normalize_text(s: str) -> str:
-    s = s.strip().lower()
-    s = re.sub(r'\s+', ' ', s)
-    return s
+def normalize_key(s: str) -> str:
+    """Нормализация ключей/запросов: нижний регистр, обрезка пробелов."""
+    return (s or "").strip().lower()
 
-def tokenize_key(s: str) -> List[str]:
-    s = normalize_text(s)
-    tokens = re.split(r'[^a-z0-9_]+', s)
-    return [t for t in tokens if t]
+def tokenize(s: str) -> List[str]:
+    """Разбить строку на токены по небуквенно-цифровым (кроме '_')."""
+    s = normalize_key(s)
+    return [t for t in TOKEN_SPLIT_RE.split(s) if t]
 
-def try_read_text(path: str) -> Optional[str]:
-    for enc in ('utf-8', 'cp1251'):
-        try:
-            with open(path, 'r', encoding=enc, errors='strict') as f:
-                return f.read()
-        except Exception:
-            continue
-    return None
+def is_sep_line(s: str) -> bool:
+    """Является ли строка разделителем ===/--- (с учётом пробелов)."""
+    return bool(SEP_LINE_RE.match(s or ""))
 
-def iterate_md_files(root: str) -> List[str]:
-    md_paths = []
-    for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [d for d in dirnames if d not in IGNORE_DIRS]
-        for name in filenames:
-            if name.lower().endswith('.md'):
-                md_paths.append(os.path.join(dirpath, name))
-    return md_paths
 
-def parse_markdown_sections(file_path: str, docs_root: str) -> Sections:
-    text = try_read_text(file_path)
-    if text is None:
-        return []
+# --------------------------------------------------------------------
+# ЧТЕНИЕ doc_roots.txt
+# --------------------------------------------------------------------
+
+def read_doc_roots() -> List[Path]:
+    """
+    Читает doc_roots.txt (рядом со скриптом) и возвращает список существующих папок.
+    Если валидных путей нет — возвращает [../docs].
+    """
+    roots: List[Path] = []
+    if DOC_ROOTS_FILE.exists():
+        base = DOC_ROOTS_FILE.parent
+        for raw in DOC_ROOTS_FILE.read_text(encoding="utf-8", errors="ignore").splitlines():
+            line = raw.strip()
+            if not line or line.startswith("#"):
+                continue
+            p = Path(line)
+            if not p.is_absolute():
+                p = (base / p).resolve()
+            if p.exists() and p.is_dir():
+                roots.append(p)
+    if not roots:
+        fb = DEFAULT_FALLBACK_DOCS.resolve()
+        if fb.exists() and fb.is_dir():
+            roots.append(fb)
+    return roots
+
+
+# --------------------------------------------------------------------
+# ПАРСИНГ ОДНОГО .MD ФАЙЛА
+# --------------------------------------------------------------------
+
+def parse_md_file(md_path: Path) -> List[Section]:
+    """
+    Разбирает ОДИН .md на список Section.
+    Логика:
+      - Секция начинается с заголовка уровня 1..6: строка "# ...", "## ...", ..., "###### ..."
+      - После заголовка читаем «мета»-строки: любые количества "aliases:" и "categories:" (в любом порядке),
+        пропуская пустые/разделители.
+      - Затем — произвольный Markdown до следующего заголовка.
+      - В codes складываем содержимое ```...``` (без ограждений).
+      - В markdown складываем контент БЕЗ строк aliases/categories (чтобы в тексте не дублировать).
+    """
+    text = md_path.read_text(encoding="utf-8", errors="ignore")
     lines = text.splitlines()
-    sections: Sections = []
+    n = len(lines)
+    sections: List[Section] = []
 
-    i = 0
-    while i < len(lines):
-        m = RE_HEADER.match(lines[i])
+    # Ищем все заголовки 1..6 уровня
+    headers = [i for i, line in enumerate(lines) if HEADER_RE.match(line)]
+    if not headers:
+        return sections
+    headers.append(n)  # виртуальный конец
+
+    for idx in range(len(headers) - 1):
+        start = headers[idx]
+        end   = headers[idx + 1]
+
+        m = HEADER_RE.match(lines[start])
         if not m:
-            i += 1
             continue
 
         display_key = m.group(1).strip()
-        key_norm = normalize_text(display_key)
-        tokens = tokenize_key(display_key)
+        key = normalize_key(display_key)
 
-        categories: List[str] = []
-        aliases: List[str] = []
+        i = start + 1  # курсор на строку после заголовка
 
-        i += 1
-        while i < len(lines) and RE_SEPARATOR.match(lines[i]):
+        # пропускаем пустые и разделители
+        while i < end and (not lines[i].strip() or is_sep_line(lines[i])):
             i += 1
 
-        while i < len(lines):
-            if RE_HEADER.match(lines[i]):
-                break
-            if not lines[i].strip():
+        # читаем мета-блок: aliases:/categories: (в любом порядке; categories может быть много раз)
+        aliases: List[str] = []
+        categories_list: List[List[str]] = []
+
+        while i < end:
+            s = lines[i].strip()
+            if not s or is_sep_line(s):
                 i += 1
                 continue
-            mc = RE_CATEGORIES.match(lines[i])
-            if mc:
-                categories = [p.strip() for p in re.split(r'\s*-\s*', mc.group(1).strip()) if p.strip()]
-                i += 1
-                continue
-            ma = RE_ALIASES.match(lines[i])
+
+            ma = ALIASES_RE.match(s)
             if ma:
-                parts = re.split(r'[;,]\s*|\s+', ma.group(1).strip())
-                aliases = [normalize_text(p) for p in parts if p.strip()]
+                raw = ma.group(1)
+                for a in re.split(r"[,\s;]+", raw):
+                    a = normalize_key(a)
+                    if a:
+                        aliases.append(a)
                 i += 1
                 continue
+
+            mc = CATEGORIES_RE.match(s)
+            if mc:
+                cat_line = mc.group(1).strip()
+                if " - " in cat_line:
+                    levels = [p.strip() for p in cat_line.split(" - ") if p.strip()]
+                else:
+                    levels = [cat_line] if cat_line else []
+                if levels:
+                    categories_list.append(levels)
+                i += 1
+                continue
+
+            # попалась НЕ мета-строка — начинается контент
             break
 
-        start_line = i
-        content_lines = []
-        while i < len(lines) and not RE_HEADER.match(lines[i]):
-            content_lines.append(lines[i])
-            i += 1
-        markdown = "\n".join(content_lines).strip("\n")
+        # контент секции от i до end
+        content_lines = lines[i:end]
 
-        code_blocks: List[CodeBlock] = []
+        # извлекаем кодовые блоки ```...``` (без ограждений)
+        codes: List[str] = []
         in_code = False
-        code_lang = ""
-        buf = []
-
-        for ln in content_lines:
-            mc = RE_CODE_FENCE.match(ln)
-            if mc:
-                if not in_code:
-                    in_code = True
-                    code_lang = (mc.group(1) or "").strip()
-                    buf = []
-                else:
-                    code_blocks.append(CodeBlock(lang=code_lang, code="\n".join(buf)))
-                    in_code = False
-                    code_lang = ""
-                    buf = []
+        current: List[str] = []
+        for line in content_lines:
+            if not in_code and FENCE_START_RE.match(line):
+                in_code = True
+                current = []
+                continue
+            if in_code and FENCE_END_RE.match(line):
+                codes.append("\n".join(current))
+                in_code = False
+                current = []
                 continue
             if in_code:
-                buf.append(ln)
-        if in_code:
-            code_blocks.append(CodeBlock(lang=code_lang, code="\n".join(buf)))
+                current.append(line)
+        if in_code and current:
+            codes.append("\n".join(current))  # на случай незакрытого блока
 
-        rel_path = os.path.relpath(file_path, docs_root)
+        markdown = "\n".join(content_lines).strip()
 
         sections.append(Section(
+            key=key,
             display_key=display_key,
-            key=key_norm,
-            tokens=tokens,
-            categories=categories,
             aliases=aliases,
-            file_path=file_path,
-            rel_path=rel_path,
-            start_line=start_line + 1,
+            categories_list=categories_list,
             markdown=markdown,
-            code_blocks=code_blocks,
+            codes=codes,
+            file_path=md_path,
+            start_line=start + 1
         ))
+
     return sections
 
-def load_all_sections(docs_root: str) -> Sections:
-    sections: Sections = []
-    for path in iterate_md_files(docs_root):
-        sections.extend(parse_markdown_sections(path, docs_root))
-    return sections
 
-# =======================
-# 5) ПОИСК
-# =======================
+# --------------------------------------------------------------------
+# СБОР ВСЕХ ФАЙЛОВ/СЕКЦИЙ ИЗ КОРНЕЙ
+# --------------------------------------------------------------------
 
-def unique_preserve_order(items: List[Section]) -> List[Section]:
-    seen = set()
-    out = []
-    for it in items:
-        if id(it) not in seen:
-            seen.add(id(it))
-            out.append(it)
-    return out
+def collect_sections_from_roots(roots: List[Path]) -> Tuple[List[Path], List[Section]]:
+    """
+    Идём по всем корневым папкам, собираем *.md (кроме IGNORE_DIRS), парсим секции.
+    Возвращаем список файлов и список секций.
+    """
+    files: List[Path] = []
+    sections: List[Section] = []
+    for root in roots:
+        for p in sorted(root.rglob("*.md")):
+            # пропускаем нежелательные каталоги
+            if any(part in IGNORE_DIRS for part in p.parts):
+                continue
+            files.append(p)
+            sections.extend(parse_md_file(p))
+    return files, sections
 
-def search_sections(sections: Sections, query: str) -> Tuple[Optional[Section], List[Section]]:
-    q = normalize_text(query)
-    if not q:
-        return None, []
-    q_tokens = tokenize_key(q)
 
-    for s in sections:
-        if s.key == q:
-            candidates = [s] + [c for c in sections if c is not s and (q in c.key or q in " ".join(c.aliases))]
-            return s, unique_preserve_order(candidates)
+# --------------------------------------------------------------------
+# ИНДЕКС/ПОИСК
+# --------------------------------------------------------------------
 
-    for s in sections:
-        if q in s.aliases:
-            candidates = [s] + [c for c in sections if c is not s and (q in c.key or q in " ".join(c.aliases))]
-            return s, unique_preserve_order(candidates)
+class SearchIndex:
+    """
+    Индекс для поиска: ключи, алиасы, токены.
+    """
+    def __init__(self, sections: List[Section]):
+        # ключ -> Section (если дубликаты — берём первый встретившийся)
+        self.by_key: Dict[str, Section] = {}
+        # алиас -> ключ
+        self.alias_to_key: Dict[str, str] = {}
+        # токен -> множество ключей
+        self.token_to_keys: Dict[str, set] = {}
+        # множество строк для fuzzy
+        self.universe: set = set()
 
-    scored = []
-    for s in sections:
-        score = 0
-        if q in s.key:
-            score += 3
-        if any(q in a for a in s.aliases):
-            score += 2
-        if q_tokens:
-            inter = len(set(q_tokens).intersection(set(s.tokens)))
-            if inter:
-                score += 1 + inter
-        if score > 0:
-            scored.append((score, s))
-    scored.sort(key=lambda t: (-t[0], t[1].display_key))
+        for s in sections:
+            if s.key not in self.by_key:
+                self.by_key[s.key] = s
+            self.universe.add(s.key)
+            for t in tokenize(s.key):
+                self.token_to_keys.setdefault(t, set()).add(s.key)
+                self.universe.add(t)
+            for a in s.aliases:
+                self.alias_to_key[a] = s.key
+                self.universe.add(a)
+                for t in tokenize(a):
+                    self.token_to_keys.setdefault(t, set()).add(s.key)
+                    self.universe.add(t)
 
-    label_to_section: Dict[str, Section] = {}
-    for s in sections:
-        label_to_section[s.display_key] = s
-        for a in s.aliases:
-            label_to_section[a] = s
+    def suggest(self, q: str, limit: int = 50) -> List[str]:
+        """
+        Подсказки (список КЛЮЧЕЙ) для Combobox.
+        Порядок: точные → подстроки (ключи, алиасы, токены) → fuzzy. Уникальные. До limit.
+        """
+        q = normalize_key(q)
+        results: List[str] = []
 
-    fuzzy_labels = difflib.get_close_matches(q, label_to_section.keys(), n=10, cutoff=0.6)
-    fuzzy_candidates = [label_to_section[lbl] for lbl in fuzzy_labels]
+        if not q:
+            # без запроса — просто отсортированный список ключей (но ограничим)
+            return sorted(self.by_key.keys())[:limit]
 
-    combined = unique_preserve_order([s for _, s in scored] + fuzzy_candidates)
-    return None, combined
+        # 1) точное
+        if q in self.by_key:
+            results.append(q)
 
-# =======================
-# 6) ДЕРЕВЬЯ ДЛЯ UI
-# =======================
+        # 2) подстроки по ключам
+        subs_keys = [k for k in self.by_key if q in k and k not in results]
+        subs_keys.sort(key=lambda k: (k.find(q), len(k)))
+        results.extend(subs_keys)
 
-def build_category_tree(sections: Sections) -> Dict:
-    root: Dict = {}
-    for s in sections:
-        node = root
-        for part in s.categories or ["Без категории"]:
-            node = node.setdefault(part, {})
-        node.setdefault("__sections__", []).append(s)
-    return root
+        # 3) подстроки по алиасам
+        alias_hits = [self.alias_to_key[a] for a in self.alias_to_key if q in a]
+        for k in alias_hits:
+            if k not in results:
+                results.append(k)
 
-def build_files_tree(sections: Sections, docs_root: str) -> Dict:
-    tree: Dict = {}
-    for s in sections:
-        rel = s.rel_path.replace("\\", "/")
-        parts = rel.split("/")
-        node = tree
-        for p in parts[:-1]:
-            node = node.setdefault(p, {})
-        node.setdefault(parts[-1], []).append(s)
-    return tree
+        # 4) подстроки по токенам
+        for t, keys in self.token_to_keys.items():
+            if q in t:
+                for k in keys:
+                    if k not in results:
+                        results.append(k)
 
-# =======================
-# 7) УТИЛИТЫ
-# =======================
+        # 5) fuzzy
+        if len(results) < limit:
+            near = difflib.get_close_matches(q, list(self.universe), n=limit, cutoff=0.7)
+            for s in near:
+                if s in self.by_key and s not in results:
+                    results.append(s)
+                elif s in self.alias_to_key:
+                    k = self.alias_to_key[s]
+                    if k not in results:
+                        results.append(k)
+                elif s in self.token_to_keys:
+                    for k in self.token_to_keys[s]:
+                        if k not in results:
+                            results.append(k)
 
-def open_in_system(path: str) -> None:
-    try:
-        if sys.platform.startswith("win"):
-            os.startfile(path)  # type: ignore[attr-defined]
-        elif sys.platform == "darwin":
-            os.system(f'open "{path}"')
-        else:
-            os.system(f'xdg-open "{path}"')
-    except Exception as e:
-        messagebox.showerror("Ошибка", f"Не удалось открыть файл:\n{e}")
+        return results[:limit]
 
-def to_clipboard(root: tk.Tk, text: str) -> None:
-    try:
-        root.clipboard_clear()
-        root.clipboard_append(text)
-    except Exception:
-        pass
+    def find_best(self, q: str) -> Optional[Section]:
+        """Лучшая секция под запрос: точное совпадение → первая из suggest()."""
+        q = normalize_key(q)
+        if not q:
+            return None
+        if q in self.by_key:
+            return self.by_key[q]
+        sug = self.suggest(q, limit=1)
+        if sug:
+            return self.by_key.get(sug[0])
+        return None
 
-# =======================
-# 8) UI
-# =======================
 
-class App_UI:
-    def __init__(self, root: tk.Tk, sections: Sections, docs_root: str, initial_query: str = ""):
+# --------------------------------------------------------------------
+# ДЕРЕВО КАТЕГОРИЙ (вставка секций)
+# --------------------------------------------------------------------
+
+def add_section_to_tree(tree: ttk.Treeview, root_id: str, cat_path: List[str],
+                        section: Section, instance_number: int) -> None:
+    """
+    Вставляет секцию по пути категорий (cat_path).
+    Генерирует УНИКАЛЬНЫЙ iid для §-узла:
+      "sec::<key>::<abs_path>::<instance_number>"
+    """
+    parent = root_id
+
+    # Проходим по уровням категорий и создаём узлы, если их ещё нет
+    for level in cat_path:
+        # Ищем среди детей узел с таким же «text»
+        found = None
+        for child in tree.get_children(parent):
+            if tree.item(child, "text") == level:
+                found = child
+                break
+        if found is None:
+            found = tree.insert(parent, "end", text=level, open=False)
+        parent = found
+
+    # Лист — сама секция
+    unique_iid = f"sec::{section.key}::{section.file_path.resolve()}::{instance_number}"
+    tree.insert(parent, "end", iid=unique_iid, text=f"§ {section.key}")
+
+
+# --------------------------------------------------------------------
+# ПРИЛОЖЕНИЕ (Tkinter)
+# --------------------------------------------------------------------
+
+class App:
+    def __init__(self, root: tk.Tk, initial_query: str = ""):
         self.root = root
-        self.sections = sections
-        self.docs_root = docs_root
+        root.title(APP_TITLE)
+        root.geometry("1150x780")
+        root.minsize(900, 600)
 
-        self.history: List[Section] = []
-        self.history_pos: int = -1
-        self.current: Optional[Section] = None
+        # 1) читаем корни и собираем секции
+        self.doc_roots = read_doc_roots()
+        self.all_files, self.sections = collect_sections_from_roots(self.doc_roots)
 
-        # Хэш-ключ — id(section), чтобы не требовать hash у dataclass
-        self.section_to_cat_nodes: Dict[int, str] = {}
-        self.section_to_file_nodes: Dict[int, str] = {}
+        # Диагностика для удобства (видно, что именно нашлось)
+        if not self.all_files:
+            messagebox.showwarning(
+                "Файлы не найдены",
+                "Не найдено ни одного .md файла в следующих корнях:\n\n"
+                + "\n".join(str(p) for p in self.doc_roots)
+            )
+        elif not self.sections:
+            messagebox.showwarning(
+                "Секции не найдены",
+                f"Найдено .md файлов: {len(self.all_files)}, но секций не распознано.\n\n"
+                "Проверьте, что заголовки разделов начинаются с '#' или '##' (например, '# ul-ol-li')."
+            )
 
-        self._build_ui()
-        self._populate_trees()
+        # 2) индекс для поиска
+        self.index = SearchIndex(self.sections)
 
+        # Текущее состояние
+        self.current_section: Optional[Section] = None
+
+        # 3) UI
+        self._build_topbar()
+        self._build_body()
+        self._fill_categories_tree()
+
+        # 4) если передан стартовый запрос — подставим и откроем
         if initial_query:
-            self.search_and_open(initial_query)
+            self.search_combo.set(initial_query)
+            self.open_best_from_combo()
 
-    def _build_ui(self) -> None:
-        self.root.title("Context Docs Viewer")
-        self.root.geometry("1100x700")
+    # ---------------- 顶няя панель (поиск) ----------------
+    def _build_topbar(self) -> None:
+        top = ttk.Frame(self.root, padding=6)
+        top.pack(side=tk.TOP, fill=tk.X)
 
-        topbar = ttk.Frame(self.root, padding=6)
-        topbar.pack(side=tk.TOP, fill=tk.X)
+        ttk.Label(top, text="Поиск по ключу:").pack(side=tk.LEFT, padx=(0, 6))
 
-        self.btn_back = ttk.Button(topbar, text="◀", width=3, command=self._go_back)
-        self.btn_back.pack(side=tk.LEFT)
-        ttk.Frame(topbar, width=4).pack(side=tk.LEFT)
+        self.search_combo = ttk.Combobox(top, state="normal", values=[], width=42)
+        self.search_combo.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
-        self.btn_forward = ttk.Button(topbar, text="▶", width=3, command=self._go_forward)
-        self.btn_forward.pack(side=tk.LEFT)
-        ttk.Frame(topbar, width=10).pack(side=tk.LEFT)
+        # обновлять список кандидатов при наборе
+        self.search_combo.bind("<KeyRelease>", self._on_query_changed)
+        # Enter — открыть лучшую секцию
+        self.search_combo.bind("<Return>", lambda e: self.open_best_from_combo())
 
-        ttk.Label(topbar, text="Поиск:").pack(side=tk.LEFT)
+        ttk.Button(top, text="Открыть", command=self.open_best_from_combo).pack(side=tk.LEFT, padx=6)
+        ttk.Button(top, text="Найти в дереве", command=self.locate_in_tree).pack(side=tk.LEFT)
 
-        self.entry_query = ttk.Entry(topbar)
-        self.entry_query.pack(side=tk.LEFT, fill=tk.X, expand=True)
-        self.entry_query.bind("<Return>", lambda e: self._on_search())
+    # ---------------- Тело окна ----------------
+    def _build_body(self) -> None:
+        body = ttk.Panedwindow(self.root, orient=tk.HORIZONTAL)
+        body.pack(fill=tk.BOTH, expand=True)
 
-        ttk.Frame(topbar, width=4).pack(side=tk.LEFT)
-        ttk.Button(topbar, text="Искать", command=self._on_search).pack(side=tk.LEFT)
-        ttk.Frame(topbar, width=4).pack(side=tk.LEFT)
-        ttk.Button(topbar, text="Найти в дереве", command=self._find_in_trees).pack(side=tk.LEFT)
+        # Слева — дерево категорий
+        left = ttk.Frame(body)
+        body.add(left, weight=1)
 
-        paned_main = ttk.PanedWindow(self.root, orient=tk.HORIZONTAL)
-        paned_main.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        self.cat_tree = ttk.Treeview(left, show="tree")
+        self.cat_tree.pack(fill=tk.BOTH, expand=True, padx=6, pady=6)
+        self.cat_tree.bind("<Double-1>", self._on_tree_activate)
+        self.cat_tree.bind("<Return>", self._on_tree_activate)
 
-        left_frame = ttk.Frame(paned_main)
-        paned_main.add(left_frame, weight=1)
+        # Справа — верх: Markdown + путь к файлу; низ — код
+        right = ttk.Panedwindow(body, orient=tk.VERTICAL)
+        body.add(right, weight=3)
 
-        nb = ttk.Notebook(left_frame)
-        nb.pack(fill=tk.BOTH, expand=True)
+        # Верх: Markdown
+        md_wrap = ttk.Frame(right, padding=6)
+        right.add(md_wrap, weight=3)
 
-        tab_cat = ttk.Frame(nb)
-        nb.add(tab_cat, text="Категории")
-        self.tree_cat = ttk.Treeview(tab_cat, show="tree")
-        self.tree_cat.pack(fill=tk.BOTH, expand=True)
-        self.tree_cat.bind("<Double-1>", self._on_cat_double_click)
+        self.md_text = ScrolledText(md_wrap, wrap="word")
+        self.md_text.pack(fill=tk.BOTH, expand=True)
+        self.md_text.configure(state="disabled")
 
-        tab_files = ttk.Frame(nb)
-        nb.add(tab_files, text="Файлы")
-        self.tree_files = ttk.Treeview(tab_files, show="tree")
-        self.tree_files.pack(fill=tk.BOTH, expand=True)
-        self.tree_files.bind("<Double-1>", self._on_files_double_click)
+        # Путь к файлу (под Markdown)
+        path_bar = ttk.Frame(md_wrap)
+        path_bar.pack(fill=tk.X, pady=(6, 0))
+        ttk.Label(path_bar, text="Файл:").pack(side=tk.LEFT)
+        self.path_value = ttk.Entry(path_bar, state="readonly")
+        self.path_value.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(6, 0))
 
-        right_paned = ttk.PanedWindow(paned_main, orient=tk.VERTICAL)
-        paned_main.add(right_paned, weight=3)
+        # Низ: кодовые блоки
+        low = ttk.Frame(right, padding=6)
+        right.add(low, weight=2)
 
-        top_right = ttk.Frame(right_paned, padding=6)
-        right_paned.add(top_right, weight=3)
+        row = ttk.Frame(low)
+        row.pack(fill=tk.X)
+        ttk.Label(row, text="Кодовые блоки:").pack(side=tk.LEFT)
+        self.code_combo = ttk.Combobox(row, state="readonly", values=[])
+        self.code_combo.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=6)
+        self.code_combo.bind("<<ComboboxSelected>>", lambda e: self._update_code_view())
 
-        self.txt_md = tk.Text(top_right, wrap=tk.NONE, font=("Consolas", 11))
-        self.txt_md.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scr1 = ttk.Scrollbar(top_right, orient=tk.VERTICAL, command=self.txt_md.yview)
-        scr1.pack(side=tk.RIGHT, fill=tk.Y)
-        self.txt_md.configure(yscrollcommand=scr1.set)
+        btns = ttk.Frame(low)
+        btns.pack(fill=tk.X, pady=(4, 0))
+        ttk.Button(btns, text="Скопировать весь блок", command=self.copy_whole_section).pack(side=tk.LEFT, padx=4)
+        ttk.Button(btns, text="Скопировать код", command=self.copy_code).pack(side=tk.LEFT, padx=4)
+        ttk.Button(btns, text="Открыть .md", command=self.open_md_file).pack(side=tk.LEFT, padx=4)
+        ttk.Button(btns, text="Закрыть", command=self.root.destroy).pack(side=tk.RIGHT, padx=4)
 
-        bottom_right = ttk.Frame(right_paned, padding=6)
-        right_paned.add(bottom_right, weight=2)
+        self.code_text = ScrolledText(low, wrap="none", height=12)
+        self.code_text.pack(fill=tk.BOTH, expand=True, pady=(6, 0))
+        self.code_text.configure(state="disabled")
 
-        row_top = ttk.Frame(bottom_right)
-        row_top.pack(side=tk.TOP, fill=tk.X)
+    # ---------------- Заполнение дерева категорий ----------------
+    def _fill_categories_tree(self) -> None:
+        self.cat_tree.delete(*self.cat_tree.get_children())
 
-        ttk.Label(row_top, text="Кодовые блоки:").pack(side=tk.LEFT)
-        ttk.Frame(row_top, width=6).pack(side=tk.LEFT)
+        # счётчик вхождений для уникальных iid
+        per_file_counter: Dict[str, int] = {}
 
-        self.combo_codes = ttk.Combobox(row_top, state="readonly")
-        self.combo_codes.pack(side=tk.LEFT, fill=tk.X, expand=True)
-        self.combo_codes.bind("<<ComboboxSelected>>", lambda e: self._show_selected_code())
+        for s in self.sections:
+            paths = s.categories_list or [["Без категории"]]
+            for cat_path in paths:
+                key = str(s.file_path.resolve())
+                per_file_counter[key] = per_file_counter.get(key, 0) + 1
+                add_section_to_tree(self.cat_tree, "", cat_path, s, per_file_counter[key])
 
-        self.txt_code = tk.Text(bottom_right, wrap=tk.NONE, font=("Consolas", 11), height=12)
-        self.txt_code.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-        scr2 = ttk.Scrollbar(bottom_right, orient=tk.VERTICAL, command=self.txt_code.yview)
-        scr2.pack(side=tk.RIGHT, fill=tk.Y)
-        self.txt_code.configure(yscrollcommand=scr2.set)
+    # ---------------- Обновление подсказок поиска ----------------
+    def _on_query_changed(self, event=None) -> None:
+        q = self.search_combo.get().strip()
+        keys = self.index.suggest(q, limit=50)
 
-        row_bottom = ttk.Frame(bottom_right)
-        row_bottom.pack(side=tk.TOP, fill=tk.X, pady=(6, 0))
+        # точное совпадение — в начало (перестраховка; suggest уже так делает)
+        exact = normalize_key(q)
+        if exact in keys:
+            ordered = [exact] + [k for k in keys if k != exact]
+        else:
+            ordered = keys
 
-        ttk.Button(row_bottom, text="Скопировать весь блок", command=self._copy_markdown).pack(side=tk.LEFT)
-        ttk.Frame(row_bottom, width=4).pack(side=tk.LEFT)
-        ttk.Button(row_bottom, text="Скопировать код", command=self._copy_code).pack(side=tk.LEFT)
-        ttk.Frame(row_bottom, width=4).pack(side=tk.LEFT)
-        ttk.Button(row_bottom, text="Открыть .md", command=self._open_file).pack(side=tk.LEFT)
-        ttk.Button(row_bottom, text="Закрыть", command=self.root.destroy).pack(side=tk.RIGHT)
+        # Собираем «человеческие» подписи
+        out = []
+        for k in ordered:
+            sec = self.index.by_key.get(k)
+            if not sec:
+                continue
+            out.append(f"{k}    —    {sec.file_path.name}")
 
-    def _populate_trees(self) -> None:
-        cat_tree = build_category_tree(self.sections)
-        self.tree_cat.delete(*self.tree_cat.get_children())
-        self.section_to_cat_nodes.clear()
-        self._fill_cat_tree("", cat_tree)
+        self.search_combo["values"] = out
 
-        files_tree = build_files_tree(self.sections, self.docs_root)
-        self.tree_files.delete(*self.tree_files.get_children())
-        self.section_to_file_nodes.clear()
-        self._fill_files_tree("", files_tree)
+    def _extract_key_from_combo(self) -> str:
+        """
+        Возвращает ключ из Combobox:
+          - если выбран из списка "key — file.md" — берём левую часть;
+          - если введён вручную — берём как есть.
+        """
+        raw = self.search_combo.get().strip()
+        parts = raw.split("—")
+        if len(parts) >= 2:
+            return parts[0].strip()
+        return raw
 
-    def _fill_cat_tree(self, parent, node_dict: Dict) -> None:
-        for name, sub in sorted(node_dict.items(), key=lambda kv: kv[0].lower()):
-            if name == "__sections__":
-                for s in sorted(sub, key=lambda x: x.display_key.lower()):
-                    text = f"§ {s.display_key} ({s.rel_path})"
-                    item_id = self.tree_cat.insert(parent, "end", text=text, values=(s.file_path,))
-                    self.section_to_cat_nodes[id(s)] = item_id
-            else:
-                item_id = self.tree_cat.insert(parent, "end", text=name)
-                self._fill_cat_tree(item_id, sub)
-
-    def _fill_files_tree(self, parent, node) -> None:
-        if isinstance(node, dict):
-            for name, sub in sorted(node.items(), key=lambda kv: kv[0].lower()):
-                item_id = self.tree_files.insert(parent, "end", text=f"📁 {name}")
-                self._fill_files_tree(item_id, sub)
-        elif isinstance(node, list):
-            for s in sorted(node, key=lambda x: x.display_key.lower()):
-                text = f"📄 § {s.display_key}"
-                item_id = self.tree_files.insert(parent, "end", text=text)
-                self.section_to_file_nodes[id(s)] = item_id
-
-    def _on_search(self) -> None:
-        query = self.entry_query.get().strip()
-        if not query:
+    def open_best_from_combo(self) -> None:
+        q = self._extract_key_from_combo()
+        if not q:
             messagebox.showinfo("Поиск", "Введите ключ для поиска.")
             return
-        self.search_and_open(query)
-
-    def search_and_open(self, query: str) -> None:
-        exact, candidates = search_sections(self.sections, query)
-        if exact:
-            self._open_section(exact, add_to_history=True)
-            self.entry_query.delete(0, tk.END)
-            self.entry_query.insert(0, exact.display_key)
+        sec = self.index.find_best(q)
+        if not sec:
+            messagebox.showinfo("Поиск", f"Ничего не найдено для: {q}")
             return
-        if not candidates:
-            messagebox.showinfo("Поиск", "Ничего не найдено.")
+        self.open_section(sec)
+
+    # ---------------- Открытие секции ----------------
+    def _on_tree_activate(self, event=None) -> None:
+        item = self.cat_tree.focus()
+        if not item:
             return
-        self._choose_candidate_and_open(candidates)
+        text = self.cat_tree.item(item, "text")
+        if not text.startswith("§ "):
+            return
+        key = text[2:].strip()
+        sec = self.index.by_key.get(key)
+        if sec:
+            self.open_section(sec)
 
-    def _choose_candidate_and_open(self, candidates: List[Section]) -> None:
-        win = tk.Toplevel(self.root)
-        win.title("Выберите раздел")
-        win.geometry("500x360")
+    def open_section(self, sec: Section) -> None:
+        self.current_section = sec
 
-        lst = tk.Listbox(win)
-        lst.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        # Markdown (заголовок и тело; служебные строки не вставляем)
+        header = f"# {sec.display_key}"
+        self.md_text.configure(state="normal")
+        self.md_text.delete("1.0", "end")
+        self.md_text.insert("1.0", header + "\n\n")
+        if sec.markdown:
+            self.md_text.insert("end", sec.markdown)
+        self.md_text.configure(state="disabled")
 
-        for s in candidates:
-            lst.insert(tk.END, f"{s.display_key}  —  {s.rel_path}")
+        # Путь к файлу
+        try:
+            self.path_value.configure(state="normal")
+            self.path_value.delete(0, "end")
+            self.path_value.insert(0, str(sec.file_path.resolve()))
+        finally:
+            self.path_value.configure(state="readonly")
 
-        def on_ok(*_):
-            idx = lst.curselection()
-            if not idx:
-                return
-            s = candidates[idx[0]]
-            self._open_section(s, add_to_history=True)
-            self.entry_query.delete(0, tk.END)
-            self.entry_query.insert(0, s.display_key)
-            win.destroy()
-
-        btn_row = ttk.Frame(win, padding=6)
-        btn_row.pack(side=tk.TOP, fill=tk.X)
-
-        ttk.Button(btn_row, text="Открыть", command=on_ok).pack(side=tk.RIGHT)
-        ttk.Button(btn_row, text="Отмена", command=win.destroy).pack(side=tk.RIGHT, padx=(0, 6))
-
-        lst.bind("<Double-Button-1>", on_ok)
-
-    def _open_section(self, s: Section, add_to_history: bool = False) -> None:
-        self.current = s
-        if add_to_history:
-            if self.history_pos < len(self.history) - 1:
-                self.history = self.history[: self.history_pos + 1]
-            self.history.append(s)
-            self.history_pos = len(self.history) - 1
-
-        self.txt_md.delete("1.0", tk.END)
-        self.txt_md.insert("1.0", f"## {s.display_key}\n\n{s.markdown}")
-
-        if s.code_blocks:
-            self.combo_codes["values"] = [f"{i+1}. ```{cb.lang or 'text'}```" for i, cb in enumerate(s.code_blocks)]
-            self.combo_codes.current(0)
-            self._show_selected_code()
+        # Код-блоки
+        if sec.codes:
+            items = [f"Блок #{i+1} — {len(c.splitlines())} строк" for i, c in enumerate(sec.codes)]
+            self.code_combo["values"] = items
+            self.code_combo.current(0)
         else:
-            self.combo_codes["values"] = []
-            self.combo_codes.set("")
-            self.txt_code.delete("1.0", tk.END)
+            self.code_combo["values"] = ["— нет кода —"]
+            self.code_combo.current(0)
+        self._update_code_view()
 
-        self._update_nav_buttons()
+    # ---------------- Работа с кодом ----------------
+    def _update_code_view(self) -> None:
+        self.code_text.configure(state="normal")
+        self.code_text.delete("1.0", "end")
+        if self.current_section and self.current_section.codes:
+            idx = self.code_combo.current()
+            if idx is None or idx < 0:
+                idx = 0
+            if 0 <= idx < len(self.current_section.codes):
+                self.code_text.insert("1.0", self.current_section.codes[idx])
+        self.code_text.configure(state="disabled")
 
-    def _show_selected_code(self) -> None:
-        s = self.current
-        if not s or not s.code_blocks:
+    def copy_whole_section(self) -> None:
+        if not self.current_section:
             return
-        idx = self.combo_codes.current()
-        if idx < 0:
+        text = f"# {self.current_section.display_key}\n\n{self.current_section.markdown}"
+        self._to_clipboard(text)
+
+    def copy_code(self) -> None:
+        if not self.current_section or not self.current_section.codes:
+            return
+        idx = self.code_combo.current()
+        if idx is None or idx < 0:
             idx = 0
-        self.txt_code.delete("1.0", tk.END)
-        self.txt_code.insert("1.0", s.code_blocks[idx].code)
+        if 0 <= idx < len(self.current_section.codes):
+            self._to_clipboard(self.current_section.codes[idx])
 
-    def _copy_markdown(self) -> None:
-        s = self.current
-        if not s:
+    def _to_clipboard(self, text: str) -> None:
+        try:
+            self.root.clipboard_clear()
+            self.root.clipboard_append(text or "")
+        except Exception as e:
+            messagebox.showerror("Копирование", f"Не удалось скопировать:\n{e}")
+
+    def open_md_file(self) -> None:
+        if not self.current_section:
             return
-        to_clipboard(self.root, f"## {s.display_key}\n\n{s.markdown}".strip())
+        webbrowser.open(self.current_section.file_path.resolve().as_uri())
 
-    def _copy_code(self) -> None:
-        s = self.current
-        if not s or not s.code_blocks:
+    # ---------------- Позиционирование в дереве ----------------
+    def locate_in_tree(self) -> None:
+        if not self.current_section:
+            messagebox.showinfo("Навигация", "Сначала откройте секцию.")
             return
-        idx = self.combo_codes.current()
-        if idx < 0:
-            idx = 0
-        to_clipboard(self.root, s.code_blocks[idx].code)
+        target = f"§ {self.current_section.key}"
 
-    def _open_file(self) -> None:
-        s = self.current
-        if not s:
-            return
-        open_in_system(s.file_path)
+        def expand_parents(iid: str):
+            parent = self.cat_tree.parent(iid)
+            while parent:
+                self.cat_tree.item(parent, open=True)
+                parent = self.cat_tree.parent(parent)
 
-    def _find_in_trees(self) -> None:
-        s = self.current
-        if not s:
-            return
-        item_cat = self.section_to_cat_nodes.get(id(s))
-        if item_cat:
-            self.tree_cat.see(item_cat)
-            self.tree_cat.selection_set(item_cat)
-        item_file = self.section_to_file_nodes.get(id(s))
-        if item_file:
-            self.tree_files.see(item_file)
-            self.tree_files.selection_set(item_file)
+        def walk(parent="") -> bool:
+            for child in self.cat_tree.get_children(parent):
+                if self.cat_tree.item(child, "text") == target:
+                    expand_parents(child)
+                    self.cat_tree.see(child)
+                    self.cat_tree.selection_set(child)
+                    self.cat_tree.focus(child)
+                    return True
+                if walk(child):
+                    return True
+            return False
 
-    def _on_cat_double_click(self, _event=None) -> None:
-        item = self.tree_cat.selection()
-        if not item:
-            return
-        text = self.tree_cat.item(item[0], "text")
-        if text.startswith("§ "):
-            name = text[2:]
-            if " (" in name:
-                name = name.split(" (", 1)[0].strip()
-            for s in self.sections:
-                if s.display_key == name:
-                    self._open_section(s, add_to_history=True)
-                    self.entry_query.delete(0, tk.END)
-                    self.entry_query.insert(0, s.display_key)
-                    break
+        walk("")
 
-    def _on_files_double_click(self, _event=None) -> None:
-        item = self.tree_files.selection()
-        if not item:
-            return
-        text = self.tree_files.item(item[0], "text")
-        if text.startswith("📄 § "):
-            name = text.replace("📄 § ", "", 1).strip()
-            for s in self.sections:
-                if s.display_key == name:
-                    self._open_section(s, add_to_history=True)
-                    self.entry_query.delete(0, tk.END)
-                    self.entry_query.insert(0, s.display_key)
-                    break
 
-    def _go_back(self) -> None:
-        if self.history_pos > 0:
-            self.history_pos -= 1
-            s = self.history[self.history_pos]
-            self._open_section(s, add_to_history=False)
-            self.entry_query.delete(0, tk.END)
-            self.entry_query.insert(0, s.display_key)
-        self._update_nav_buttons()
+# --------------------------------------------------------------------
+# ТОЧКА ВХОДА
+# --------------------------------------------------------------------
 
-    def _go_forward(self) -> None:
-        if self.history_pos < len(self.history) - 1:
-            self.history_pos += 1
-            s = self.history[self.history_pos]
-            self._open_section(s, add_to_history=False)
-            self.entry_query.delete(0, tk.END)
-            self.entry_query.insert(0, s.display_key)
-        self._update_nav_buttons()
-
-    def _update_nav_buttons(self) -> None:
-        self.btn_back.state(["!disabled"] if self.history_pos > 0 else ["disabled"])
-        self.btn_forward.state(["!disabled"] if self.history_pos < len(self.history) - 1 else ["disabled"])
-
-# =======================
-# 9) MAIN
-# =======================
-
-def main() -> None:
-    docs_root = os.environ.get("CONTEXT_DOCS_ROOT", DEFAULT_DOCS_ROOT)
+def main():
+    initial = sys.argv[1] if len(sys.argv) > 1 else ""
     root = tk.Tk()
-    if not os.path.isdir(docs_root):
-        messagebox.showwarning(
-            "Внимание",
-            f"Папка docs не найдена.\nОжидалось: {docs_root}\nСоздайте её и добавьте .md файлы."
-        )
-    sections = load_all_sections(docs_root)
-    app = App_UI(root, sections, docs_root, initial_query=(sys.argv[1] if len(sys.argv) > 1 else ""))
+    app = App(root, initial_query=initial)
     root.mainloop()
 
 if __name__ == "__main__":
