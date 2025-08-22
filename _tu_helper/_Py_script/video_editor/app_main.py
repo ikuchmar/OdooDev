@@ -1,14 +1,9 @@
+# video_editor/app_main.py
 # -*- coding: utf-8 -*-
 """
-app_main.py — точка входа.
-Запускает графический интерфейс из tools/ui_app.py
+Минимальный запуск приложения: импортируем и стартуем UI.
 """
-
-from tools.ui_app import App_UI
-
-def main():
-    app = App_UI()
-    app.mainloop()
+from tools.ui_app_main import run_app
 
 if __name__ == "__main__":
-    main()
+    run_app()
