@@ -8,21 +8,13 @@ make_video.py — простой и подробно прокомментиро�
   • субтитров (soft/дорожка или burn/прожиг; можно отключить через subtitles.enable),
   • текстовых оверлеев (белый текст из .txt поверх кадра).
 
-Скрипт написан максимально просто, без внешних Python-зависимостей (нужен ffmpeg).
+Главный фикс: drawtext теперь получает текст из Python через text='…'
+(а НЕ через textfile=…), что устраняет проблемы кавычек/двоеточий на Windows.
 
-КАК ЗАПУСКАТЬ:
-1) Положите 'make_video.py' и 'config.toml' в одну папку.
-2) В этой папке выполните:     python make_video.py
-   (или:                        python make_video.py --dry-run   ← только проверка)
-   (или указать свой конфиг:    python make_video.py --config "D:/path/config.toml")
-
-ТРЕБОВАНИЯ:
-- Python 3.11+ (ради встроенного tomllib).
-- ffmpeg установлен и доступен в PATH (как команда 'ffmpeg').
-
-ВАЖНО (Windows):
-- Для drawtext обычно нужен явный путь к .ttf/.otf в конфиге
-  (например, C:/Windows/Fonts/arial.ttf).
+Как запускать:
+  1) Положите 'make_video.py' и 'config.toml' в одну папку.
+  2) Запустите:   python make_video.py        (или --dry-run / --verbose)
+Требования: Python 3.11+ (tomllib), установленный ffmpeg в PATH.
 """
 
 from __future__ import annotations
@@ -38,7 +30,6 @@ from pathlib import Path
 from typing import List, Optional, Tuple
 
 import tomllib  # стандартный парсер TOML (Python 3.11+)
-
 
 # ====================== ВСПОМОГАТЕЛЬНЫЕ ======================
 
@@ -61,6 +52,23 @@ def check_ffmpeg_available() -> None:
 def default_config_path() -> Path:
     return Path(__file__).resolve().parent / "config.toml"
 
+# --- Экранирование текста для drawtext:text='…'
+def escape_drawtext_text(s: str) -> str:
+    """
+    Минимально необходимое экранирование для drawtext:
+      - обратный слэш -> \\\\
+      - одинарная кавычка -> \'
+      - двоеточие -> \:
+      - перевод строки -> \\n
+      - возврат каретки -> \\n (заменим)
+    Этого достаточно для безопасной передачи в text='…' внутри filter_complex.
+    """
+    s = s.replace("\\", "\\\\")
+    s = s.replace("'", "\\'")
+    s = s.replace(":", "\\:")
+    s = s.replace("\r\n", "\n").replace("\r", "\n")
+    s = s.replace("\n", r"\n")
+    return s
 
 # ====================== СТРУКТУРЫ ДАННЫХ ======================
 
@@ -130,7 +138,7 @@ class Config:
     norm_mode: str
     norm_target: float
     # Субтитры
-    sub_enable: bool         # можно отключать целиком
+    sub_enable: bool
     sub_mode: str
     sub_encoding: str
     sub_select_strategy: str
@@ -160,7 +168,6 @@ class Config:
     timing_offset: float
     log_level: str
     log_to_file: bool
-
 
 # ====================== ЗАГРУЗКА КОНФИГА ======================
 
@@ -265,10 +272,10 @@ def load_config(path: Path) -> Config:
     norm_mode = str(g(audio_norm, "mode", "ebu_r128")).lower()
     norm_target = float(g(audio_norm, "target", -14.0))
 
-    # Субтитры (введён флаг enable)
+    # Субтитры
     sub_enable = bool(g(subs, "enable", True))
     sub_mode = str(g(subs, "mode", "burn")).lower()         # "soft" | "burn"
-    sub_encoding = str(g(subs, "encoding", "utf8")).lower() # справочно
+    sub_encoding = str(g(subs, "encoding", "utf8")).lower()
     sub_select_strategy = str(g(subs, "select_strategy", "by_name_sequence")).lower()
     sub_allow_list = bool(g(subs, "allow_explicit_list", True))
     sub_file = g(subs, "file", "") or ""
@@ -377,7 +384,6 @@ def load_config(path: Path) -> Config:
         log_level=log_level, log_to_file=log_to_file,
     )
 
-
 # ====================== ТАЙМЛАЙНЫ ======================
 
 def resolution_to_wh(res: str) -> Tuple[int, int]:
@@ -475,7 +481,6 @@ def pair_texts_to_images(cfg: Config,
             result.append((txt,txt.start,txt.end,style))
     return result
 
-
 # ====================== ПОМОЩНИК ДЛЯ АУДИО-ФИЛЬТРОВ ======================
 
 def build_audio_chain(lin: str, filters: list[str], lout: str, delay_ms: int | None = None) -> str:
@@ -495,7 +500,6 @@ def build_audio_chain(lin: str, filters: list[str], lout: str, delay_ms: int | N
     if not body:
         body = "anull"
     return f"{lin}{body}{lout}"
-
 
 # ====================== СБОРКА КОМАНДЫ FFMPEG ======================
 
@@ -584,16 +588,22 @@ def build_ffmpeg_command(cfg: Config,
     if cfg.text_enable and text_tl:
         for i,(txt,s,e,st) in enumerate(text_tl):
             out=f"[vt{i}]"
-            # Путь к .txt и шрифту — POSIX; ЭКРАНИРОВАНИЕ: только двойные кавычки внутри значений
-            def dq(s: str) -> str:
-                return '"' + s.replace('"', r'\"') + '"'
+            # Читаем текст из файла (UTF-8). Если нельзя — пропускаем.
+            try:
+                content = txt.path.read_text(encoding="utf-8")
+            except Exception as ex:
+                log(f"WARNING: не удалось прочитать текст {txt.path}: {ex}; пропускаем")
+                content = ""
+            if not content.strip():
+                fc.append(f"{map_video}null{out}")
+                map_video = out
+                continue
 
-            textfile_path = Path(txt.path).as_posix()
+            esc = escape_drawtext_text(content)
             enable_expr = f"between(t,{s:.6f},{e:.6f})"
-
             params=[
-                f"textfile={dq(textfile_path)}",
-                f"enable={dq(enable_expr)}",
+                f"text='{esc}'",
+                f"enable='{enable_expr}'",
                 f"x={st['x']}",
                 f"y={st['y']}",
                 f"fontsize={st['fontsize']}",
@@ -607,7 +617,8 @@ def build_ffmpeg_command(cfg: Config,
                 params += [f"box=1", f"boxcolor={st['boxcolor']}", f"boxborderw={st['boxborderw']}"]
             if cfg.text_fontfile:
                 fontfile_path = Path(cfg.text_fontfile).as_posix()
-                params.append(f"fontfile={dq(fontfile_path)}")
+                # fontfile допускает обычный POSIX-путь; пробелы/двоеточия тут не мешают
+                params.append(f"fontfile='{fontfile_path}'")
 
             fc.append(f"{map_video}drawtext={':'.join(params)}{out}")
             map_video=out
@@ -635,7 +646,6 @@ def build_ffmpeg_command(cfg: Config,
     if subtitle_soft: args+=["-c:s","mov_text"]
     args+=[str(cfg.out_filename)]
     return args
-
 
 # ====================== MAIN ======================
 
