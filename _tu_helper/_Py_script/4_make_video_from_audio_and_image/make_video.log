@@ -1,0 +1,195 @@
+2025-08-29 23:46:47,892 [INFO] Старт make_video_from_audio_and_image
+2025-08-29 23:46:47,893 [INFO] Найдено аудио-файлов: 1
+2025-08-29 23:46:47,893 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Видео\001_01_At the Supermarket_en.mp3
+2025-08-29 23:46:47,893 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Видео\001_01_At the Supermarket_en.png -> Видео: 001_01_At the Supermarket_en.mp4
+2025-08-29 23:46:51,265 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Видео\001_01_At the Supermarket_en_with_text.png -> Видео: 001_01_At the Supermarket_en_with_text.mp4
+2025-08-29 23:46:55,315 [INFO] Готово. Создано видео: 2
+2025-08-30 00:57:01,524 [INFO] Старт make_video_from_audio_and_image
+2025-08-30 00:57:01,526 [INFO] Найдено аудио-файлов: 30
+2025-08-30 00:57:01,526 [INFO] (1/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_di.mp3
+2025-08-30 00:57:01,528 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_di_bg.mp4
+2025-08-30 00:57:03,645 [INFO] (2/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_en.mp3
+2025-08-30 00:57:03,647 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_en_bg.mp4
+2025-08-30 00:57:06,631 [INFO] (3/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_ru.mp3
+2025-08-30 00:57:06,633 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_ru_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_ru_bg.mp4
+2025-08-30 00:57:09,530 [INFO] (4/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_di.mp3
+2025-08-30 00:57:09,532 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_di_bg.mp4
+2025-08-30 00:57:11,170 [INFO] (5/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_en.mp3
+2025-08-30 00:57:11,172 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_en_bg.mp4
+2025-08-30 00:57:13,557 [INFO] (6/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_ru.mp3
+2025-08-30 00:57:13,558 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_ru_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_ru_bg.mp4
+2025-08-30 00:57:16,287 [INFO] (7/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_di.mp3
+2025-08-30 00:57:16,289 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_di_bg.mp4
+2025-08-30 00:57:18,129 [INFO] (8/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_en.mp3
+2025-08-30 00:57:18,131 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_en_bg.mp4
+2025-08-30 00:57:20,795 [INFO] (9/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_ru.mp3
+2025-08-30 00:57:20,797 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_ru_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_ru_bg.mp4
+2025-08-30 00:57:23,737 [INFO] (10/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_di.mp3
+2025-08-30 00:57:23,739 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_di_bg.mp4
+2025-08-30 00:57:25,530 [INFO] (11/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_en.mp3
+2025-08-30 00:57:25,532 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_en_bg.mp4
+2025-08-30 00:57:27,900 [INFO] (12/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_ru.mp3
+2025-08-30 00:57:27,902 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_ru_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_ru_bg.mp4
+2025-08-30 00:57:30,598 [INFO] (13/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_di.mp3
+2025-08-30 00:57:30,600 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_di_bg.mp4
+2025-08-30 00:57:32,592 [INFO] (14/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_en.mp3
+2025-08-30 00:57:32,594 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_en_bg.mp4
+2025-08-30 00:57:34,950 [INFO] (15/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_ru.mp3
+2025-08-30 00:57:34,952 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_ru_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_ru_bg.mp4
+2025-08-30 00:57:37,358 [INFO] (16/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_di.mp3
+2025-08-30 00:57:37,360 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_di_bg.mp4
+2025-08-30 00:57:39,356 [INFO] (17/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_en.mp3
+2025-08-30 00:57:39,358 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_en_bg.mp4
+2025-08-30 00:57:41,786 [INFO] (18/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_ru.mp3
+2025-08-30 00:57:41,788 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_ru_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_ru_bg.mp4
+2025-08-30 00:57:44,465 [INFO] (19/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_di.mp3
+2025-08-30 00:57:44,467 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_di_bg.mp4
+2025-08-30 00:57:46,419 [INFO] (20/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_en.mp3
+2025-08-30 00:57:46,421 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_en_bg.mp4
+2025-08-30 00:57:48,582 [INFO] (21/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_ru.mp3
+2025-08-30 00:57:48,584 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_ru_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_ru_bg.mp4
+2025-08-30 00:57:50,636 [INFO] (22/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_di.mp3
+2025-08-30 00:57:50,638 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_di_bg.mp4
+2025-08-30 00:57:52,704 [INFO] (23/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_en.mp3
+2025-08-30 00:57:52,706 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_en_bg.mp4
+2025-08-30 00:57:54,995 [INFO] (24/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_ru.mp3
+2025-08-30 00:57:54,997 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_ru_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_ru_bg.mp4
+2025-08-30 00:57:57,268 [INFO] (25/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_di.mp3
+2025-08-30 00:57:57,270 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_di_bg.mp4
+2025-08-30 00:57:59,224 [INFO] (26/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_en.mp3
+2025-08-30 00:57:59,226 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_en_bg.mp4
+2025-08-30 00:58:01,643 [INFO] (27/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_ru.mp3
+2025-08-30 00:58:01,646 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_ru_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_ru_bg.mp4
+2025-08-30 00:58:03,764 [INFO] (28/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_di.mp3
+2025-08-30 00:58:03,766 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_di_bg.mp4
+2025-08-30 00:58:05,712 [INFO] (29/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_en.mp3
+2025-08-30 00:58:05,714 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_en_bg.mp4
+2025-08-30 00:58:07,931 [INFO] (30/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_ru.mp3
+2025-08-30 00:58:07,933 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_ru_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_ru_bg.mp4
+2025-08-30 00:58:10,399 [INFO] Готово. Создано видео: 30
+2025-08-30 01:16:16,229 [INFO] Старт make_video_from_audio_and_image
+2025-08-30 01:16:16,231 [INFO] Найдено аудио-файлов: 30
+2025-08-30 01:16:16,231 [INFO] (1/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_di.mp3
+2025-08-30 01:16:16,232 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_di_bg.mp4
+2025-08-30 01:16:18,132 [INFO] (2/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_en.mp3
+2025-08-30 01:16:18,134 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_en_bg.mp4
+2025-08-30 01:16:21,162 [INFO] (3/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_ru.mp3
+2025-08-30 01:16:21,164 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:16:21,164 [INFO] (4/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_di.mp3
+2025-08-30 01:16:21,165 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_di_bg.mp4
+2025-08-30 01:16:22,822 [INFO] (5/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_en.mp3
+2025-08-30 01:16:22,824 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_en_bg.mp4
+2025-08-30 01:16:25,152 [INFO] (6/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_ru.mp3
+2025-08-30 01:16:25,154 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:16:25,154 [INFO] (7/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_di.mp3
+2025-08-30 01:16:25,155 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_di_bg.mp4
+2025-08-30 01:16:26,961 [INFO] (8/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_en.mp3
+2025-08-30 01:16:26,962 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_en_bg.mp4
+2025-08-30 01:16:29,599 [INFO] (9/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_ru.mp3
+2025-08-30 01:16:29,601 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:16:29,601 [INFO] (10/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_di.mp3
+2025-08-30 01:16:29,603 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_di_bg.mp4
+2025-08-30 01:16:31,382 [INFO] (11/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_en.mp3
+2025-08-30 01:16:31,384 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_en_bg.mp4
+2025-08-30 01:16:33,759 [INFO] (12/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_ru.mp3
+2025-08-30 01:16:33,760 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:16:33,760 [INFO] (13/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_di.mp3
+2025-08-30 01:16:33,762 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_di_bg.mp4
+2025-08-30 01:16:35,740 [INFO] (14/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_en.mp3
+2025-08-30 01:16:35,742 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_en_bg.mp4
+2025-08-30 01:16:38,280 [INFO] (15/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_ru.mp3
+2025-08-30 01:16:38,290 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:16:38,290 [INFO] (16/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_di.mp3
+2025-08-30 01:16:38,292 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_di_bg.mp4
+2025-08-30 01:16:40,276 [INFO] (17/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_en.mp3
+2025-08-30 01:16:40,279 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_en_bg.mp4
+2025-08-30 01:16:42,675 [INFO] (18/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_ru.mp3
+2025-08-30 01:16:42,679 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:16:42,679 [INFO] (19/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_di.mp3
+2025-08-30 01:16:42,683 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_di_bg.mp4
+2025-08-30 01:16:44,659 [INFO] (20/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_en.mp3
+2025-08-30 01:16:44,661 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_en_bg.mp4
+2025-08-30 01:16:46,829 [INFO] (21/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_ru.mp3
+2025-08-30 01:16:46,833 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:16:46,833 [INFO] (22/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_di.mp3
+2025-08-30 01:16:46,837 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_di_bg.mp4
+2025-08-30 01:16:48,869 [INFO] (23/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_en.mp3
+2025-08-30 01:16:48,873 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_en_bg.mp4
+2025-08-30 01:16:51,162 [INFO] (24/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_ru.mp3
+2025-08-30 01:16:51,164 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:16:51,164 [INFO] (25/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_di.mp3
+2025-08-30 01:16:51,165 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_di_bg.mp4
+2025-08-30 01:16:53,078 [INFO] (26/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_en.mp3
+2025-08-30 01:16:53,080 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_en_bg.mp4
+2025-08-30 01:16:55,469 [INFO] (27/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_ru.mp3
+2025-08-30 01:16:55,471 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:16:55,471 [INFO] (28/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_di.mp3
+2025-08-30 01:16:55,473 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_di_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_di_bg.mp4
+2025-08-30 01:16:57,441 [INFO] (29/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_en.mp3
+2025-08-30 01:16:57,445 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_en_bg.png -> Видео: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_en_bg.mp4
+2025-08-30 01:16:59,657 [INFO] (30/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_ru.mp3
+2025-08-30 01:16:59,660 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:16:59,661 [INFO] Готово. Создано видео: 20
+2025-08-30 01:22:43,812 [INFO] Старт make_video_from_audio_and_image
+2025-08-30 01:22:43,814 [INFO] Найдено аудио-файлов: 30
+2025-08-30 01:22:43,814 [INFO] (1/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_di.mp3
+2025-08-30 01:22:43,816 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_di_bg.png -> Видео: 001_01_At the Supermarket_di_bg.mp4
+2025-08-30 01:22:45,576 [INFO] (2/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_en.mp3
+2025-08-30 01:22:45,578 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_en_bg.png -> Видео: 001_01_At the Supermarket_en_bg.mp4
+2025-08-30 01:22:48,359 [INFO] (3/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_01_At the Supermarket_ru.mp3
+2025-08-30 01:22:48,361 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:22:48,361 [INFO] (4/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_di.mp3
+2025-08-30 01:22:48,363 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_di_bg.png -> Видео: 001_02_Morning Coffee_di_bg.mp4
+2025-08-30 01:22:49,884 [INFO] (5/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_en.mp3
+2025-08-30 01:22:49,886 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_en_bg.png -> Видео: 001_02_Morning Coffee_en_bg.mp4
+2025-08-30 01:22:52,062 [INFO] (6/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_02_Morning Coffee_ru.mp3
+2025-08-30 01:22:52,063 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:22:52,063 [INFO] (7/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_di.mp3
+2025-08-30 01:22:52,065 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_di_bg.png -> Видео: 001_03_Taking the Bus_di_bg.mp4
+2025-08-30 01:22:53,755 [INFO] (8/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_en.mp3
+2025-08-30 01:22:53,757 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_en_bg.png -> Видео: 001_03_Taking the Bus_en_bg.mp4
+2025-08-30 01:22:56,221 [INFO] (9/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_03_Taking the Bus_ru.mp3
+2025-08-30 01:22:56,223 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:22:56,223 [INFO] (10/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_di.mp3
+2025-08-30 01:22:56,224 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_di_bg.png -> Видео: 001_04_At the Café_di_bg.mp4
+2025-08-30 01:22:57,846 [INFO] (11/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_en.mp3
+2025-08-30 01:22:57,847 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_en_bg.png -> Видео: 001_04_At the Café_en_bg.mp4
+2025-08-30 01:23:00,070 [INFO] (12/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_04_At the Café_ru.mp3
+2025-08-30 01:23:00,072 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:23:00,072 [INFO] (13/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_di.mp3
+2025-08-30 01:23:00,074 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_di_bg.png -> Видео: 001_05_Traveling by Train_di_bg.mp4
+2025-08-30 01:23:01,883 [INFO] (14/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_en.mp3
+2025-08-30 01:23:01,884 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_en_bg.png -> Видео: 001_05_Traveling by Train_en_bg.mp4
+2025-08-30 01:23:04,102 [INFO] (15/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_05_Traveling by Train_ru.mp3
+2025-08-30 01:23:04,103 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:23:04,103 [INFO] (16/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_di.mp3
+2025-08-30 01:23:04,105 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_di_bg.png -> Видео: 001_06_ At the Doctor’s_di_bg.mp4
+2025-08-30 01:23:05,922 [INFO] (17/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_en.mp3
+2025-08-30 01:23:05,924 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_en_bg.png -> Видео: 001_06_ At the Doctor’s_en_bg.mp4
+2025-08-30 01:23:08,199 [INFO] (18/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_06_ At the Doctor’s_ru.mp3
+2025-08-30 01:23:08,201 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:23:08,201 [INFO] (19/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_di.mp3
+2025-08-30 01:23:08,202 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_di_bg.png -> Видео: 001_07_Weekend with Friends_di_bg.mp4
+2025-08-30 01:23:10,004 [INFO] (20/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_en.mp3
+2025-08-30 01:23:10,006 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_en_bg.png -> Видео: 001_07_Weekend with Friends_en_bg.mp4
+2025-08-30 01:23:11,988 [INFO] (21/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_07_Weekend with Friends_ru.mp3
+2025-08-30 01:23:11,990 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:23:11,990 [INFO] (22/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_di.mp3
+2025-08-30 01:23:11,992 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_di_bg.png -> Видео: 001_08_Working in the Office_di_bg.mp4
+2025-08-30 01:23:13,884 [INFO] (23/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_en.mp3
+2025-08-30 01:23:13,886 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_en_bg.png -> Видео: 001_08_Working in the Office_en_bg.mp4
+2025-08-30 01:23:15,939 [INFO] (24/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_08_Working in the Office_ru.mp3
+2025-08-30 01:23:15,941 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:23:15,941 [INFO] (25/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_di.mp3
+2025-08-30 01:23:15,942 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_di_bg.png -> Видео: 001_09_Vacation at the Beach_di_bg.mp4
+2025-08-30 01:23:17,698 [INFO] (26/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_en.mp3
+2025-08-30 01:23:17,700 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_en_bg.png -> Видео: 001_09_Vacation at the Beach_en_bg.mp4
+2025-08-30 01:23:19,856 [INFO] (27/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_09_Vacation at the Beach_ru.mp3
+2025-08-30 01:23:19,858 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:23:19,858 [INFO] (28/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_di.mp3
+2025-08-30 01:23:19,860 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_di_bg.png -> Видео: 001_10_Evening Walk_di_bg.mp4
+2025-08-30 01:23:21,652 [INFO] (29/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_en.mp3
+2025-08-30 01:23:21,654 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_en_bg.png -> Видео: 001_10_Evening Walk_en_bg.mp4
+2025-08-30 01:23:23,695 [INFO] (30/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_ru.mp3
+2025-08-30 01:23:23,697 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:23:23,697 [INFO] Готово. Создано видео: 20
