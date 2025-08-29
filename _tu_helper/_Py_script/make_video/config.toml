@@ -1,0 +1,125 @@
+# =========================
+#  CONFIG (лежит рядом с make_video.py)
+# =========================
+# ПАМЯТКА:
+#  • Нет изображений → фон (color ниже), длит. = длит. аудио или 5 сек.
+#  • Нет аудио       → видео без звука.
+#  • Нет субтитров   → просто без субтитров.
+#  • Нет текстов     → без текстового оверлея.
+#  • safety.stop_on_missing=true → если в списке указан файл и его нет → ошибка.
+
+[output]
+filename = "D://Entertaiment//Английский//data//Видео//Урок 1//youtube_1080p.mp4"   # итоговый файл
+overwrite = true                 # перезаписывать при наличии?
+sidecar_timeline = true          # сохранить timeline.json рядом
+
+[video]
+resolution = "1080p"             # "720p" | "1080p" | "4k"
+fps = 30
+default_image_duration = 3.0
+
+  [video.background]
+  mode  = "contain"              # "contain" | "cover" | "fit" | "pad"
+  color = "black"                # black, white, gray, ... или HEX "#RRGGBB"
+
+[transitions_default]
+type = "crossfade"               # "none" | "crossfade" | "dip" (dip ~ crossfade с затемнением)
+duration = 0.75
+
+[images]
+use_folder = true
+folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+#folder = "./images"
+order = "by_name"
+# Пример явного списка (если use_folder=false):
+# list = [
+#   { path="./images/001.jpg", duration=3.0, transition="crossfade" },
+#   { path="./images/002.png", duration=4.0, transition="none"      },
+#   { path="./images/003.jpeg",duration=2.5, transition="dip"       }
+# ]
+list = []
+
+[audio]
+mode = "sequence"                # "sequence" — последовательно, "mix" — параллельно (наложение)
+use_folder = true
+folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+#folder = "./audio"
+order = "by_name"
+# Пример явного списка (если use_folder=false):
+# list = [
+#   { path="./audio/intro.mp3",     start=0.0,  fade_in=0.5, fade_out=0.5, gain_db=-2.0 },
+#   { path="./audio/voiceover.wav", start=10.0, fade_in=0.2, fade_out=0.2                 },
+#   { path="./audio/outro.m4a",     start=25.0, fade_in=0.5, fade_out=1.0, gain_db=-3.5   }
+# ]
+list = []
+
+[audio_normalize]
+mode = "ebu_r128"                # "off" | "ebu_r128" | "peak" | "rms"
+target = -14.0                   # LUFS для ebu_r128
+
+[subtitles]
+enable = false
+mode = "burn"                    # "soft" (дорожка) | "burn" (прожиг)
+encoding = "utf8"
+select_strategy = "by_name_sequence"
+allow_explicit_list = true
+file = ""                        # одиночный файл (если указан — приоритетнее)
+folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+#folder = "./subs"
+# list = [
+#   { path="./subs/part1_ru.srt" },
+#   { path="./subs/part2_en.srt" },
+#   { path="./subs/part3_uk.srt" }
+# ]
+list = []
+  [subtitles.style]
+  preset = "default"
+
+[text_overlay]
+enable = true
+# ВАЖНО для Windows: пропишите шрифт, например:
+ fontfile = "C:/Windows/Fonts/arial.ttf"
+#fontfile = ""
+use_folder = true
+folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+#folder = "./texts"
+order = "by_name"
+bind_to_images_by_order = true
+default_x = "(w-text_w)/2"
+default_y = "h*0.80"
+default_fontsize = 36
+default_line_spacing = 6
+default_box = true
+default_boxcolor = "black@0.5"
+default_boxborderw = 10
+default_fontcolor = "white"
+default_shadowcolor = "black"
+default_shadowx = 1
+default_shadowy = 1
+# Пример явного списка (если use_folder=false или нужна явная временная разметка):
+# list = [
+#   { path="./texts/slide1.txt", start=0.0, end=3.0, x="(w-text_w)/2", y="h*0.82", fontsize=40 },
+#   { path="./texts/slide2.txt", start=5.0, end=8.0 },
+#   { path="./texts/slide3.txt", start=9.0, end=12.0 }
+# ]
+list = []
+
+[placeholders.image]
+path = ""     # если пусто — фон из video.background.color
+text = ""     # (зарезервировано; не рисуется в этой версии)
+
+[audio_silence]
+enable = true
+loudness_db = -90.0
+
+[safety]
+stop_on_missing = true
+fallback_image = ""              # можно указать картинку-замену, если чего-то не хватает
+
+[timing]
+snap_to_frames = true
+global_offset = 0.0
+
+[logging]
+level = "INFO"                   # "DEBUG" | "INFO" | "WARNING" | "ERROR"
+to_file = false
