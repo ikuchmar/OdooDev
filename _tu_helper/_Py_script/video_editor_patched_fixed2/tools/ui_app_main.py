@@ -13,6 +13,7 @@ from tkinter import ttk, messagebox
 from .ui_app_files import UITabFiles
 from .ui_app_view import UITabView
 from .ui_app_fragment import UITabFragment
+#from .ui_app_fragment import UITabFragments as UITabFragment
 from .ui_app_audio import UITabAudio
 from .ui_app_denoise import UITabDenoise
 from .ui_app_speed import UITabSpeed
@@ -47,7 +48,7 @@ class App_UI(tk.Tk):
             "files","view","fragment","audio","denoise","speed","logo","convert","automontage","queue"
         ]}
         nb.add(self.frames["files"], text="Файлы")
-        nb.add(self.frames["view"], text="Просмотр/Лента")
+        nb.add(self.frames["view"], text="Видео")
         nb.add(self.frames["fragment"], text="Фрагмент")
         nb.add(self.frames["audio"], text="Аудио")
         nb.add(self.frames["denoise"], text="Шумоподавление")
