@@ -8,27 +8,40 @@
 #  • Нет текстов     → без текстового оверлея.
 #  • safety.stop_on_missing=true → если в списке указан файл и его нет → ошибка.
 
+#========================================================
 [output]
-filename = "D://Entertaiment//Английский//data//Видео//Урок 1//youtube_1080p.mp4"   # итоговый файл
+#========================================================
+
+#filename = "D://Entertaiment//Английский//data//Видео//Урок 1//youtube_1080p.mp4"   # итоговый файл
+filename = "D://Entertaimant//Английский//! свои рассказы//Видео//youtube_1080p.mp4"   # итоговый файл
 overwrite = true                 # перезаписывать при наличии?
 sidecar_timeline = true          # сохранить timeline.json рядом
 
+#========================================================
 [video]
+#========================================================
 resolution = "1080p"             # "720p" | "1080p" | "4k"
 fps = 30
 default_image_duration = 3.0
 
-  [video.background]
+#========================================================
+[video.background]
+#========================================================
   mode  = "contain"              # "contain" | "cover" | "fit" | "pad"
   color = "black"                # black, white, gray, ... или HEX "#RRGGBB"
 
+#========================================================
 [transitions_default]
+#========================================================
 type = "crossfade"               # "none" | "crossfade" | "dip" (dip ~ crossfade с затемнением)
 duration = 0.75
 
+#========================================================
 [images]
+#========================================================
 use_folder = true
-folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+#folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+folder = "D://Entertaimant//Английский//! свои рассказы//Видео//"
 #folder = "./images"
 order = "by_name"
 # Пример явного списка (если use_folder=false):
@@ -39,10 +52,13 @@ order = "by_name"
 # ]
 list = []
 
+#========================================================
 [audio]
+#========================================================
 mode = "sequence"                # "sequence" — последовательно, "mix" — параллельно (наложение)
 use_folder = true
-folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+#folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+folder = "D://Entertaimant//Английский//! свои рассказы//Видео//"
 #folder = "./audio"
 order = "by_name"
 # Пример явного списка (если use_folder=false):
@@ -53,18 +69,23 @@ order = "by_name"
 # ]
 list = []
 
+#========================================================
 [audio_normalize]
+#========================================================
 mode = "ebu_r128"                # "off" | "ebu_r128" | "peak" | "rms"
 target = -14.0                   # LUFS для ebu_r128
 
+#========================================================
 [subtitles]
+#========================================================
 enable = false
 mode = "burn"                    # "soft" (дорожка) | "burn" (прожиг)
 encoding = "utf8"
 select_strategy = "by_name_sequence"
 allow_explicit_list = true
 file = ""                        # одиночный файл (если указан — приоритетнее)
-folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+#folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+folder = "D://Entertaimant//Английский//! свои рассказы//Видео//"
 #folder = "./subs"
 # list = [
 #   { path="./subs/part1_ru.srt" },
@@ -75,13 +96,16 @@ list = []
   [subtitles.style]
   preset = "default"
 
+#========================================================
 [text_overlay]
+#========================================================
 enable = true
 # ВАЖНО для Windows: пропишите шрифт, например:
  fontfile = "C:/Windows/Fonts/arial.ttf"
 #fontfile = ""
 use_folder = true
-folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+#folder = "D://Entertaiment//Английский//data//Видео//Урок 1//"
+folder = "D://Entertaimant//Английский//! свои рассказы//Видео//"
 #folder = "./texts"
 order = "by_name"
 bind_to_images_by_order = true
@@ -104,22 +128,32 @@ default_shadowy = 1
 # ]
 list = []
 
+#========================================================
 [placeholders.image]
+#========================================================
 path = ""     # если пусто — фон из video.background.color
 text = ""     # (зарезервировано; не рисуется в этой версии)
 
+#========================================================
 [audio_silence]
+#========================================================
 enable = true
 loudness_db = -90.0
 
+#========================================================
 [safety]
+#========================================================
 stop_on_missing = true
 fallback_image = ""              # можно указать картинку-замену, если чего-то не хватает
 
+#========================================================
 [timing]
+#========================================================
 snap_to_frames = true
 global_offset = 0.0
 
+#========================================================
 [logging]
+#========================================================
 level = "INFO"                   # "DEBUG" | "INFO" | "WARNING" | "ERROR"
 to_file = false
