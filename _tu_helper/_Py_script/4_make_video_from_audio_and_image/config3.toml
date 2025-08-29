@@ -10,7 +10,7 @@
 # Режим источника аудио:
 #   "dir"       — брать все аудио из папки input_dir (ниже), с опцией рекурсии.
 #   "file_list" — брать список аудио из текстового файла file_list_path (по одному пути на строку).
-mode = "dirs"  # варианты: "dir" | "file_list"
+mode = "dir"  # варианты: "dir" | "file_list"
 
 # Если mode = "dir"
 #input_dir = "D:/Media/audio_input"   # папка с аудио

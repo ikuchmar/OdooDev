@@ -4,7 +4,6 @@
 Скрипт пакетно делает видео из пар (аудио + картинка).
 - Запуск без аргументов.
 - Читает config.toml из того же каталога, где лежит скрипт.
-- Источники аудио: список папок (mode="dirs") или файл-список (mode="file_list").
 - Для каждого аудио ищет картинки с тем же стемом (в т.ч. с суффиксами).
 - Если найдено несколько картинок — создаёт видео для КАЖДОЙ (имя видео = имя картинки + ".mp4").
 - Если картинок нет — аудио пропускается, процесс продолжается.
@@ -13,7 +12,7 @@
 Анти-«мерцание» статичных картинок:
 - трактуем картинку как статичное изображение: `-f image2`
 - fps задаём через фильтр `fps=...` + `-vsync cfr`
-- добавляем `-tune stillimage` для libx264
+- добавляем `-tune stillimage`
 """
 
 from __future__ import annotations
@@ -79,33 +78,23 @@ def is_image(path: Path, image_exts: set[str]) -> bool:
 
 
 def collect_audios_by_mode(cfg: dict, script_dir: Path, audio_exts: set[str]) -> list[Path]:
-    """
-    Собираем список аудиофайлов:
-    - mode="dirs": из всех папок input_dirs (recurse=True/False)
-    - mode="file_list": из файла со списком путей
-    """
     inp = cfg.get("input", {})
-    mode = str(inp.get("mode", "dirs")).strip().lower()
+    mode = str(inp.get("mode", "dir")).strip().lower()
     collected: list[Path] = []
 
-    if mode == "dirs":
-        input_dirs = inp.get("input_dirs", [])
-        if not input_dirs:
-            logging.error("В конфиге input.input_dirs не задан.")
+    if mode == "dir":
+        input_dir = str(inp.get("input_dir", "")).strip()
+        if not input_dir:
+            logging.error("В конфиге input.input_dir не задан.")
             return []
+        base = Path(input_dir)
+        if not base.is_absolute():
+            base = (script_dir / base).resolve()
         recurse = bool(inp.get("recurse", True))
         pattern = "**/*" if recurse else "*"
-
-        for dir_path in input_dirs:
-            base = Path(str(dir_path))
-            if not base.is_absolute():
-                base = (script_dir / base).resolve()
-            if not base.exists():
-                logging.warning("Папка не найдена: %s", base)
-                continue
-            for p in base.glob(pattern):
-                if is_audio(p, audio_exts):
-                    collected.append(p)
+        for p in base.glob(pattern):
+            if is_audio(p, audio_exts):
+                collected.append(p)
 
     elif mode == "file_list":
         file_list_path = str(inp.get("file_list_path", "")).strip()
@@ -140,11 +129,6 @@ def collect_audios_by_mode(cfg: dict, script_dir: Path, audio_exts: set[str]) ->
 
 
 def build_suffix_checker(stem: str, suffixes_cfg: list[str]):
-    """
-    Предикат: подходит ли image_stem под допустимые суффиксы.
-    - ["*"] или пусто => любой суффикс (включая пустой).
-    - Иначе принимаем только строго перечисленные ("" — точное совпадение без суффикса).
-    """
     allow_any = (len(suffixes_cfg) == 0) or (len(suffixes_cfg) == 1 and suffixes_cfg[0] == "*")
     allowed = set(suffixes_cfg) if not allow_any else None
 
@@ -160,10 +144,6 @@ def build_suffix_checker(stem: str, suffixes_cfg: list[str]):
 
 
 def find_candidate_images(audio_path: Path, image_exts: set[str], image_dirs: list[Path], suffixes_cfg: list[str]) -> list[Path]:
-    """
-    Ищем все картинки, чьи имена начинаются со стема аудио и проходят по политике суффиксов.
-    Возвращаем список всех найденных (для каждой будет создано видео).
-    """
     stem = audio_path.stem
     check_suffix = build_suffix_checker(stem, suffixes_cfg)
 
@@ -189,10 +169,6 @@ def ensure_dir(path: Path) -> None:
 
 
 def choose_output_path(base_dir: Path, name_stem: str, ext: str, on_exists: str) -> Path | None:
-    """
-    Возвращает путь для сохранения. Если on_exists="skip" и файл уже есть — вернём None.
-    Если "rename" — добавим -1, -2... до свободного имени.
-    """
     out = base_dir / f"{name_stem}.{ext}"
     if not out.exists():
         return out
@@ -217,7 +193,7 @@ def hex_or_name_color_to_ffmpeg(color: str) -> str:
 
 def build_vfilter(width: int, height: int, scale_mode: str, pad_color: str, fps: int) -> str:
     """
-    Формируем -vf:
+    Формируем -vf для ffmpeg:
     - fit:   scale=...:decrease, pad=..., fps=N
     - cover: scale=...:increase, crop=..., fps=N
     """
@@ -255,7 +231,7 @@ def run_ffmpeg(
         "-loglevel", "error",
         "-y",
 
-        "-f", "image2",   # читаем изображение как статичное
+        "-f", "image2",   # <— читаем изображение как статичное
         "-loop", "1",
         "-i", str(image_path),
 
@@ -314,7 +290,6 @@ def main() -> None:
     audio_exts = normalize_exts(input_cfg.get("audio_exts", []))
     image_exts = normalize_exts(input_cfg.get("image_exts", []))
 
-    # Доп. каталоги для картинок (если заданы)
     image_dirs: list[Path] = []
     for d in input_cfg.get("image_search_dirs", []):
         p = Path(str(d))
@@ -322,15 +297,12 @@ def main() -> None:
             p = (script_dir / p).resolve()
         image_dirs.append(p)
 
-    # Разрешённые суффиксы
     suffixes_cfg = [str(s) for s in input_cfg.get("image_suffixes", ["*"])]
 
-    # Выходные параметры
     out_dir_cfg = str(output_cfg.get("dir", "")).strip()  # "" => рядом с аудио
     on_exists = str(output_cfg.get("on_exists", "rename")).lower()
     out_ext = str(output_cfg.get("ext", "mp4")).strip().lstrip(".") or "mp4"
 
-    # Параметры кодирования
     width = int(enc.get("width", 1920))
     height = int(enc.get("height", 1080))
     fps = int(enc.get("fps", 30))
@@ -345,11 +317,9 @@ def main() -> None:
     movflags = enc.get("movflags", "+faststart") or None
     threads = int(enc.get("threads", 0)) or None
 
-    # ffmpeg
     ffmpeg_path = str(enc.get("ffmpeg_path", "")).strip()
     ffmpeg = Path(ffmpeg_path) if ffmpeg_path else "ffmpeg"
 
-    # Собираем список аудио
     audios = collect_audios_by_mode(cfg, script_dir, audio_exts)
     if not audios:
         logging.warning("Аудио не найдено. Проверьте input.mode и параметры.")
@@ -367,7 +337,7 @@ def main() -> None:
                 logging.warning("  Картинка не найдена -> пропуск")
                 continue
 
-            # Куда класть:
+            # куда класть:
             if out_dir_cfg:
                 base_out_dir = Path(out_dir_cfg)
                 if not base_out_dir.is_absolute():

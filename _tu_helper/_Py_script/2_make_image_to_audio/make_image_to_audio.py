@@ -2,43 +2,49 @@
 # -*- coding: utf-8 -*-
 """
 Создание фоновых изображений под каждый аудиофайл.
-- Настройки берутся из config.toml (рядом со скриптом).
-- Запуск без параметров: python make_image_from_audio.py
-- Требуется Python 3.11+ (tomllib) и Pillow (PIL).
 
-Установка Pillow при необходимости:
-    pip install Pillow
+Фичи:
+- input_dir (одна папка) и/или input_dirs (список папок)
+- input_files (явный список файлов)
+- include_suffixes / exclude_suffixes (по stem, без учёта регистра)
+- output_suffix (добавляется к имени картинки)
+- output_dir + mirror_subdirs (зеркалировать структуру подпапок)
+- фон: color | gradient | image
+- формат: png/jpg/webp (+jpeg_quality)
+- политика конфликтов: skip/overwrite/rename
+- dry_run, лог в файл (опционально), многопоточность (workers>1)
+
+Требуется: Python 3.11+ (tomllib) и Pillow (PIL).
+Установка Pillow:  pip install Pillow
 """
 
 from __future__ import annotations
 
 import io
-import re
 import traceback
 from pathlib import Path
 from typing import Dict, Any, List, Tuple, Optional
 from dataclasses import dataclass
 
-# --- Чтение TOML ---
+# --- TOML (Python 3.11+) ---
 try:
-    import tomllib  # Python 3.11+
+    import tomllib
 except Exception:
-    print("❌ Нужен Python 3.11+ (модуль tomllib). Обновите Python.")
+    print("❌ Нужен Python 3.11+ (есть модуль tomllib). Обновите Python.")
     raise
 
-# --- Изображения (Pillow) ---
+# --- Pillow ---
 try:
     from PIL import Image, ImageDraw
 except Exception:
     print("❌ Не установлен Pillow (PIL). Установите: pip install Pillow")
     raise
 
-# --- Потоки (по желанию) ---
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 # =========================
-# УТИЛИТЫ / I/O
+# УТИЛИТЫ
 # =========================
 
 def script_dir() -> Path:
@@ -95,7 +101,7 @@ def safe_name_with_suffix(target: Path) -> Path:
 
 
 # =========================
-# ГЕНЕРАЦИЯ ФОНА
+# ФОН
 # =========================
 
 def hex_to_rgba(color_hex: str) -> Tuple[int, int, int, int]:
@@ -120,7 +126,6 @@ def hex_to_rgba(color_hex: str) -> Tuple[int, int, int, int]:
 
 
 def make_solid_image(w: int, h: int, rgba: Tuple[int, int, int, int]) -> Image.Image:
-    """Создать однотонное изображение RGBA."""
     return Image.new("RGBA", (w, h), rgba)
 
 
@@ -131,7 +136,6 @@ def make_gradient_image(
     rgba_to: Tuple[int, int, int, int],
     direction: str
 ) -> Image.Image:
-    """Создать линейный градиент (вертикальный/горизонтальный)."""
     base = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     draw = ImageDraw.Draw(base)
 
@@ -157,10 +161,9 @@ def make_gradient_image(
 
 def fit_background(img: Image.Image, canvas_w: int, canvas_h: int, mode: str) -> Image.Image:
     """
-    Встраивание фоновой картинки:
-      contain — вписать без обрезки (letterbox)
-      cover   — заполнить всё, обрезая лишнее
-      stretch — растянуть до точного размера
+    contain — вписать без обрезки (letterbox)
+    cover   — заполнить всё, обрезая лишнее
+    stretch — растянуть до точного размера
     """
     mode = (mode or "contain").lower()
     if mode == "stretch":
@@ -186,7 +189,6 @@ def fit_background(img: Image.Image, canvas_w: int, canvas_h: int, mode: str) ->
 
 
 def make_background(cfg_img: Dict[str, Any]) -> Image.Image:
-    """Собрать фон согласно конфигу image.background. Возвращает RGBA-изображение нужного размера."""
     w = int(cfg_img.get("width", 1920))
     h = int(cfg_img.get("height", 1080))
     bg = cfg_img.get("background", {}) or {}
@@ -217,12 +219,12 @@ def make_background(cfg_img: Dict[str, Any]) -> Image.Image:
 
 
 # =========================
-# ФИЛЬТРАЦИЯ ФАЙЛОВ
+# ФИЛЬТРЫ ФАЙЛОВ
 # =========================
 
 def passes_suffix_filters(stem: str, cfg: Dict[str, Any]) -> bool:
     """
-    Возвращает True, если файл проходит фильтры суффиксов.
+    True, если файл проходит фильтры суффиксов.
     - exclude_suffixes: если stem заканчивается на любой из них -> отклонить.
     - include_suffixes: если список НЕ пустой, stem должен заканчиваться на любой из них.
     Проверка без учёта регистра.
@@ -244,22 +246,60 @@ def passes_suffix_filters(stem: str, cfg: Dict[str, Any]) -> bool:
                 return True
         return False
 
-    # Если include_suffixes пуст — ограничений нет, файл проходит
+    # Если include_suffixes пуст — ограничений нет
     return True
 
 
+# =========================
+# СБОР ВХОДНЫХ ФАЙЛОВ
+# =========================
+
+def get_all_input_dirs(cfg: Dict[str, Any]) -> List[Path]:
+    """
+    Собирает список всех входных директорий:
+    - одиночная input_dir (если задана)
+    - список input_dirs (если задан)
+    Возвращает список Path (может быть пустым).
+    """
+    dirs: List[Path] = []
+
+    if "input_dir" in cfg and cfg["input_dir"]:
+        d = str(cfg["input_dir"]).strip()
+        if d:
+            dirs.append(Path(d))
+
+    if "input_dirs" in cfg and cfg["input_dirs"]:
+        for d in cfg["input_dirs"]:
+            s = str(d).strip()
+            if s:
+                dirs.append(Path(s))
+
+    # Уникализируем и упорядочим для стабильности
+    uniq = []
+    seen = set()
+    for p in dirs:
+        rp = p.resolve()
+        if rp not in seen:
+            uniq.append(rp)
+            seen.add(rp)
+    return uniq
+
+
 def collect_audio_files(cfg: Dict[str, Any], log_fp: Optional[io.TextIOBase]) -> List[Path]:
-    """Собрать список аудиофайлов из input_dir (+recursive) и input_files, применяя фильтры суффиксов."""
+    """
+    Собрать список аудиофайлов из:
+    - input_dir (одна папка) и/или input_dirs (список папок),
+    - input_files (список файлов).
+    Применяется фильтрация по суффиксам.
+    """
     audio_exts = cfg.get("audio_exts") or [".mp3", ".wav", ".m4a", ".flac"]
-    input_dir = (cfg.get("input_dir") or "").strip()
     recursive = bool(cfg.get("recursive", True))
     input_files = cfg.get("input_files") or []
 
     files: List[Path] = []
 
-    # Из папки
-    if input_dir:
-        base = Path(input_dir)
+    # Папки
+    for base in get_all_input_dirs(cfg):
         if base.exists() and base.is_dir():
             pattern = "**/*" if recursive else "*"
             for p in base.glob(pattern):
@@ -271,7 +311,7 @@ def collect_audio_files(cfg: Dict[str, Any], log_fp: Optional[io.TextIOBase]) ->
         else:
             log_print(f"⚠️  input_dir не существует или не папка: {base}", log_fp)
 
-    # Из списка
+    # Явные файлы
     for f in input_files:
         p = Path(f)
         if p.exists() and p.is_file():
@@ -285,48 +325,61 @@ def collect_audio_files(cfg: Dict[str, Any], log_fp: Optional[io.TextIOBase]) ->
         else:
             log_print(f"⚠️  В input_files путь не найден: {p}", log_fp)
 
+    # Уникализация
     uniq = sorted(set(files))
     log_print(f"Найдено аудиофайлов (после фильтрации): {len(uniq)}", log_fp)
     return uniq
 
 
 # =========================
-# ПУТИ ВЫВОДА / СОХРАНЕНИЕ
+# ВЫЧИСЛЕНИЕ ПУТЕЙ ВЫВОДА
 # =========================
 
 def compute_output_path(in_file: Path, cfg: Dict[str, Any], image_format: str) -> Path:
     """
     Определить путь сохранения итогового изображения для аудиофайла.
-    Учитывает output_dir (или рядом), mirror_subdirs, output_suffix и формат.
+    Учитывает:
+      - output_dir (или рядом с аудио),
+      - mirror_subdirs (зеркалирование структуры подпапок относительно одной из входных директорий),
+      - output_suffix,
+      - формат.
     """
     out_dir_cfg = (cfg.get("output_dir") or "").strip()
     mirror = bool(cfg.get("mirror_subdirs", True))
     suffix = (cfg.get("output_suffix") or "").strip()
 
+    # Куда складываем
     if not out_dir_cfg:
         target_dir = in_file.parent
     else:
         base_out = Path(out_dir_cfg)
+
         if not mirror:
             target_dir = base_out
         else:
-            input_dir = (cfg.get("input_dir") or "").strip()
-            if input_dir:
+            # Пытаемся вычислить относительный путь относительно КАЖДОЙ входной директории
+            rel_dir: Optional[Path] = None
+            for base_in in get_all_input_dirs(cfg):
                 try:
-                    rel = in_file.parent.resolve().relative_to(Path(input_dir).resolve())
-                    target_dir = base_out / rel
+                    rel_dir = in_file.parent.resolve().relative_to(base_in.resolve())
+                    break
                 except Exception:
-                    target_dir = base_out
-            else:
-                target_dir = base_out
+                    continue
+
+            # Если удалось — зеркалим, иначе — в корень output_dir
+            target_dir = base_out / rel_dir if rel_dir is not None else base_out
 
     ensure_dir(target_dir)
 
-    # Имя файла с опциональным суффиксом
+    # Имя файла + опциональный суффикс
     stem = in_file.stem + suffix if suffix else in_file.stem
     new_name = f"{stem}.{image_format.lower()}"
     return target_dir / new_name
 
+
+# =========================
+# СОХРАНЕНИЕ
+# =========================
 
 def save_image(
     img: Image.Image,
@@ -406,13 +459,13 @@ def process_one(job: Job, cfg_img: Dict[str, Any], conflicts: str, dry_run: bool
 def main():
     cfg = load_config()
 
-    # Настройки верхнего уровня
+    # Верхнеуровневые настройки
     dry_run = bool(cfg.get("dry_run", False))
     conflicts = str(cfg.get("conflicts", "skip"))
     workers = int(cfg.get("workers", 0))
     log_file = (cfg.get("log_file") or "").strip()
 
-    # Открываем лог-файл, если задан
+    # Лог
     log_fp: Optional[io.TextIOBase] = None
     if log_file:
         try:
@@ -438,7 +491,7 @@ def main():
             log_fp.close()
         return
 
-    # Формирование задач
+    # Задачи
     image_format = str(cfg_img.get("format", "png"))
     jobs: List[Job] = []
     for f in files:

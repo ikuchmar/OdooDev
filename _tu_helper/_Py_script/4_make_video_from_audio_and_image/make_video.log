@@ -193,3 +193,109 @@
 2025-08-30 01:23:23,695 [INFO] (30/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 1\001_10_Evening Walk_ru.mp3
 2025-08-30 01:23:23,697 [WARNING]   Картинка не найдена -> пропуск
 2025-08-30 01:23:23,697 [INFO] Готово. Создано видео: 20
+2025-08-30 01:40:09,418 [INFO] Старт make_video_from_audio_and_image
+2025-08-30 01:40:09,418 [ERROR] Неизвестный режим input.mode: dir
+2025-08-30 01:40:09,418 [WARNING] Аудио не найдено. Проверьте input.mode и параметры.
+2025-08-30 01:41:06,683 [INFO] Старт make_video_from_audio_and_image
+2025-08-30 01:41:06,686 [INFO] Найдено аудио-файлов: 50
+2025-08-30 01:41:06,687 [INFO] (1/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_01 Athens and Democracy_en.mp3
+2025-08-30 01:41:06,688 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_01 Athens and Democracy_en_bg.png -> Видео: 002_01 Athens and Democracy_en_bg.mp4
+2025-08-30 01:41:08,638 [INFO] (2/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_01 Athens and Democracy_ru.mp3
+2025-08-30 01:41:08,639 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:08,639 [INFO] (3/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_02 The Vikings_en.mp3
+2025-08-30 01:41:08,640 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_02 The Vikings_en_bg.png -> Видео: 002_02 The Vikings_en_bg.mp4
+2025-08-30 01:41:10,512 [INFO] (4/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_02 The Vikings_ru.mp3
+2025-08-30 01:41:10,513 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:10,513 [INFO] (5/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_03 The Leaning Tower of Pisa_en.mp3
+2025-08-30 01:41:10,514 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_03 The Leaning Tower of Pisa_en_bg.png -> Видео: 002_03 The Leaning Tower of Pisa_en_bg.mp4
+2025-08-30 01:41:12,364 [INFO] (6/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_03 The Leaning Tower of Pisa_ru.mp3
+2025-08-30 01:41:12,365 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:12,365 [INFO] (7/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_04 The Swiss Alps_en.mp3
+2025-08-30 01:41:12,366 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_04 The Swiss Alps_en_bg.png -> Видео: 002_04 The Swiss Alps_en_bg.mp4
+2025-08-30 01:41:14,260 [INFO] (8/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_04 The Swiss Alps_ru.mp3
+2025-08-30 01:41:14,261 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:14,261 [INFO] (9/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_05 Amsterdam and Bicycles_en.mp3
+2025-08-30 01:41:14,263 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_05 Amsterdam and Bicycles_en_bg.png -> Видео: 002_05 Amsterdam and Bicycles_en_bg.mp4
+2025-08-30 01:41:16,057 [INFO] (10/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_05 Amsterdam and Bicycles_ru.mp3
+2025-08-30 01:41:16,058 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:16,058 [INFO] (11/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_06 The London Underground_en.mp3
+2025-08-30 01:41:16,059 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_06 The London Underground_en_bg.png -> Видео: 002_06 The London Underground_en_bg.mp4
+2025-08-30 01:41:17,930 [INFO] (12/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_06 The London Underground_ru.mp3
+2025-08-30 01:41:17,932 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:17,932 [INFO] (13/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_07 The French Revolution_en.mp3
+2025-08-30 01:41:17,933 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_07 The French Revolution_en_bg.png -> Видео: 002_07 The French Revolution_en_bg.mp4
+2025-08-30 01:41:19,888 [INFO] (14/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_07 The French Revolution_ru.mp3
+2025-08-30 01:41:19,889 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:19,889 [INFO] (15/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_08 New Orleans and Jazz_en.mp3
+2025-08-30 01:41:19,890 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_08 New Orleans and Jazz_en_bg.png -> Видео: 002_08 New Orleans and Jazz_en_bg.mp4
+2025-08-30 01:41:21,714 [INFO] (16/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_08 New Orleans and Jazz_ru.mp3
+2025-08-30 01:41:21,716 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:21,716 [INFO] (17/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_09 Hollywood_en.mp3
+2025-08-30 01:41:21,717 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_09 Hollywood_en_bg.png -> Видео: 002_09 Hollywood_en_bg.mp4
+2025-08-30 01:41:23,300 [INFO] (18/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_09 Hollywood_ru.mp3
+2025-08-30 01:41:23,302 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:23,302 [INFO] (19/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_10 Washington D.C._en.mp3
+2025-08-30 01:41:23,303 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_10 Washington D.C._en_bg.png -> Видео: 002_10 Washington D.C._en_bg.mp4
+2025-08-30 01:41:24,994 [INFO] (20/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 2\002_10 Washington D.C._ru.mp3
+2025-08-30 01:41:24,995 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:24,995 [INFO] (21/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_01 Sigmund Freud and Dreams (psychology + Jewish history)_di.mp3
+2025-08-30 01:41:24,997 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_01 Sigmund Freud and Dreams (psychology + Jewish history)_di_bg.png -> Видео: 003_01 Sigmund Freud and Dreams (psychology + Jewish history)_di_bg.mp4
+2025-08-30 01:41:28,954 [INFO] (22/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_01 Sigmund Freud and Dreams (psychology + Jewish history)_en.mp3
+2025-08-30 01:41:28,956 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_01 Sigmund Freud and Dreams (psychology + Jewish history)_en_bg.png -> Видео: 003_01 Sigmund Freud and Dreams (psychology + Jewish history)_en_bg.mp4
+2025-08-30 01:41:30,936 [INFO] (23/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_01 Sigmund Freud and Dreams (psychology + Jewish history)_ru.mp3
+2025-08-30 01:41:30,937 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:30,938 [INFO] (24/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_02 Jewish Food and Family (culinary + religion + health)_di.mp3
+2025-08-30 01:41:30,939 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_02 Jewish Food and Family (culinary + religion + health)_di_bg.png -> Видео: 003_02 Jewish Food and Family (culinary + religion + health)_di_bg.mp4
+2025-08-30 01:41:33,901 [INFO] (25/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_02 Jewish Food and Family (culinary + religion + health)_en.mp3
+2025-08-30 01:41:33,903 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_02 Jewish Food and Family (culinary + religion + health)_en_bg.png -> Видео: 003_02 Jewish Food and Family (culinary + religion + health)_en_bg.mp4
+2025-08-30 01:41:36,243 [INFO] (26/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_02 Jewish Food and Family (culinary + religion + health)_ru.mp3
+2025-08-30 01:41:36,244 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:36,244 [INFO] (27/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_03 Sport and Mountains (sport + travel + confusing words)_di.mp3
+2025-08-30 01:41:36,246 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_03 Sport and Mountains (sport + travel + confusing words)_di_bg.png -> Видео: 003_03 Sport and Mountains (sport + travel + confusing words)_di_bg.mp4
+2025-08-30 01:41:38,981 [INFO] (28/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_03 Sport and Mountains (sport + travel + confusing words)_en.mp3
+2025-08-30 01:41:38,983 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_03 Sport and Mountains (sport + travel + confusing words)_en_bg.png -> Видео: 003_03 Sport and Mountains (sport + travel + confusing words)_en_bg.mp4
+2025-08-30 01:41:41,189 [INFO] (29/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_03 Sport and Mountains (sport + travel + confusing words)_ru.mp3
+2025-08-30 01:41:41,190 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:41,190 [INFO] (30/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_04 Jerusalem Wall and Market_di.mp3
+2025-08-30 01:41:41,192 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_04 Jerusalem Wall and Market_di_bg.png -> Видео: 003_04 Jerusalem Wall and Market_di_bg.mp4
+2025-08-30 01:41:44,941 [INFO] (31/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_04 Jerusalem Wall and Market_en.mp3
+2025-08-30 01:41:44,942 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_04 Jerusalem Wall and Market_en_bg.png -> Видео: 003_04 Jerusalem Wall and Market_en_bg.mp4
+2025-08-30 01:41:47,375 [INFO] (32/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_04 Jerusalem Wall and Market_ru.mp3
+2025-08-30 01:41:47,376 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:47,376 [INFO] (33/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_05 Bands, Parades and “Paradise”_di.mp3
+2025-08-30 01:41:47,378 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_05 Bands, Parades and “Paradise”_di_bg.png -> Видео: 003_05 Bands, Parades and “Paradise”_di_bg.mp4
+2025-08-30 01:41:50,163 [INFO] (34/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_05 Bands, Parades and “Paradise”_en.mp3
+2025-08-30 01:41:50,164 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_05 Bands, Parades and “Paradise”_en_bg.png -> Видео: 003_05 Bands, Parades and “Paradise”_en_bg.mp4
+2025-08-30 01:41:52,595 [INFO] (35/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_05 Bands, Parades and “Paradise”_ru.mp3
+2025-08-30 01:41:52,597 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:52,597 [INFO] (36/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_06 Healthy Breakfast Cereal vs Serial_di.mp3
+2025-08-30 01:41:52,598 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_06 Healthy Breakfast Cereal vs Serial_di_bg.png -> Видео: 003_06 Healthy Breakfast Cereal vs Serial_di_bg.mp4
+2025-08-30 01:41:56,405 [INFO] (37/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_06 Healthy Breakfast Cereal vs Serial_en.mp3
+2025-08-30 01:41:56,406 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_06 Healthy Breakfast Cereal vs Serial_en_bg.png -> Видео: 003_06 Healthy Breakfast Cereal vs Serial_en_bg.mp4
+2025-08-30 01:41:58,746 [INFO] (38/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_06 Healthy Breakfast Cereal vs Serial_ru.mp3
+2025-08-30 01:41:58,748 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:41:58,748 [INFO] (39/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_07 Gym Brotherhood Lose vs Loose_di.mp3
+2025-08-30 01:41:58,750 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_07 Gym Brotherhood Lose vs Loose_di_bg.png -> Видео: 003_07 Gym Brotherhood Lose vs Loose_di_bg.mp4
+2025-08-30 01:42:02,143 [INFO] (40/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_07 Gym Brotherhood Lose vs Loose_en.mp3
+2025-08-30 01:42:02,145 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_07 Gym Brotherhood Lose vs Loose_en_bg.png -> Видео: 003_07 Gym Brotherhood Lose vs Loose_en_bg.mp4
+2025-08-30 01:42:04,420 [INFO] (41/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_07 Gym Brotherhood Lose vs Loose_ru.mp3
+2025-08-30 01:42:04,422 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:42:04,422 [INFO] (42/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_08 Desert or Dessert_di.mp3
+2025-08-30 01:42:04,424 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_08 Desert or Dessert_di_bg.png -> Видео: 003_08 Desert or Dessert_di_bg.mp4
+2025-08-30 01:42:07,791 [INFO] (43/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_08 Desert or Dessert_en.mp3
+2025-08-30 01:42:07,793 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_08 Desert or Dessert_en_bg.png -> Видео: 003_08 Desert or Dessert_en_bg.mp4
+2025-08-30 01:42:09,809 [INFO] (44/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_08 Desert or Dessert_ru.mp3
+2025-08-30 01:42:09,811 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:42:09,811 [INFO] (45/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_09 Quiet Evenings, Quite Productive_di.mp3
+2025-08-30 01:42:09,813 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_09 Quiet Evenings, Quite Productive_di_bg.png -> Видео: 003_09 Quiet Evenings, Quite Productive_di_bg.mp4
+2025-08-30 01:42:13,653 [INFO] (46/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_09 Quiet Evenings, Quite Productive_en.mp3
+2025-08-30 01:42:13,655 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_09 Quiet Evenings, Quite Productive_en_bg.png -> Видео: 003_09 Quiet Evenings, Quite Productive_en_bg.mp4
+2025-08-30 01:42:15,775 [INFO] (47/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_09 Quiet Evenings, Quite Productive_ru.mp3
+2025-08-30 01:42:15,777 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:42:15,777 [INFO] (48/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_10 Proverbs and Community_di.mp3
+2025-08-30 01:42:15,779 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_10 Proverbs and Community_di_bg.png -> Видео: 003_10 Proverbs and Community_di_bg.mp4
+2025-08-30 01:42:19,762 [INFO] (49/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_10 Proverbs and Community_en.mp3
+2025-08-30 01:42:19,764 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_10 Proverbs and Community_en_bg.png -> Видео: 003_10 Proverbs and Community_en_bg.mp4
+2025-08-30 01:42:22,011 [INFO] (50/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_10 Proverbs and Community_ru.mp3
+2025-08-30 01:42:22,013 [WARNING]   Картинка не найдена -> пропуск
+2025-08-30 01:42:22,013 [INFO] Готово. Создано видео: 30
