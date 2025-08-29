@@ -1,0 +1,67 @@
+{
+  "inputs": [
+    "data/Урок 3/*.txt"
+  ],
+  "recursive_inputs": true,
+  "extensions": [
+    ".txt"
+  ],
+  "enable_languages": [
+    "en",
+    "ru"
+  ],
+  "voice_en": "en-GB-SoniaNeural",
+  "alt_voices_en": [
+    "en-GB-RyanNeural",
+    "en-GB-SoniaNeural",
+    "en-US-GuyNeural",
+    "en-US-RogerNeural",
+    "en-US-SteffanNeural",
+    "en-US-JennyNeural",
+    "en-US-AriaNeural",
+    "en-US-MichelleNeural",
+    "en-AU-WilliamNeural",
+    "en-AU-NatashaNeural"
+  ],
+  "all_voices_en": [
+    "en-GB-RyanNeural",
+    "en-GB-ThomasNeural",
+    "en-GB-LibbyNeural",
+    "en-GB-MaisieNeural",
+    "en-GB-SoniaNeural",
+    "en-US-GuyNeural",
+    "en-US-RogerNeural",
+    "en-US-SteffanNeural",
+    "en-US-JennyNeural",
+    "en-US-AriaNeural",
+    "en-US-MichelleNeural",
+    "en-US-AnaNeural",
+    "en-AU-WilliamNeural",
+    "en-AU-NatashaNeural"
+  ],
+  "voice_ru": "ru-RU-DmitryNeural",
+  "voice_uk": "uk-UA-OstapNeural",
+  "alt_voices_uk": [
+    "uk-UA-OstapNeural",
+    "uk-UA-PolinaNeural"
+  ],
+  "rate": -15,
+  "pause": 600,
+  "strip_emojis": true,
+  "multi_en_outputs": false,
+  "suffix_filters": {
+    "en": {
+      "enabled": false,
+      "suffix": "_en"
+    },
+    "ru": {
+      "enabled": false,
+      "suffix": "_ru"
+    },
+    "uk": {
+      "enabled": false,
+      "suffix": "_uk"
+    }
+  }
+}
+

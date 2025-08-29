@@ -1,0 +1,172 @@
+{
+  "_comment": "Любые ключи, начинающиеся с '_' — игнорируются скриптом (можно писать комментарии).",
+  "_comment_inputs": "Список входных файлов/масок/папок. Можно указывать абсолютные или относительные пути, например '*.txt', 'data', 'data/*.txt'.",
+  "inputs": [
+    "D:\\Work_Odoo\\OdooDev\\_tu_helper\\_Py_script\\tts\\data\\Урок 1\\001_01_At the Supermarket_ru.txt"
+  ],
+    "_inputs": [
+    "data/*.txt"
+  ],
+  "_inputs2": [
+    "data/*.txt",
+    "notes",
+    "data"
+  ],
+  "_comment_recursive_inputs": "Если true — искать файлы рекурсивно во всех подпапках.",
+  "recursive_inputs": true,
+  "_comment_extensions": "Какие расширения файлов брать для обработки.",
+  "extensions": [
+    ".txt"
+  ],
+  "_comment_enable_languages": "Языки, которые будут озвучены, если не сработал жёсткий фильтр по суффиксу.",
+  "enable_languages": [
+    "en",
+    "ru"
+  ],
+    "_enable_languages": [
+    "en",
+    "ru",
+    "uk"
+  ],
+  "_comment_voice_en": "Основной голос для английского текста.",
+  "voice_en": "en-GB-SoniaNeural",
+  "_comment_alt_voices_en": "Альтернативные голоса для английского (fallback, если основной не сработал).",
+  "alt_voices_en": [
+    "en-GB-RyanNeural",
+    "en-GB-SoniaNeural",
+    "en-US-GuyNeural",
+    "en-US-RogerNeural",
+    "en-US-SteffanNeural",
+    "en-US-JennyNeural",
+    "en-US-AriaNeural",
+    "en-US-MichelleNeural",
+    "en-AU-WilliamNeural",
+    "en-AU-NatashaNeural"
+  ],
+  "_comment_en_strict_no_fallback": "Если true — EN читается только voice_en, без переключения на альтернативные.",
+  "en_strict_no_fallback": true,
+  "_comment_all_voices_en": "Полный список всех доступных EN-голосов (для справки, не используется скриптом напрямую).",
+  "all_voices_en": [
+    "en-GB-RyanNeural",
+    "en-GB-ThomasNeural",
+    "en-GB-LibbyNeural",
+    "en-GB-MaisieNeural",
+    "en-GB-SoniaNeural",
+    "en-US-GuyNeural",
+    "en-US-RogerNeural",
+    "en-US-SteffanNeural",
+    "en-US-JennyNeural",
+    "en-US-AriaNeural",
+    "en-US-MichelleNeural",
+    "en-US-AnaNeural",
+    "en-AU-WilliamNeural",
+    "en-AU-NatashaNeural"
+  ],
+
+  "_comment_voice_ru": "Основной голос для русского текста.",
+  "voice_ru": "ru-RU-DmitryNeural",
+  "_comment_alt_voices_ru": "Альтернативные голоса для русского текста.",
+  "alt_voices_ru": [
+    "ru-RU-SergeyNeural",
+    "ru-RU-AndreiNeural",
+    "ru-RU-DmitryNeural",
+    "ru-RU-SvetlanaNeural"
+  ],
+  "_comment_ru_strict_no_fallback": "Если true — RU читается только voice_ru, без fallback.",
+  "ru_strict_no_fallback": true,
+  "_comment_voice_uk": "Основной голос для украинского текста.",
+  "voice_uk": "uk-UA-OstapNeural",
+  "_comment_alt_voices_uk": "Альтернативные голоса для украинского текста.",
+  "alt_voices_uk": [
+    "uk-UA-OstapNeural",
+    "uk-UA-PolinaNeural"
+  ],
+  "_comment_uk_strict_no_fallback": "Если true — UK читается только voice_uk, без fallback.",
+  "uk_strict_no_fallback": true,
+  "_comment_rate": "Скорость речи в процентах (+10 быстрее, -15 медленнее).",
+  "rate": -15,
+  "_comment_pause": "Базовая пауза между предложениями (в миллисекундах).",
+  "pause": 600,
+  "_comment_strip_emojis": "Если true — удалять эмодзи и нестандартные символы из текста.",
+  "strip_emojis": true,
+  "_comment_multi_en_outputs": "Если true — создавать отдельные MP3 для каждого голоса из alt_voices_en.",
+  "multi_en_outputs": false,
+  "_comment_suffix_filters": "Фильтры по суффиксу имени файла. Если enabled=true и файл заканчивается на этот суффикс — озвучивается только этим языком.",
+  "suffix_filters": {
+    "en": {
+      "enabled": true,
+      "suffix": "_en"
+    },
+    "ru": {
+      "enabled": false,
+      "suffix": "_ru"
+    },
+    "uk": {
+      "enabled": true,
+      "suffix": "_uk"
+    }
+  },
+  "_comment_explicit_language_markers": "Явные маркеры в тексте, которые задают язык до ближайшего разделителя.",
+  "explicit_language_markers": {
+    "en": [
+      "[EN]",
+      "_en_",
+      "(en)",
+      "en:",
+      "english:"
+    ],
+    "ru": [
+      "[RU]",
+      "[RUS]",
+      "_ru_",
+      "_рус_",
+      "(ru)",
+      "(рус)",
+      "ru:",
+      "рус:",
+      "russian:"
+    ],
+    "uk": [
+      "[UK]",
+      "[UA]",
+      "_uk_",
+      "_ua_",
+      "(uk)",
+      "(ua)",
+      "uk:",
+      "ua:",
+      "ukrainian:"
+    ]
+  },
+  "_comment_marker_end_delimiters": "Символы, до которых действует маркер языка.",
+  "marker_end_delimiters": [
+    ".",
+    ";",
+    "!",
+    "?",
+    "\n"
+  ],
+  "_comment_strip_symbols": "Символы, которые нужно полностью убирать из текста (не озвучиваются).",
+  "strip_symbols": [
+    "(",
+    ")",
+    "[",
+    "]",
+    "{",
+    "}",
+    "_",
+    "<",
+    ">",
+    "—"
+  ],
+  "_comment_extra_pause_on_double_space": "Параметры для паузы, если встречается двойной пробел.",
+  "extra_pause_on_double_space": {
+    "enabled": true,
+    "ms": 200
+  },
+  "_comment_extra_pause_on_newline": "Параметры для паузы, если предложение начинается с новой строки.",
+  "extra_pause_on_newline": {
+    "enabled": true,
+    "ms": 600
+  }
+}

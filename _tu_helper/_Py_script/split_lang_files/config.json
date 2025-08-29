@@ -1,0 +1,10 @@
+{
+  "_comment": "Любые ключи, начинающиеся с '_' — игнорируются скриптом",
+  "source_path": "D:\\Work_Odoo\\OdooDev\\_tu_helper\\_Py_script\\tts\\data\\Урок 3\\out",
+  "dest_root": "D:\\Work_Odoo\\OdooDev\\_tu_helper\\_Py_script\\tts\\data\\Урок 3\\out2",
+  "extensions": [".txt", ".md"],
+  "encoding": "utf-8",
+  "preserve_structure": true,
+  "overwrite": true,
+  "dry_run": false
+}
