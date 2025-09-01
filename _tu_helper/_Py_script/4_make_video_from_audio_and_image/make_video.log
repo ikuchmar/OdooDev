@@ -299,3 +299,77 @@
 2025-08-30 01:42:22,011 [INFO] (50/50) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 3\003_10 Proverbs and Community_ru.mp3
 2025-08-30 01:42:22,013 [WARNING]   Картинка не найдена -> пропуск
 2025-08-30 01:42:22,013 [INFO] Готово. Создано видео: 30
+2025-09-01 17:05:32,785 [INFO] Старт make_video_from_audio_and_image
+2025-09-01 17:05:32,786 [INFO] Найдено аудио-файлов: 1
+2025-09-01 17:05:32,786 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-01 17:05:32,787 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg.png -> Видео: 001_01_At the Supermarket_en_bg.mp4
+2025-09-01 17:05:36,225 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg1.png -> Видео: 001_01_At the Supermarket_en_bg1.mp4
+2025-09-01 17:05:39,366 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg2.png -> Видео: 001_01_At the Supermarket_en_bg2.mp4
+2025-09-01 17:05:42,440 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg3.png -> Видео: 001_01_At the Supermarket_en_bg3.mp4
+2025-09-01 17:05:45,498 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg4.png -> Видео: 001_01_At the Supermarket_en_bg4.mp4
+2025-09-01 17:05:48,539 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg5.png -> Видео: 001_01_At the Supermarket_en_bg5.mp4
+2025-09-01 17:05:51,568 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg6.png -> Видео: 001_01_At the Supermarket_en_bg6.mp4
+2025-09-01 17:05:54,580 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg7.png -> Видео: 001_01_At the Supermarket_en_bg7.mp4
+2025-09-01 17:05:57,621 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg8.png -> Видео: 001_01_At the Supermarket_en_bg8.mp4
+2025-09-01 17:06:00,715 [INFO] Готово. Создано видео: 9
+2025-09-01 17:16:03,626 [INFO] Старт make_video_from_audio_and_image
+2025-09-01 17:16:03,627 [INFO] Найдено аудио-файлов: 1
+2025-09-01 17:16:03,627 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-01 17:16:03,932 [INFO]   Слайдшоу: кадров=9, per_image=3.704s, итоговый файл: 001_01_At the Supermarket_en.mp4
+2025-09-01 17:16:07,342 [INFO] Готово. Создано видео: 1
+2025-09-01 17:17:04,326 [INFO] Старт make_video_from_audio_and_image
+2025-09-01 17:17:04,326 [INFO] Найдено аудио-файлов: 1
+2025-09-01 17:17:04,327 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-01 17:17:04,345 [INFO]   Слайдшоу: кадров=8, per_image=4.167s, итоговый файл: 001_01_At the Supermarket_en-1.mp4
+2025-09-01 17:17:07,576 [INFO] Готово. Создано видео: 1
+2025-09-01 17:22:22,929 [INFO] Старт make_video_from_audio_and_image
+2025-09-01 17:22:22,929 [INFO] Найдено аудио-файлов: 1
+2025-09-01 17:22:22,929 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-01 17:22:22,929 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg.png -> Видео: 001_01_At the Supermarket_en_bg.mp4
+2025-09-01 17:22:25,620 [INFO] Готово. Создано видео: 1
+2025-09-01 17:32:59,901 [INFO] Старт make_video_from_audio_and_image
+2025-09-01 17:32:59,901 [INFO] Найдено аудио-файлов: 1
+2025-09-01 17:32:59,901 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-01 17:32:59,921 [INFO]   Слайдшоу: кадров=9, policy=stretch_last, sum=33.336s, out=001_01_At the Supermarket_en.mp4
+2025-09-01 17:33:02,936 [INFO] Готово. Создано видео: 1
+2025-09-01 18:21:20,662 [INFO] Старт make_video_from_audio_and_image
+2025-09-01 18:21:20,662 [INFO] Найдено аудио-файлов: 1
+2025-09-01 18:21:20,662 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-01 18:21:20,915 [INFO]   Слайдшоу: кадров=9, policy=stretch_last, sum=33.336s, out=001_01_At the Supermarket_en-1.mp4
+2025-09-01 18:21:24,082 [INFO] Готово. Создано видео: 1
+2025-09-01 18:22:16,763 [INFO] Старт make_video_from_audio_and_image
+2025-09-01 18:22:16,764 [INFO] Найдено аудио-файлов: 1
+2025-09-01 18:22:16,764 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-01 18:22:16,787 [INFO]   Слайдшоу: кадров=8, policy=stretch_last, sum=33.336s, out=001_01_At the Supermarket_en.mp4
+2025-09-01 18:22:19,541 [INFO] Готово. Создано видео: 1
+2025-09-01 23:03:24,743 [INFO] Старт make_video_from_audio_and_image
+2025-09-01 23:03:24,744 [INFO] Найдено аудио-файлов: 1
+2025-09-01 23:03:24,744 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-01 23:03:25,020 [INFO]   Слайдшоу: кадров=8, policy=stretch_last, sum=33.336s, out=001_01_At the Supermarket_en.mp4
+2025-09-01 23:03:27,970 [INFO] Готово. Создано видео: 1
+2025-09-01 23:13:23,946 [INFO] Старт make_video_from_audio_and_image
+2025-09-01 23:13:23,947 [INFO] Найдено аудио-файлов: 1
+2025-09-01 23:13:23,947 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-01 23:13:23,964 [INFO]   Слайдшоу: кадров=8, policy=stretch_last, sum=33.336s, итог: 001_01_At the Supermarket_en.mp4
+2025-09-01 23:13:26,638 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_1.png
+2025-09-01 23:13:26,638 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_2.png
+2025-09-01 23:13:26,638 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_3.png
+2025-09-01 23:13:26,639 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_4.png
+2025-09-01 23:13:26,639 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_5.png
+2025-09-01 23:13:26,639 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_6.png
+2025-09-01 23:13:26,639 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_7.png
+2025-09-01 23:13:26,639 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_8.png
+2025-09-01 23:13:26,639 [INFO] Готово. Создано видео: 1
+2025-09-02 00:02:48,409 [INFO] Старт make_video_from_audio_and_image
+2025-09-02 00:02:48,409 [INFO] Найдено аудио-файлов: 1
+2025-09-02 00:02:48,409 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-02 00:02:48,433 [INFO]   Слайдшоу: кадров=8, policy=stretch_last, sum=31.512s, итог: 001_01_At the Supermarket_en.mp4
+2025-09-02 00:02:50,996 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_1.png
+2025-09-02 00:02:50,997 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_2.png
+2025-09-02 00:02:50,997 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_3.png
+2025-09-02 00:02:50,997 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_4.png
+2025-09-02 00:02:50,997 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_5.png
+2025-09-02 00:02:50,997 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_6.png
+2025-09-02 00:02:50,997 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_7.png
+2025-09-02 00:02:50,997 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_8.png
+2025-09-02 00:02:50,997 [INFO] Готово. Создано видео: 1

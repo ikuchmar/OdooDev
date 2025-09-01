@@ -1,0 +1,211 @@
+{
+  "_comment": "Ключи, начинающиеся с '_' — комментарии, скрипт их игнорирует.",
+  "_comment_inputs": "Файлы/маски/папки. Можно относительные пути.",
+  "inputs": [
+    "D://Entertaimant//Английский//! свои рассказы//Урок 4"
+  ],
+  "_example_inputs": [
+    "D:\\Work_Odoo\\OdooDev\\_tu_helper\\_Py_script\\tts\\data\\Стих",
+    "D:\\Work_Odoo\\OdooDev\\_tu_helper\\_Py_script\\tts\\data\\Урок 4\\*.txt",
+    "data/*.txt",
+    "notes",
+    "data"
+  ],
+  "_comment_recursive_inputs": "Если true — дополнительно расширять маски без ** до рекурсивных.",
+  "recursive_inputs": true,
+  "_comment_extensions": "Какие расширения брать.",
+  "extensions": [
+    ".txt"
+  ],
+  "_comment_enable_languages": "Какие языки озвучивать по умолчанию, если не сработал жёсткий суффикс.",
+  "enable_languages": [
+    "en",
+    "ru"
+  ],
+  "_enable_languages": [
+    "en",
+    "ru",
+    "uk"
+  ],
+  "_comment_languages": "Описание каждого языка: голос(а), строгий режим, маркеры, суффикс-фильтр, правила сопоставления с langdetect. Добавляй новые языки по этой же схеме, напр. de, es, fr,",
+  "languages": {
+    "en": {
+      "_comment_voice_en": "Основной голос для английского текста.",
+      "voice": "en-GB-SoniaNeural",
+      "_comment_alt_voices_en": "Альтернативные голоса для английского (fallback, если основной не сработал).",
+      "alt_voices": [
+        "en-GB-RyanNeural",
+        "en-GB-SoniaNeural",
+        "en-US-GuyNeural",
+        "en-US-RogerNeural",
+        "en-US-SteffanNeural",
+        "en-US-JennyNeural",
+        "en-US-AriaNeural",
+        "en-US-MichelleNeural",
+        "en-AU-WilliamNeural",
+        "en-AU-NatashaNeural"
+      ],
+      "_comment_all_voices_en": "Полный список всех доступных EN-голосов (для справки, не используется скриптом напрямую).",
+      "all_voices_en": [
+        "en-GB-RyanNeural",
+        "en-GB-ThomasNeural",
+        "en-GB-LibbyNeural",
+        "en-GB-MaisieNeural",
+        "en-GB-SoniaNeural",
+        "en-US-GuyNeural",
+        "en-US-RogerNeural",
+        "en-US-SteffanNeural",
+        "en-US-JennyNeural",
+        "en-US-AriaNeural",
+        "en-US-MichelleNeural",
+        "en-US-AnaNeural",
+        "en-US-KidNeural",
+        "en-AU-WilliamNeural",
+        "en-AU-NatashaNeural"
+      ],
+      "_comment_en_strict_no_fallback": "Если true — EN читается только voice_en, без переключения на альтернативные.",
+      "strict_no_fallback": true,
+      "_comment_explicit_language_markers": "Явные маркеры в тексте, которые задают язык до ближайшего разделителя.",
+      "markers": [
+        "[EN]",
+        "_en_",
+        "(en)",
+        "en:",
+        "english:"
+      ],
+      "_comment_suffix_filters": "Фильтры по суффиксу имени файла. Если enabled=true и файл заканчивается на этот суффикс — озвучивается только этим языком.",
+      "suffix_filter": {
+        "enabled": true,
+        "suffix": "_en"
+      },
+      "_comment": "detect_prefixes — коды/префиксы из langdetect, которые считаем этим языком.",
+      "detect_prefixes": [
+        "en"
+      ],
+      "_comment_aliases_en": "Алиасы для выбора конкретного голоса в тексте: (v:ryan), (v:guy) и т.п.",
+      "voice_aliases": {
+        "ryan": "en-GB-RyanNeural",
+        "thomas": "en-GB-ThomasNeural",
+        "guy": "en-US-GuyNeural",
+        "steffan": "en-US-SteffanNeural"
+      }
+    },
+    "ru": {
+      "_comment_voice_ru": "Основной голос для русского текста.",
+      "voice": "ru-RU-DmitryNeural",
+      "_comment_alt_voices_ru": "Альтернативные голоса для русского текста.",
+      "alt_voices_ru": [
+        "ru-RU-SergeyNeural",
+        "ru-RU-AndreiNeural",
+        "ru-RU-DmitryNeural",
+        "ru-RU-SvetlanaNeural"
+      ],
+      "_comment_ru_strict_no_fallback": "Если true — RU читается только voice_ru, без fallback.",
+      "strict_no_fallback": true,
+      "markers": [
+        "[RU]",
+        "[RUS]",
+        "_ru_",
+        "_рус_",
+        "(ru)",
+        "(рус)",
+        "ru:",
+        "рус:",
+        "russian:"
+      ],
+      "suffix_filter": {
+        "enabled": true,
+        "suffix": "_ru"
+      },
+      "detect_prefixes": [
+        "ru"
+      ],
+      "_comment_aliases_ru": "Алиасы голосов RU.",
+      "voice_aliases": {
+        "dmitry": "ru-RU-DmitryNeural",
+        "sergey": "ru-RU-SergeyNeural",
+        "andrei": "ru-RU-AndreiNeural",
+        "svetlana": "ru-RU-SvetlanaNeural"
+      }
+    },
+    "uk": {
+      "voice": "uk-UA-PolinaNeural",
+      "alt_voices": [
+        "uk-UA-OstapNeural",
+        "uk-UA-PolinaNeural"
+      ],
+      "strict_no_fallback": true,
+      "markers": [
+        "[UK]",
+        "[UA]",
+        "_uk_",
+        "_ua_",
+        "(uk)",
+        "(ua)",
+        "uk:",
+        "ua:",
+        "ukrainian:"
+      ],
+      "suffix_filter": {
+        "enabled": true,
+        "suffix": "_uk"
+      },
+      "detect_prefixes": [
+        "uk"
+      ],
+      "_comment_aliases_uk": "Алиасы голосов UK.",
+      "voice_aliases": {
+        "ostap": "uk-UA-OstapNeural",
+        "polina": "uk-UA-PolinaNeural"
+      }
+    }
+  },
+  "_comment_strip_symbols": "Символы, которые нужно полностью убрать из озвучки.",
+  "strip_symbols": [
+    "(",
+    ")",
+    "[",
+    "]",
+    "{",
+    "}",
+    "_",
+    "<",
+    ">",
+    "—"
+  ],
+  "_comment_strip_emojis": "Удалять эмодзи/«экзотику».",
+  "strip_emojis": true,
+  "_comment_rate": "Скорость речи (%). Отрицательное — медленнее.",
+  "rate": -15,
+  "_comment_pauses": "Паузы. Пауза имитируется добавлением запятых (≈300 мс/запятая).",
+  "pauses": {
+    "between_phrases_ms": 600,
+    "space_pause": {
+      "enabled": false,
+      "ms_per_space": 1
+    },
+    "newline_pause": {
+      "enabled": true,
+      "ms_per_newline": 600
+    },
+    "_comment_extra_pause_on_newline": "Параметры для паузы, если предложение начинается с новой строки.",
+    "start_of_line_extra_pause_ms": 600
+  },
+  "_comment_sentence_delimiters": "Разделители конца фразы. Символы, до которых действует маркер языка.",
+  "sentence_delimiters": [
+    ".",
+    ";",
+    "!",
+    "?",
+    "\n"
+  ],
+  "_comment_multi_en_outputs": "Если true — создаём отдельные MP3 для каждого EN-голоса из alt_voices.",
+  "multi_en_outputs": false,
+  "_comment_voice_marker_prefixes": "Префиксы для голосовых маркеров в тексте: (v:алиас) или (voice:алиас).",
+  "voice_marker_prefixes": [
+    "v:",
+    "voice:"
+  ],
+  "_comment_allow_partial_voice_match": "Если алиас не найден в voice_aliases — искать по подстроке среди [voice] + alt_voices.",
+  "allow_partial_voice_match": true
+}

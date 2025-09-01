@@ -3,7 +3,7 @@
 ОСНОВА — ТЕКСТОВЫЕ ФАЙЛЫ (*.txt).
 Для каждого TXT в указанных папках/файлах ищем соответствующие изображения в той же папке
 и наносим текст по двум режимам:
-- per_image_text_mode = "full_text": каждая выбранная картинка получает ВЕСЬ текст.
+- per_image_text_mode = "full_text": каждая картинка получает ВЕСЬ текст.
 - per_image_text_mode = "line_by_line_cycle": текст режется на строки/блоки строк; блоки раздаются по картинкам циклично.
   Можно задать lines_per_image (сколько строк на одну картинку).
 
@@ -17,13 +17,8 @@
 
 Индексация вывода при циклическом использовании одной картинки:
 - cycle_output_indexing = true/false
-- cycle_index_start, cycle_index_pad
+- cycle_index_start, cycle_index_pad (ведущие нули)
 - cycle_index_name_template = "{stem}_{i}{suffix}{ext}"
-
-Дополнительно:
-- target_images = "all" | "first" — выбирать все или только первую картинку.
-- delete_original_after_success = true/false — удалять ли исходник после успешного сохранения результата
-  (только если создан отдельный файл, не overwrite, и не dry_run).
 
 Зависимости:
     pip install pillow
@@ -443,7 +438,7 @@ def render_text_block_on_image(
     text_lines: List[str],
     cfg: dict,
 ) -> Image.Image:
-    """Рендерит МНОГОСТРОЧНЫЙ блок (full_text или line_by_line_cycle с lines_per_image>1)."""
+    """Рендерит МНОГОСТРОЧНЫЙ блок (используется для full_text и line_by_line_cycle при lines_per_image>1)."""
     if img.mode != "RGBA":
         img = img.convert("RGBA")
     W, H = img.size
@@ -591,13 +586,12 @@ def process_one_image(
     block_lines: Optional[List[str]],
     dry_run: bool,
     indexing_kwargs: Optional[dict] = None
-) -> Tuple[bool, Optional[Path]]:
+) -> bool:
     """
     Обработка одного изображения.
     - mode="full_text": block_lines — весь текст по строкам.
     - mode="line_block": block_lines — блок из N строк для этой картинки.
     - mode="single_line": block_lines = [одна строка].
-    Возвращает (ok, out_path).
     """
     try:
         img = Image.open(img_path)
@@ -608,7 +602,7 @@ def process_one_image(
             preview = "\\n".join(block_lines or [])
             logging.info("[DRY RUN] %s → режим=%s, строк(в блоке)=%d; пример: %r",
                          img_path.name, mode, len(block_lines or []), preview[:80])
-            return True, None
+            return True
 
         if mode == "single_line":
             img = render_single_line_on_image(img, block_lines[0] if block_lines else "", cfg)
@@ -623,12 +617,12 @@ def process_one_image(
             naming=cfg.get("output_naming", "suffix"),
             suffix=cfg.get("output_suffix", "_with_text"),
             save_ext=save_ext,
-            **kw,
+            **kw,  # здесь попадут index и прочие параметры индексации
         )
 
         if out_path is None:
             logging.info("Пропуск сохранения (skip_if_exists): %s", img_path.name)
-            return True, None
+            return True
 
         params = {}
         img_to_save = img
@@ -647,34 +641,11 @@ def process_one_image(
         ensure_dir(out_path.parent)
         img_to_save.save(out_path, format=save_format, **params)
         logging.info("Сохранено: %s", out_path)
-        return True, out_path
+        return True
 
     except Exception as e:
         logging.exception("Ошибка при обработке %s: %s", img_path, e)
-        return False, None
-
-
-def try_delete_original(original_path: Path, out_path: Optional[Path], cfg: dict):
-    """Удаляет исходную картинку, если это разрешено и безопасно."""
-    if not bool(cfg.get("delete_original_after_success", False)):
-        return
-    if bool(cfg.get("dry_run", False)):
-        return
-    if out_path is None:
-        return
-    # Если сохраняли поверх исходника — удалять нечего (пути совпадают)
-    try:
-        if original_path.resolve() == out_path.resolve():
-            return
-    except Exception:
-        if str(original_path) == str(out_path):
-            return
-    try:
-        if original_path.exists():
-            original_path.unlink()
-            logging.info("Исходник удалён: %s", original_path)
-    except Exception as e:
-        logging.warning("Не удалось удалить исходник %s: %s", original_path, e)
+        return False
 
 
 def main():
@@ -718,11 +689,6 @@ def main():
         logging.warning("Неизвестный per_image_text_mode: %s — используем 'full_text'", per_image_text_mode)
         per_image_text_mode = "full_text"
 
-    target_images = str(cfg.get("target_images", "all")).lower()
-    if target_images not in ("all", "first"):
-        logging.warning("Неизвестный target_images: %s — используем 'all'", target_images)
-        target_images = "all"
-
     include_empty_lines = bool(cfg.get("include_empty_lines", False))
     lines_per_image = int(cfg.get("lines_per_image", 1))
     if lines_per_image < 1:
@@ -761,29 +727,24 @@ def main():
             logging.info("Нет подходящих картинок для %s — пропуск.", txt.name)
             continue
 
-        # Применяем режим "first", если выбран
-        if target_images == "first":
-            images = images[:1]
-
         total_images += len(images)
 
         if per_image_text_mode == "full_text":
-            # Каждая выбранная картинка получает весь (уже отфильтрованный) текст
+            # Каждая картинка получает весь (уже отфильтрованный) текст
             lines_full = filtered_text.splitlines()
             if not include_empty_lines:
                 lines_full = [ln for ln in lines_full if ln.strip() != ""]
             for img_path in images:
-                ok, out_path = process_one_image(
+                ok = process_one_image(
                     img_path=img_path,
                     cfg=cfg,
                     mode="full_text",
                     block_lines=lines_full,
                     dry_run=dry_run,
-                    indexing_kwargs=None  # индексация не нужна
+                    indexing_kwargs=None  # индексация тут не нужна
                 )
                 if ok:
                     processed += 1
-                    try_delete_original(img_path, out_path, cfg)
                 else:
                     skipped += 1
 
@@ -810,9 +771,8 @@ def main():
             if curr:
                 blocks.append(curr)
 
-            # Счётчик использований и последний сохранённый путь для каждой картинки
+            # Счётчик использований каждой картинки в рамках одного TXT
             use_count: Dict[Path, int] = {p: 0 for p in images}
-            last_out: Dict[Path, Optional[Path]] = {p: None for p in images}
 
             # Раздаём блоки по картинкам циклично
             for i, block in enumerate(blocks):
@@ -832,7 +792,7 @@ def main():
                         cycle_tpl=cycle_tpl,
                     )
 
-                ok, out_path = process_one_image(
+                ok = process_one_image(
                     img_path=img_path,
                     cfg=cfg,
                     mode=mode,
@@ -842,13 +802,9 @@ def main():
                 )
                 if ok:
                     processed += 1
-                    last_out[img_path] = out_path
                 else:
                     skipped += 1
-
-            # ПОСЛЕ цикла — удаляем исходники один раз для каждой картинки
-            for p in images:
-                try_delete_original(p, last_out[p], cfg)
+            # Картинки, на которые не выпал блок, не трогаем.
 
     logging.info(
         "Готово. TXT: %d; найдено картинок: %d; успешно обработано: %d; без картинок: %d; ошибок: %d",

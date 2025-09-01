@@ -10,11 +10,19 @@
 # Режим источника аудио:
 #   "dir"       — брать все аудио из папки input_dir (ниже), с опцией рекурсии.
 #   "file_list" — брать список аудио из текстового файла file_list_path (по одному пути на строку).
-mode = "dir"  # варианты: "dir" | "file_list"
+mode = "dirs"  # варианты: "dir" | "file_list"
 
 # Если mode = "dir"
 #input_dir = "D:/Media/audio_input"   # папка с аудио
-input_dir = "D://Entertaimant//Английский//! свои рассказы//Урок 1"   # папка с аудио
+#input_dir = "D://Entertaimant//Английский//! свои рассказы//Урок 1"   # папка с аудио
+
+# Если mode = "dirs" — список папок с аудио:
+input_dirs = [
+    "D://Entertaimant//Английский//! свои рассказы//Урок 4",
+    #  "D://Entertaimant//Английский//! свои рассказы//Урок 2",
+    #  "D://Entertaimant//Английский//! свои рассказы//Урок 3"
+]
+
 recurse = true                       # рекурсивно обходить подпапки (true/false)
 
 # Если mode = "file_list"
@@ -45,6 +53,13 @@ image_search_dirs = []  # пример: ["D:/Media/images", "../common_images"]
 #image_suffixes = ["", "_with_text", "_text", "_t", "_1", "_2"]
 image_suffixes = ["*"]
 # Чтобы разрешить любые — замените на ["*"].
+
+[slideshow]
+enabled = false          # true — один ролик-слайдшоу; false — по ролику на каждую картинку
+order = "name"          # "name" (по имени файла) | "mtime" (по дате изменения)
+transition = "none"     # "none" | "crossfade"  (пока реализован "none")
+crossfade_sec = 0.5     # задел под будущее (кроссфейд), сейчас не используется
+min_image_sec = 0.3     # минимальная длительность показа одного кадра, сек (страховка)
 
 # --------- Вывод ----------
 [output]

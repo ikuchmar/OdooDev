@@ -3,7 +3,7 @@
 ОСНОВА — ТЕКСТОВЫЕ ФАЙЛЫ (*.txt).
 Для каждого TXT в указанных папках/файлах ищем соответствующие изображения в той же папке
 и наносим текст по двум режимам:
-- per_image_text_mode = "full_text": каждая выбранная картинка получает ВЕСЬ текст.
+- per_image_text_mode = "full_text": каждая картинка получает ВЕСЬ текст.
 - per_image_text_mode = "line_by_line_cycle": текст режется на строки/блоки строк; блоки раздаются по картинкам циклично.
   Можно задать lines_per_image (сколько строк на одну картинку).
 
@@ -15,16 +15,6 @@
 - remove_markers: список подстрок, которые вырезаются из текста перед обработкой.
 - drop_lines_with_markers: если True — строки, содержащие любой маркер, полностью исключаются.
 
-Индексация вывода при циклическом использовании одной картинки:
-- cycle_output_indexing = true/false
-- cycle_index_start, cycle_index_pad
-- cycle_index_name_template = "{stem}_{i}{suffix}{ext}"
-
-Дополнительно:
-- target_images = "all" | "first" — выбирать все или только первую картинку.
-- delete_original_after_success = true/false — удалять ли исходник после успешного сохранения результата
-  (только если создан отдельный файл, не overwrite, и не dry_run).
-
 Зависимости:
     pip install pillow
 Требуется Python 3.11+ (для tomllib).
@@ -32,7 +22,7 @@
 
 import sys
 import logging
-from typing import List, Tuple, Optional, Iterable, Dict
+from typing import List, Tuple, Optional, Iterable
 from pathlib import Path
 
 # tomllib — стандартный модуль Python 3.11+
@@ -127,7 +117,7 @@ def wrap_text_to_width(text: str, font: ImageFont.FreeTypeFont, draw: ImageDraw.
     """Перенос строк по ширине для МНОГОСТРОЧНОГО блока (режим full_text/мультистрочный)."""
     lines: List[str] = []
     for raw_line in text.splitlines():
-        # Сохраняем пустые строки (если строка реально пустая)
+        # Сохраняем пустые строки (если строка реально пустая в исходнике)
         if raw_line.strip() == "" and raw_line != "":
             lines.append("")
             continue
@@ -246,73 +236,36 @@ def normalize_format_and_ext(src: Path, save_format_cfg: str) -> Tuple[str, str]
     return "PNG", ".png"
 
 
-def choose_output_path(
-    src_img: Path,
-    output_dir: str,
-    naming: str,
-    suffix: str,
-    save_ext: str,
-    *,
-    index: Optional[int] = None,
-    cycle_indexing: bool = False,
-    cycle_index_start: int = 1,
-    cycle_index_pad: int = 0,
-    cycle_tpl: str = "{stem}_{i}{suffix}{ext}",
-) -> Optional[Path]:
+def choose_output_path(src_img: Path, output_dir: str, naming: str, suffix: str, save_ext: str) -> Optional[Path]:
     """
-    Возвращает путь к выходному файлу.
-    Если передан index и cycle_indexing=True — используется индексированный шаблон имени.
-    При naming='suffix' и suffix='' путь может совпасть с исходным (фактический overwrite).
+    Возвращает путь к выходному файлу по выбранной схеме именования.
+    ВАЖНО: при naming="suffix" и suffix="" фактически будет перезапись исходника.
     """
     if naming not in ("suffix", "overwrite", "skip_if_exists"):
         logging.warning("Неизвестный режим output_naming: %s, используем 'suffix'", naming)
         naming = "suffix"
 
-    stem = src_img.stem
-    ext = save_ext  # нормализованное расширение (".jpg"/".png"/".webp")
-
-    def build_name_with_suffix(base_stem: str) -> str:
-        return (base_stem + suffix) if naming == "suffix" else base_stem
-
-    # Индексированная ветка (для циклов)
-    if cycle_indexing and index is not None:
-        i_val = max(index, cycle_index_start)
-        i_str = str(i_val).zfill(max(0, cycle_index_pad))
-        out_stem = cycle_tpl.format(
-            stem=stem,
-            i=i_str,
-            suffix=(suffix if naming == "suffix" else ""),
-            ext=""  # добавим отдельно
-        )
-        filename = out_stem + ext
-        out_path = Path(output_dir, filename) if output_dir else src_img.with_name(filename)
-        ensure_dir(out_path.parent)
-        if naming == "skip_if_exists" and out_path.exists():
-            return None
-        return out_path
-
-    # Обычная ветка
     if output_dir:
         base = Path(output_dir) / src_img.name
         if naming == "suffix":
             if suffix == "":
                 logging.warning("output_naming='suffix' и output_suffix='' → фактически overwrite для %s", src_img.name)
-            base = base.with_stem(build_name_with_suffix(base.stem))
-        out_path = base.with_suffix(ext)
+            base = base.with_stem(base.stem + suffix)
+        out_path = base.with_suffix(save_ext)
         ensure_dir(out_path.parent)
         if naming == "skip_if_exists" and out_path.exists():
             return None
         return out_path
 
     if naming == "overwrite":
-        return src_img.with_suffix(ext)
+        return src_img.with_suffix(save_ext)
     elif naming == "skip_if_exists":
-        candidate = src_img.with_suffix(ext)
+        candidate = src_img.with_suffix(save_ext)
         return None if candidate.exists() else candidate
     else:
         if suffix == "":
             logging.warning("output_naming='suffix' и output_suffix='' → фактически overwrite для %s", src_img.name)
-        return src_img.with_stem(build_name_with_suffix(src_img.stem)).with_suffix(ext)
+        return src_img.with_stem(src_img.stem + suffix).with_suffix(save_ext)
 
 
 def find_images_for_text(
@@ -357,9 +310,10 @@ def find_images_for_text(
 
 def filter_text_by_markers_raw(text: str, markers: List[str], drop_lines: bool) -> str:
     """
-    Фильтрует сырой текст (целиком):
-    - drop_lines=True: строки с любым маркером удаляются целиком.
-    - drop_lines=False: маркеры вырезаются как подстроки.
+    Фильтрует сырой текст (целиком), в зависимости от режима:
+    - drop_lines=True: любые строки, содержащие ЛЮБОЙ маркер, полностью удаляются.
+    - drop_lines=False: все вхождения маркеров просто вырезаются из текста.
+    Возвращает отфильтрованный текст.
     """
     if not markers:
         return text
@@ -368,10 +322,11 @@ def filter_text_by_markers_raw(text: str, markers: List[str], drop_lines: bool) 
         kept_lines: List[str] = []
         for line in text.splitlines():
             if any(m in line for m in markers):
-                continue
+                continue  # выбросили всю строку
             kept_lines.append(line)
         return "\n".join(kept_lines)
 
+    # иначе — просто вырезаем маркеры как подстроки
     cleaned = text
     for m in markers:
         if m:
@@ -381,8 +336,8 @@ def filter_text_by_markers_raw(text: str, markers: List[str], drop_lines: bool) 
 
 def filter_lines_by_markers(lines: List[str], markers: List[str], drop_lines: bool) -> List[str]:
     """
-    Фильтрует список строк:
-    - drop_lines=True: удаляет строки, содержащие любой маркер.
+    Фильтрует список строк (после splitlines).
+    - drop_lines=True: удаляет строки, где встречается любой маркер.
     - drop_lines=False: вырезает маркеры как подстроки в каждой строке.
     """
     if not markers:
@@ -404,14 +359,77 @@ def filter_lines_by_markers(lines: List[str], markers: List[str], drop_lines: bo
 # РЕНДЕРИНГ
 # =========================
 
+def text_block_bbox(lines: List[str], font: ImageFont.FreeTypeFont, draw: ImageDraw.ImageDraw, line_spacing: float, stroke_width: int) -> Tuple[int, int]:
+    max_w = 0
+    total_h = 0
+    prev_h = 0
+    for i, line in enumerate(lines):
+        bbox = draw.textbbox((0, 0), line if line else " ", font=font, stroke_width=stroke_width)
+        w = bbox[2] - bbox[0]
+        h = bbox[3] - bbox[1]
+        max_w = max(max_w, w)
+        if i == 0:
+            total_h += h
+        else:
+            total_h += int(prev_h * line_spacing)
+        prev_h = h
+    return max_w, total_h
+
+
+def draw_multiline_text(
+    img: Image.Image,
+    xy: Tuple[int, int],
+    lines: List[str],
+    font: ImageFont.FreeTypeFont,
+    color: Tuple[int, int, int, int],
+    align: str,
+    line_spacing: float,
+    readability_style: str,
+    stroke_width: int,
+    stroke_fill: Tuple[int, int, int, int],
+    background_box_fill: Tuple[int, int, int, int],
+):
+    draw = ImageDraw.Draw(img, "RGBA")
+    bw, bh = text_block_bbox(lines, font, draw, line_spacing, stroke_width=stroke_width)
+    x, y = xy
+
+    if readability_style in ("box", "both"):
+        box = Image.new("RGBA", (bw, bh), background_box_fill)
+        img.alpha_composite(box, dest=(x, y))
+
+    prev_h = 0
+    ly = y
+    for i, line in enumerate(lines):
+        bbox = draw.textbbox((0, 0), line if line else " ", font=font, stroke_width=stroke_width)
+        lw = bbox[2] - bbox[0]
+        lh = bbox[3] - bbox[1]
+
+        if i == 0:
+            ly = y
+        else:
+            ly = ly + int(prev_h * line_spacing)
+        prev_h = lh
+
+        if align == "left":
+            lx = x
+        elif align == "right":
+            lx = x + (bw - lw)
+        else:
+            lx = x + (bw - lw) // 2
+
+        draw.text(
+            (lx, ly),
+            line,
+            font=font,
+            fill=color,
+            stroke_width=stroke_width if readability_style in ("stroke", "both") else 0,
+            stroke_fill=stroke_fill
+        )
+
+
 def fit_single_line_to_box(text_line: str, font_path: str, font_size: int, min_font_size: int,
                            draw: ImageDraw.ImageDraw, max_w: int, max_h: int,
                            stroke_width: int) -> Tuple[ImageFont.FreeTypeFont, str, int, int]:
-    """
-    Подгоняет ОДНУ строку под ограничение (max_w, max_h), уменьшая шрифт до min_font_size.
-    Если всё ещё не влезает — усечёт с '…'.
-    Возвращает (font, possibly_trimmed_line, bw, bh).
-    """
     size = font_size
     font = ImageFont.truetype(font_path, size)
 
@@ -443,7 +461,6 @@ def render_text_block_on_image(
     text_lines: List[str],
     cfg: dict,
 ) -> Image.Image:
-    """Рендерит МНОГОСТРОЧНЫЙ блок (full_text или line_by_line_cycle с lines_per_image>1)."""
     if img.mode != "RGBA":
         img = img.convert("RGBA")
     W, H = img.size
@@ -520,7 +537,6 @@ def render_single_line_on_image(
     line: str,
     cfg: dict,
 ) -> Image.Image:
-    """Рендерит ОДНУ строку (используется при lines_per_image=1)."""
     if img.mode != "RGBA":
         img = img.convert("RGBA")
     W, H = img.size
@@ -530,6 +546,7 @@ def render_single_line_on_image(
     margin_x = int(cfg.get("margin_x", 32))
     margin_y = int(cfg.get("margin_y", 32))
     anchor = str(cfg.get("anchor", "bottom_center")).lower()
+    align = str(cfg.get("align", "center")).lower()
 
     readability_style = str(cfg.get("readability_style", "both")).lower()
     stroke_width = int(cfg.get("stroke_width", 2))
@@ -568,6 +585,7 @@ def render_single_line_on_image(
         box = Image.new("RGBA", (bw, bh), background_box_fill)
         img.alpha_composite(box, dest=(x, y))
 
+    # для одиночной строки align по сути не влияет (рамка = ширина строки)
     draw.text(
         (x, y),
         line_fit,
@@ -589,15 +607,13 @@ def process_one_image(
     cfg: dict,
     mode: str,
     block_lines: Optional[List[str]],
-    dry_run: bool,
-    indexing_kwargs: Optional[dict] = None
-) -> Tuple[bool, Optional[Path]]:
+    dry_run: bool
+) -> bool:
     """
     Обработка одного изображения.
     - mode="full_text": block_lines — весь текст по строкам.
     - mode="line_block": block_lines — блок из N строк для этой картинки.
     - mode="single_line": block_lines = [одна строка].
-    Возвращает (ok, out_path).
     """
     try:
         img = Image.open(img_path)
@@ -608,7 +624,7 @@ def process_one_image(
             preview = "\\n".join(block_lines or [])
             logging.info("[DRY RUN] %s → режим=%s, строк(в блоке)=%d; пример: %r",
                          img_path.name, mode, len(block_lines or []), preview[:80])
-            return True, None
+            return True
 
         if mode == "single_line":
             img = render_single_line_on_image(img, block_lines[0] if block_lines else "", cfg)
@@ -616,19 +632,17 @@ def process_one_image(
             img = render_text_block_on_image(img, block_lines or [""], cfg)
 
         save_format, save_ext = normalize_format_and_ext(img_path, cfg.get("save_format", ""))
-        kw = indexing_kwargs or {}
         out_path = choose_output_path(
             src_img=img_path,
             output_dir=cfg.get("output_dir", ""),
             naming=cfg.get("output_naming", "suffix"),
             suffix=cfg.get("output_suffix", "_with_text"),
             save_ext=save_ext,
-            **kw,
         )
 
         if out_path is None:
             logging.info("Пропуск сохранения (skip_if_exists): %s", img_path.name)
-            return True, None
+            return True
 
         params = {}
         img_to_save = img
@@ -647,34 +661,11 @@ def process_one_image(
         ensure_dir(out_path.parent)
         img_to_save.save(out_path, format=save_format, **params)
         logging.info("Сохранено: %s", out_path)
-        return True, out_path
+        return True
 
     except Exception as e:
         logging.exception("Ошибка при обработке %s: %s", img_path, e)
-        return False, None
-
-
-def try_delete_original(original_path: Path, out_path: Optional[Path], cfg: dict):
-    """Удаляет исходную картинку, если это разрешено и безопасно."""
-    if not bool(cfg.get("delete_original_after_success", False)):
-        return
-    if bool(cfg.get("dry_run", False)):
-        return
-    if out_path is None:
-        return
-    # Если сохраняли поверх исходника — удалять нечего (пути совпадают)
-    try:
-        if original_path.resolve() == out_path.resolve():
-            return
-    except Exception:
-        if str(original_path) == str(out_path):
-            return
-    try:
-        if original_path.exists():
-            original_path.unlink()
-            logging.info("Исходник удалён: %s", original_path)
-    except Exception as e:
-        logging.warning("Не удалось удалить исходник %s: %s", original_path, e)
+        return False
 
 
 def main():
@@ -718,11 +709,6 @@ def main():
         logging.warning("Неизвестный per_image_text_mode: %s — используем 'full_text'", per_image_text_mode)
         per_image_text_mode = "full_text"
 
-    target_images = str(cfg.get("target_images", "all")).lower()
-    if target_images not in ("all", "first"):
-        logging.warning("Неизвестный target_images: %s — используем 'all'", target_images)
-        target_images = "all"
-
     include_empty_lines = bool(cfg.get("include_empty_lines", False))
     lines_per_image = int(cfg.get("lines_per_image", 1))
     if lines_per_image < 1:
@@ -732,12 +718,6 @@ def main():
     remove_markers: List[str] = cfg.get("remove_markers", []) or []
     drop_lines_with_markers = bool(cfg.get("drop_lines_with_markers", False))
 
-    # Индексация выходных файлов при цикле
-    cycle_indexing = bool(cfg.get("cycle_output_indexing", False))
-    cycle_index_start = int(cfg.get("cycle_index_start", 1))
-    cycle_index_pad = int(cfg.get("cycle_index_pad", 0))
-    cycle_tpl = str(cfg.get("cycle_index_name_template", "{stem}_{i}{suffix}{ext}"))
-
     total_txt = len(text_files)
     total_images = 0
     processed = 0
@@ -745,7 +725,7 @@ def main():
     no_images = 0
 
     for txt in text_files:
-        # читаем и фильтруем сырой текст по маркерам
+        # читаем и фильтруем сырое содержимое по маркерам
         try:
             raw_text = txt.read_text(encoding=text_encoding)
         except Exception as e:
@@ -761,35 +741,31 @@ def main():
             logging.info("Нет подходящих картинок для %s — пропуск.", txt.name)
             continue
 
-        # Применяем режим "first", если выбран
-        if target_images == "first":
-            images = images[:1]
-
         total_images += len(images)
 
         if per_image_text_mode == "full_text":
-            # Каждая выбранная картинка получает весь (уже отфильтрованный) текст
+            # Каждая картинка получает весь (уже отфильтрованный) текст
             lines_full = filtered_text.splitlines()
+            # Если не включены пустые, можно легонько подчистить пустые «случайные» строки:
             if not include_empty_lines:
                 lines_full = [ln for ln in lines_full if ln.strip() != ""]
             for img_path in images:
-                ok, out_path = process_one_image(
+                ok = process_one_image(
                     img_path=img_path,
                     cfg=cfg,
                     mode="full_text",
                     block_lines=lines_full,
-                    dry_run=dry_run,
-                    indexing_kwargs=None  # индексация не нужна
+                    dry_run=dry_run
                 )
                 if ok:
                     processed += 1
-                    try_delete_original(img_path, out_path, cfg)
                 else:
                     skipped += 1
 
         else:
-            # line_by_line_cycle
+            # line_by_line_cycle: сформируем список строк, затем применим фильтрацию по маркерам на уровне строк (на всякий)
             raw_lines = filtered_text.splitlines()
+            # ещё раз фильтруем по маркерам на уровне строк (на случай, если пользователю удобнее мыслить «по строкам»)
             lines = filter_lines_by_markers(raw_lines, remove_markers, drop_lines_with_markers)
             if not include_empty_lines:
                 lines = [ln for ln in lines if ln.strip() != ""]
@@ -801,54 +777,31 @@ def main():
 
             # Группируем строки пакетами по lines_per_image
             blocks: List[List[str]] = []
-            curr: List[str] = []
+            current: List[str] = []
             for ln in lines:
-                curr.append(ln)
-                if len(curr) == lines_per_image:
-                    blocks.append(curr)
-                    curr = []
-            if curr:
-                blocks.append(curr)
-
-            # Счётчик использований и последний сохранённый путь для каждой картинки
-            use_count: Dict[Path, int] = {p: 0 for p in images}
-            last_out: Dict[Path, Optional[Path]] = {p: None for p in images}
+                current.append(ln)
+                if len(current) == lines_per_image:
+                    blocks.append(current)
+                    current = []
+            if current:
+                blocks.append(current)
 
             # Раздаём блоки по картинкам циклично
             for i, block in enumerate(blocks):
                 img_path = images[i % n_images]
-                use_count[img_path] += 1
-                index_for_this = use_count[img_path] - 1 + cycle_index_start  # 1,2,3,...
-
                 mode = "single_line" if len(block) == 1 else "line_block"
-
-                indexing_kwargs = {}
-                if cycle_indexing:
-                    indexing_kwargs = dict(
-                        index=index_for_this,
-                        cycle_indexing=True,
-                        cycle_index_start=cycle_index_start,
-                        cycle_index_pad=cycle_index_pad,
-                        cycle_tpl=cycle_tpl,
-                    )
-
-                ok, out_path = process_one_image(
+                ok = process_one_image(
                     img_path=img_path,
                     cfg=cfg,
                     mode=mode,
                     block_lines=block,
-                    dry_run=dry_run,
-                    indexing_kwargs=indexing_kwargs
+                    dry_run=dry_run
                 )
                 if ok:
                     processed += 1
-                    last_out[img_path] = out_path
                 else:
                     skipped += 1
-
-            # ПОСЛЕ цикла — удаляем исходники один раз для каждой картинки
-            for p in images:
-                try_delete_original(p, last_out[p], cfg)
+            # Картинки, на которые не выпал блок, не трогаем.
 
     logging.info(
         "Готово. TXT: %d; найдено картинок: %d; успешно обработано: %d; без картинок: %d; ошибок: %d",

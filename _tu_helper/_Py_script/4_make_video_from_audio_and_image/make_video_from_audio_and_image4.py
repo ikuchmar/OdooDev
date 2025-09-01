@@ -4,21 +4,26 @@
 Скрипт пакетно делает видео из пар (аудио + картинка).
 - Запуск без аргументов.
 - Читает config.toml из того же каталога, где лежит скрипт.
+- Источники аудио: список папок (mode="dirs") или файл-список (mode="file_list").
 - Для каждого аудио ищет картинки с тем же стемом (в т.ч. с суффиксами).
 - Если найдено несколько картинок — создаёт видео для КАЖДОЙ (имя видео = имя картинки + ".mp4").
 - Если картинок нет — аудио пропускается, процесс продолжается.
 - Если [output].dir пустой — видео кладётся в ТУ ЖЕ ПАПКУ, где лежит аудио.
+
+Анти-«мерцание» статичных картинок:
+- трактуем картинку как статичное изображение: `-f image2`
+- fps задаём через фильтр `fps=...` + `-vsync cfr`
+- добавляем `-tune stillimage` для libx264
 """
 
 from __future__ import annotations
 
 import sys
-import os
 import subprocess
 import logging
 from pathlib import Path
 
-# В Python 3.11+ доступен tomllib (у вас Python 3.12)
+# Python 3.11+: стандартный модуль tomllib
 try:
     import tomllib  # type: ignore
 except Exception as e:
@@ -27,11 +32,10 @@ except Exception as e:
 
 
 # =========================
-# ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+# Утилиты
 # =========================
 
 def load_config(config_path: Path) -> dict:
-    """Загрузка TOML-конфига."""
     if not config_path.exists():
         print(f"Не найден файл настроек: {config_path}")
         sys.exit(1)
@@ -40,7 +44,6 @@ def load_config(config_path: Path) -> dict:
 
 
 def setup_logging(cfg: dict, script_dir: Path) -> None:
-    """Настройка логирования в консоль и файл (по желанию)."""
     log_cfg = cfg.get("logging", {})
     level_name = str(log_cfg.get("level", "INFO")).upper()
     level = getattr(logging, level_name, logging.INFO)
@@ -57,7 +60,6 @@ def setup_logging(cfg: dict, script_dir: Path) -> None:
 
 
 def normalize_exts(exts: list[str]) -> set[str]:
-    """Нормализуем расширения: убираем точки, приводим к нижнему регистру."""
     norm = set()
     for e in exts:
         e = str(e).strip().lower()
@@ -77,24 +79,33 @@ def is_image(path: Path, image_exts: set[str]) -> bool:
 
 
 def collect_audios_by_mode(cfg: dict, script_dir: Path, audio_exts: set[str]) -> list[Path]:
-    """Собираем список аудиофайлов согласно input.mode."""
+    """
+    Собираем список аудиофайлов:
+    - mode="dirs": из всех папок input_dirs (recurse=True/False)
+    - mode="file_list": из файла со списком путей
+    """
     inp = cfg.get("input", {})
-    mode = str(inp.get("mode", "dir")).strip().lower()
+    mode = str(inp.get("mode", "dirs")).strip().lower()
     collected: list[Path] = []
 
-    if mode == "dir":
-        input_dir = str(inp.get("input_dir", "")).strip()
-        if not input_dir:
-            logging.error("В конфиге input.input_dir не задан.")
+    if mode == "dirs":
+        input_dirs = inp.get("input_dirs", [])
+        if not input_dirs:
+            logging.error("В конфиге input.input_dirs не задан.")
             return []
-        base = Path(input_dir)
-        if not base.is_absolute():
-            base = (script_dir / base).resolve()
         recurse = bool(inp.get("recurse", True))
         pattern = "**/*" if recurse else "*"
-        for p in base.glob(pattern):
-            if is_audio(p, audio_exts):
-                collected.append(p)
+
+        for dir_path in input_dirs:
+            base = Path(str(dir_path))
+            if not base.is_absolute():
+                base = (script_dir / base).resolve()
+            if not base.exists():
+                logging.warning("Папка не найдена: %s", base)
+                continue
+            for p in base.glob(pattern):
+                if is_audio(p, audio_exts):
+                    collected.append(p)
 
     elif mode == "file_list":
         file_list_path = str(inp.get("file_list_path", "")).strip()
@@ -130,7 +141,7 @@ def collect_audios_by_mode(cfg: dict, script_dir: Path, audio_exts: set[str]) ->
 
 def build_suffix_checker(stem: str, suffixes_cfg: list[str]):
     """
-    Возвращает предикат: подходит ли image_stem под допустимые суффиксы.
+    Предикат: подходит ли image_stem под допустимые суффиксы.
     - ["*"] или пусто => любой суффикс (включая пустой).
     - Иначе принимаем только строго перечисленные ("" — точное совпадение без суффикса).
     """
@@ -149,11 +160,13 @@ def build_suffix_checker(stem: str, suffixes_cfg: list[str]):
 
 
 def find_candidate_images(audio_path: Path, image_exts: set[str], image_dirs: list[Path], suffixes_cfg: list[str]) -> list[Path]:
-    """Ищем все картинки, чьи имена начинаются со стема аудио и проходят по политике суффиксов."""
+    """
+    Ищем все картинки, чьи имена начинаются со стема аудио и проходят по политике суффиксов.
+    Возвращаем список всех найденных (для каждой будет создано видео).
+    """
     stem = audio_path.stem
     check_suffix = build_suffix_checker(stem, suffixes_cfg)
 
-    # Где ищем: рядом с аудио + доп. директории (если заданы)
     search_dirs: list[Path] = [audio_path.parent]
     for d in image_dirs:
         if d not in search_dirs:
@@ -176,7 +189,10 @@ def ensure_dir(path: Path) -> None:
 
 
 def choose_output_path(base_dir: Path, name_stem: str, ext: str, on_exists: str) -> Path | None:
-    """Возвращает путь для сохранения с учётом on_exists."""
+    """
+    Возвращает путь для сохранения. Если on_exists="skip" и файл уже есть — вернём None.
+    Если "rename" — добавим -1, -2... до свободного имени.
+    """
     out = base_dir / f"{name_stem}.{ext}"
     if not out.exists():
         return out
@@ -199,12 +215,16 @@ def hex_or_name_color_to_ffmpeg(color: str) -> str:
     return color.strip()
 
 
-def build_vfilter(width: int, height: int, scale_mode: str, pad_color: str) -> str:
-    """Формируем -vf для ffmpeg."""
+def build_vfilter(width: int, height: int, scale_mode: str, pad_color: str, fps: int) -> str:
+    """
+    Формируем -vf:
+    - fit:   scale=...:decrease, pad=..., fps=N
+    - cover: scale=...:increase, crop=..., fps=N
+    """
     if scale_mode == "cover":
-        return f"scale={width}:{height}:force_original_aspect_ratio=increase,crop={width}:{height}"
+        return f"scale={width}:{height}:force_original_aspect_ratio=increase,crop={width}:{height},fps={fps}"
     color = hex_or_name_color_to_ffmpeg(pad_color)
-    return f"scale={width}:{height}:force_original_aspect_ratio=decrease,pad={width}:{height}:(ow-iw)/2:(oh-ih)/2:color={color}"
+    return f"scale={width}:{height}:force_original_aspect_ratio=decrease,pad={width}:{height}:(ow-iw)/2:(oh-ih)/2:color={color},fps={fps}"
 
 
 def run_ffmpeg(
@@ -213,7 +233,6 @@ def run_ffmpeg(
     audio_path: Path,
     out_path: Path,
     vf: str,
-    fps: int,
     vcodec: str,
     preset: str,
     crf: int,
@@ -223,29 +242,45 @@ def run_ffmpeg(
     movflags: str | None,
     threads: int | None,
 ) -> int:
-    """Запускаем ffmpeg для сборки статичного видеоряда под длительность аудио."""
+    """
+    Запускаем ffmpeg для сборки видео.
+    Ключевые отличия против мерцания:
+    - перед изображением: -f image2 (читать как статичное)
+    - fps через фильтр + -vsync cfr
+    - -tune stillimage для libx264
+    """
     cmd = [
         str(ffmpeg),
         "-hide_banner",
         "-loglevel", "error",
         "-y",
+
+        "-f", "image2",   # читаем изображение как статичное
         "-loop", "1",
-        "-r", str(fps),
         "-i", str(image_path),
+
         "-i", str(audio_path),
+
         "-c:v", vcodec,
         "-preset", preset,
         "-crf", str(crf),
         "-pix_fmt", pix_fmt,
+        "-tune", "stillimage",
+
         "-vf", vf,
+        "-vsync", "cfr",
+
         "-c:a", acodec,
         "-b:a", abitrate,
+
         "-shortest",
     ]
+
     if movflags:
         cmd += ["-movflags", movflags]
     if threads and threads > 0:
         cmd += ["-threads", str(threads)]
+
     cmd += [str(out_path)]
 
     logging.debug("FFmpeg cmd: %s", " ".join(cmd))
@@ -261,19 +296,17 @@ def run_ffmpeg(
 
 
 # =========================
-# ОСНОВНОЙ ПРОЦЕСС
+# Основной процесс
 # =========================
 
 def main() -> None:
     script_path = Path(__file__).resolve()
     script_dir = script_path.parent
 
-    # 1) Конфиг + логи
     cfg = load_config(script_dir / "config.toml")
     setup_logging(cfg, script_dir)
     logging.info("Старт make_video_from_audio_and_image")
 
-    # 2) Параметры
     input_cfg = cfg.get("input", {})
     output_cfg = cfg.get("output", {})
     enc = cfg.get("encode", {})
@@ -297,7 +330,7 @@ def main() -> None:
     on_exists = str(output_cfg.get("on_exists", "rename")).lower()
     out_ext = str(output_cfg.get("ext", "mp4")).strip().lstrip(".") or "mp4"
 
-    # Кодеки/видео-аудио
+    # Параметры кодирования
     width = int(enc.get("width", 1920))
     height = int(enc.get("height", 1080))
     fps = int(enc.get("fps", 30))
@@ -316,16 +349,15 @@ def main() -> None:
     ffmpeg_path = str(enc.get("ffmpeg_path", "")).strip()
     ffmpeg = Path(ffmpeg_path) if ffmpeg_path else "ffmpeg"
 
-    # 3) Собираем список аудио
+    # Собираем список аудио
     audios = collect_audios_by_mode(cfg, script_dir, audio_exts)
     if not audios:
         logging.warning("Аудио не найдено. Проверьте input.mode и параметры.")
         return
     logging.info("Найдено аудио-файлов: %d", len(audios))
 
-    # 4) Обработка
     total_video = 0
-    vf_common = build_vfilter(width, height, scale_mode, pad_color)
+    vf_common = build_vfilter(width, height, scale_mode, pad_color, fps)
 
     for idx, audio in enumerate(audios, 1):
         try:
@@ -335,9 +367,7 @@ def main() -> None:
                 logging.warning("  Картинка не найдена -> пропуск")
                 continue
 
-            # Выбираем базовую папку вывода:
-            # - если в конфиге указан output.dir -> используем его
-            # - иначе — кладём рядом с текущим аудио
+            # Куда класть:
             if out_dir_cfg:
                 base_out_dir = Path(out_dir_cfg)
                 if not base_out_dir.is_absolute():
@@ -352,14 +382,13 @@ def main() -> None:
                     logging.info("  Уже существует (skip): %s", (base_out_dir / f"{img.stem}.{out_ext}").name)
                     continue
 
-                logging.info("  Картинка: %s -> Видео: %s", img, out_path)
+                logging.info("  Картинка: %s -> Видео: %s", img, out_path.name)
                 code = run_ffmpeg(
                     ffmpeg=ffmpeg,
                     image_path=img,
                     audio_path=audio,
                     out_path=out_path,
                     vf=vf_common,
-                    fps=fps,
                     vcodec=vcodec,
                     preset=preset,
                     crf=crf,

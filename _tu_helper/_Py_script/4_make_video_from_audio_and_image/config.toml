@@ -18,8 +18,9 @@ mode = "dirs"  # варианты: "dir" | "file_list"
 
 # Если mode = "dirs" — список папок с аудио:
 input_dirs = [
-  "D://Entertaimant//Английский//! свои рассказы//Урок 2",
-  "D://Entertaimant//Английский//! свои рассказы//Урок 3"
+    "D://Entertaimant//Английский//! свои рассказы//Урок 4",
+    #  "D://Entertaimant//Английский//! свои рассказы//Урок 2",
+    #  "D://Entertaimant//Английский//! свои рассказы//Урок 3"
 ]
 
 recurse = true                       # рекурсивно обходить подпапки (true/false)
@@ -52,6 +53,15 @@ image_search_dirs = []  # пример: ["D:/Media/images", "../common_images"]
 #image_suffixes = ["", "_with_text", "_text", "_t", "_1", "_2"]
 image_suffixes = ["*"]
 # Чтобы разрешить любые — замените на ["*"].
+
+[slideshow]
+enabled = true                  # true — один ролик-слайдшоу иначе по ролику на каждый файл
+order = "name"                  # "name" | "mtime"
+source = "auto"                 # "auto"|"file"|"suffix"|"auto_equal"
+timings_file_ext = ".slides.txt"# имя файла-таймингов: <stem><ext> рядом с аудио
+min_image_sec = 0.3             # минимальная длительность кадра
+fill_policy = "stretch_last"    # "stretch_last"|"scale_all"|"clip"
+delete_images_after = true
 
 # --------- Вывод ----------
 [output]
