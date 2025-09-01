@@ -1,7 +1,8 @@
 # === Общие параметры входа/выхода ===
 # Список папок для обхода (рекурсивно, если recursive=true)
-#input_dirs = ["D://Entertaimant//Английский//! свои рассказы//Урок 1"]
-input_dirs = ["D://Entertaimant//Английский//! свои рассказы//Видео2"]
+input_dirs = ["D://Entertaimant//Английский//! свои рассказы//Урок 2",
+"D://Entertaimant//Английский//! свои рассказы//Урок 3"]
+#input_dirs = ["D://Entertaimant//Английский//! свои рассказы//Видео2"]
 #input_dirs = ["./input"]
 # Явный список файлов изображений (если нужно точечно)
 input_files = []
@@ -46,7 +47,7 @@ output_dir = ""
 # "suffix"         — имя + "_with_text" (без перезаписи исходников)
 # "overwrite"      — перезаписывать исходник
 # "skip_if_exists" — пропускать, если выходной уже существует
-output_naming = "suffix"
+output_naming = "overwrite"
 
 # Суффикс для режима "suffix"
 output_suffix = "_tx"
@@ -72,7 +73,7 @@ color = "#FFFFFF"
 #  - "stroke" — только контур
 #  - "box"   — полупрозрачная подложка под текст
 #  - "both"  — и подложка, и контур
-readability_style = "both"
+readability_style = "none"
 
 # Контур текста (для "stroke" и "both")
 stroke_width = 2
@@ -89,7 +90,7 @@ align = "center"
 # "top_left","top_center","top_right",
 # "center_left","center","center_right",
 # "bottom_left","bottom_center","bottom_right"
-anchor = "bottom_center"
+anchor = "center"
 
 # Отступы от краёв (пиксели)
 margin_x = 32
@@ -97,7 +98,7 @@ margin_y = 32
 
 # Максимальная ширина/высота области под текст (в долях от размеров изображения)
 max_width_pct = 0.90
-max_height_pct = 0.70
+max_height_pct = 0.90
 
 # Межстрочный интервал (множитель к высоте строки)
 line_spacing = 1.20

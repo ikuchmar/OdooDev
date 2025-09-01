@@ -81,14 +81,7 @@
       "_comment": "detect_prefixes — коды/префиксы из langdetect, которые считаем этим языком.",
       "detect_prefixes": [
         "en"
-      ],
-      "_comment_aliases_en": "Алиасы для выбора конкретного голоса в тексте: (v:ryan), (v:guy) и т.п.",
-      "voice_aliases": {
-        "ryan": "en-GB-RyanNeural",
-        "thomas": "en-GB-ThomasNeural",
-        "guy": "en-US-GuyNeural",
-        "steffan": "en-US-SteffanNeural"
-      }
+      ]
     },
     "ru": {
       "_comment_voice_ru": "Основной голос для русского текста.",
@@ -119,14 +112,7 @@
       },
       "detect_prefixes": [
         "ru"
-      ],
-      "_comment_aliases_ru": "Алиасы голосов RU.",
-      "voice_aliases": {
-        "dmitry": "ru-RU-DmitryNeural",
-        "sergey": "ru-RU-SergeyNeural",
-        "andrei": "ru-RU-AndreiNeural",
-        "svetlana": "ru-RU-SvetlanaNeural"
-      }
+      ]
     },
     "uk": {
       "voice": "uk-UA-PolinaNeural",
@@ -152,12 +138,7 @@
       },
       "detect_prefixes": [
         "uk"
-      ],
-      "_comment_aliases_uk": "Алиасы голосов UK.",
-      "voice_aliases": {
-        "ostap": "uk-UA-OstapNeural",
-        "polina": "uk-UA-PolinaNeural"
-      }
+      ]
     }
   },
   "_comment_strip_symbols": "Символы, которые нужно полностью убрать из озвучки.",
@@ -198,14 +179,5 @@
     "!",
     "?",
     "\n"
-  ],
-  "_comment_multi_en_outputs": "Если true — создаём отдельные MP3 для каждого EN-голоса из alt_voices.",
-  "multi_en_outputs": false,
-  "_comment_voice_marker_prefixes": "Префиксы для голосовых маркеров в тексте: (v:алиас) или (voice:алиас).",
-  "voice_marker_prefixes": [
-    "v:",
-    "voice:"
-  ],
-  "_comment_allow_partial_voice_match": "Если алиас не найден в voice_aliases — искать по подстроке среди [voice] + alt_voices.",
-  "allow_partial_voice_match": true
+  ]
 }
