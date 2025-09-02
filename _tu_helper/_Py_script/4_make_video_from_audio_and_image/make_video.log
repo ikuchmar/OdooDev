@@ -373,3 +373,359 @@
 2025-09-02 00:02:50,997 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_7.png
 2025-09-02 00:02:50,997 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_8.png
 2025-09-02 00:02:50,997 [INFO] Готово. Создано видео: 1
+2025-09-02 00:12:23,272 [INFO] Старт make_video_from_audio_and_image
+2025-09-02 00:12:23,278 [INFO] Найдено аудио-файлов: 30
+2025-09-02 00:12:23,278 [INFO] (1/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di.mp3
+2025-09-02 00:12:23,319 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=18.528s, итог: 001_01_At the Supermarket_di.mp4
+2025-09-02 00:12:25,031 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_1.png
+2025-09-02 00:12:25,031 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_2.png
+2025-09-02 00:12:25,032 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_3.png
+2025-09-02 00:12:25,032 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_4.png
+2025-09-02 00:12:25,032 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_5.png
+2025-09-02 00:12:25,032 [INFO] (2/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-02 00:12:25,062 [INFO]   Слайдшоу: кадров=8, policy=stretch_last, sum=31.248s, итог: 001_01_At the Supermarket_en.mp4
+2025-09-02 00:12:28,002 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_1.png
+2025-09-02 00:12:28,002 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_2.png
+2025-09-02 00:12:28,002 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_3.png
+2025-09-02 00:12:28,002 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_4.png
+2025-09-02 00:12:28,002 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_5.png
+2025-09-02 00:12:28,002 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_6.png
+2025-09-02 00:12:28,002 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_7.png
+2025-09-02 00:12:28,002 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_8.png
+2025-09-02 00:12:28,002 [INFO] (3/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_ru.mp3
+2025-09-02 00:12:28,006 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 00:12:28,006 [INFO] (4/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di.mp3
+2025-09-02 00:12:28,030 [INFO]   Слайдшоу: кадров=4, policy=stretch_last, sum=13.368s, итог: 001_02_Morning Coffee_di.mp4
+2025-09-02 00:12:29,384 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di_bg_1.png
+2025-09-02 00:12:29,385 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di_bg_2.png
+2025-09-02 00:12:29,385 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di_bg_3.png
+2025-09-02 00:12:29,385 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di_bg_4.png
+2025-09-02 00:12:29,385 [INFO] (5/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_en.mp3
+2025-09-02 00:12:29,413 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=24.144s, итог: 001_02_Morning Coffee_en.mp4
+2025-09-02 00:12:31,413 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_en_bg_1.png
+2025-09-02 00:12:31,413 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_en_bg_2.png
+2025-09-02 00:12:31,413 [INFO] (6/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_ru.mp3
+2025-09-02 00:12:31,416 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 00:12:31,416 [INFO] (7/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di.mp3
+2025-09-02 00:12:31,441 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=16.128s, итог: 001_03_Taking the Bus_di.mp4
+2025-09-02 00:12:32,986 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg_1.png
+2025-09-02 00:12:32,986 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg_2.png
+2025-09-02 00:12:32,986 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg_3.png
+2025-09-02 00:12:32,987 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg_4.png
+2025-09-02 00:12:32,987 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg_5.png
+2025-09-02 00:12:32,987 [INFO] (8/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_en.mp3
+2025-09-02 00:12:33,013 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=27.816s, итог: 001_03_Taking the Bus_en.mp4
+2025-09-02 00:12:35,323 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_en_bg_1.png
+2025-09-02 00:12:35,323 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_en_bg_2.png
+2025-09-02 00:12:35,323 [INFO] (9/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_ru.mp3
+2025-09-02 00:12:35,326 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 00:12:35,326 [INFO] (10/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di.mp3
+2025-09-02 00:12:35,360 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=14.784s, итог: 001_04_At the Café_di.mp4
+2025-09-02 00:12:36,834 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg_1.png
+2025-09-02 00:12:36,834 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg_2.png
+2025-09-02 00:12:36,834 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg_3.png
+2025-09-02 00:12:36,834 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg_4.png
+2025-09-02 00:12:36,835 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg_5.png
+2025-09-02 00:12:36,835 [INFO] (11/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_en.mp3
+2025-09-02 00:12:36,865 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=24.576s, итог: 001_04_At the Café_en.mp4
+2025-09-02 00:12:38,933 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_en_bg_1.png
+2025-09-02 00:12:38,933 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_en_bg_2.png
+2025-09-02 00:12:38,933 [INFO] (12/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_ru.mp3
+2025-09-02 00:12:38,936 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 00:12:38,937 [INFO] (13/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di.mp3
+2025-09-02 00:12:38,963 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=18.264s, итог: 001_05_Traveling by Train_di.mp4
+2025-09-02 00:12:40,742 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg_1.png
+2025-09-02 00:12:40,742 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg_2.png
+2025-09-02 00:12:40,742 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg_3.png
+2025-09-02 00:12:40,742 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg_4.png
+2025-09-02 00:12:40,742 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg_5.png
+2025-09-02 00:12:40,742 [INFO] (14/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_en.mp3
+2025-09-02 00:12:40,766 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=24.600s, итог: 001_05_Traveling by Train_en.mp4
+2025-09-02 00:12:42,840 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_en_bg_1.png
+2025-09-02 00:12:42,840 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_en_bg_2.png
+2025-09-02 00:12:42,840 [INFO] (15/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_ru.mp3
+2025-09-02 00:12:42,843 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 00:12:42,843 [INFO] (16/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di.mp3
+2025-09-02 00:12:42,869 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=17.448s, итог: 001_06_ At the Doctor’s_di.mp4
+2025-09-02 00:12:44,597 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg_1.png
+2025-09-02 00:12:44,597 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg_2.png
+2025-09-02 00:12:44,597 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg_3.png
+2025-09-02 00:12:44,597 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg_4.png
+2025-09-02 00:12:44,597 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg_5.png
+2025-09-02 00:12:44,597 [INFO] (17/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en.mp3
+2025-09-02 00:12:44,633 [INFO]   Слайдшоу: кадров=3, policy=stretch_last, sum=24.624s, итог: 001_06_ At the Doctor’s_en.mp4
+2025-09-02 00:12:46,726 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en_bg_1.png
+2025-09-02 00:12:46,726 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en_bg_2.png
+2025-09-02 00:12:46,726 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en_bg_3.png
+2025-09-02 00:12:46,726 [INFO] (18/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_ru.mp3
+2025-09-02 00:12:46,729 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 00:12:46,729 [INFO] (19/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di.mp3
+2025-09-02 00:12:46,753 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=17.496s, итог: 001_07_Weekend with Friends_di.mp4
+2025-09-02 00:12:48,476 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg_1.png
+2025-09-02 00:12:48,476 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg_2.png
+2025-09-02 00:12:48,476 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg_3.png
+2025-09-02 00:12:48,477 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg_4.png
+2025-09-02 00:12:48,477 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg_5.png
+2025-09-02 00:12:48,477 [INFO] (20/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_en.mp3
+2025-09-02 00:12:48,502 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=20.904s, итог: 001_07_Weekend with Friends_en.mp4
+2025-09-02 00:12:50,312 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_en_bg_1.png
+2025-09-02 00:12:50,312 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_en_bg_2.png
+2025-09-02 00:12:50,312 [INFO] (21/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_ru.mp3
+2025-09-02 00:12:50,315 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 00:12:50,315 [INFO] (22/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di.mp3
+2025-09-02 00:12:50,354 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=18.384s, итог: 001_08_Working in the Office_di.mp4
+2025-09-02 00:12:52,122 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg_1.png
+2025-09-02 00:12:52,122 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg_2.png
+2025-09-02 00:12:52,122 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg_3.png
+2025-09-02 00:12:52,122 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg_4.png
+2025-09-02 00:12:52,123 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg_5.png
+2025-09-02 00:12:52,123 [INFO] (23/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_en.mp3
+2025-09-02 00:12:52,147 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=22.176s, итог: 001_08_Working in the Office_en.mp4
+2025-09-02 00:12:54,066 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_en_bg_1.png
+2025-09-02 00:12:54,066 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_en_bg_2.png
+2025-09-02 00:12:54,066 [INFO] (24/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_ru.mp3
+2025-09-02 00:12:54,069 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 00:12:54,069 [INFO] (25/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di.mp3
+2025-09-02 00:12:54,093 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=17.064s, итог: 001_09_Vacation at the Beach_di.mp4
+2025-09-02 00:12:55,797 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg_1.png
+2025-09-02 00:12:55,797 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg_2.png
+2025-09-02 00:12:55,797 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg_3.png
+2025-09-02 00:12:55,797 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg_4.png
+2025-09-02 00:12:55,797 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg_5.png
+2025-09-02 00:12:55,797 [INFO] (26/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_en.mp3
+2025-09-02 00:12:55,821 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=23.496s, итог: 001_09_Vacation at the Beach_en.mp4
+2025-09-02 00:12:57,850 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_en_bg_1.png
+2025-09-02 00:12:57,851 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_en_bg_2.png
+2025-09-02 00:12:57,851 [INFO] (27/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_ru.mp3
+2025-09-02 00:12:57,853 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 00:12:57,853 [INFO] (28/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di.mp3
+2025-09-02 00:12:57,880 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=17.376s, итог: 001_10_Evening Walk_di.mp4
+2025-09-02 00:12:59,595 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di_bg_1.png
+2025-09-02 00:12:59,595 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di_bg_2.png
+2025-09-02 00:12:59,595 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di_bg_3.png
+2025-09-02 00:12:59,595 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di_bg_4.png
+2025-09-02 00:12:59,595 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di_bg_5.png
+2025-09-02 00:12:59,595 [INFO] (29/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_en.mp3
+2025-09-02 00:12:59,620 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=21.720s, итог: 001_10_Evening Walk_en.mp4
+2025-09-02 00:13:01,493 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_en_bg_1.png
+2025-09-02 00:13:01,493 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_en_bg_2.png
+2025-09-02 00:13:01,493 [INFO] (30/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_ru.mp3
+2025-09-02 00:13:01,495 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 00:13:01,495 [INFO] Готово. Создано видео: 20
+2025-09-02 02:11:00,963 [INFO] Старт make_video_from_audio_and_image
+2025-09-02 02:11:00,964 [INFO] Найдено аудио-файлов: 1
+2025-09-02 02:11:00,964 [INFO] (1/1) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di.mp3
+2025-09-02 02:11:00,989 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=18.528s, итог: 001_01_At the Supermarket_di.mp4
+2025-09-02 02:11:02,573 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_1.png
+2025-09-02 02:11:02,574 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_2.png
+2025-09-02 02:11:02,574 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_3.png
+2025-09-02 02:11:02,574 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_4.png
+2025-09-02 02:11:02,574 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_5.png
+2025-09-02 02:11:02,574 [INFO] Готово. Создано видео: 1
+2025-09-02 02:19:22,580 [INFO] Старт make_video_from_audio_and_image
+2025-09-02 02:19:22,582 [INFO] Найдено аудио-файлов: 30
+2025-09-02 02:19:22,582 [INFO] (1/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di.mp3
+2025-09-02 02:19:22,585 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg.png -> Видео: 001_01_At the Supermarket_di_bg.mp4
+2025-09-02 02:19:24,299 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg.png
+2025-09-02 02:19:24,299 [INFO] (2/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-02 02:19:24,301 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg.png -> Видео: 001_01_At the Supermarket_en_bg.mp4
+2025-09-02 02:19:26,829 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg.png
+2025-09-02 02:19:26,829 [INFO] (3/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_ru.mp3
+2025-09-02 02:19:26,831 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:19:26,831 [INFO] (4/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di.mp3
+2025-09-02 02:19:26,833 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di_bg.png -> Видео: 001_02_Morning Coffee_di_bg.mp4
+2025-09-02 02:19:28,255 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di_bg.png
+2025-09-02 02:19:28,255 [INFO] (5/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_en.mp3
+2025-09-02 02:19:28,257 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_en_bg.png -> Видео: 001_02_Morning Coffee_en_bg.mp4
+2025-09-02 02:19:30,315 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_en_bg.png
+2025-09-02 02:19:30,315 [INFO] (6/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_ru.mp3
+2025-09-02 02:19:30,317 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:19:30,317 [INFO] (7/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di.mp3
+2025-09-02 02:19:30,319 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg.png -> Видео: 001_03_Taking the Bus_di_bg.mp4
+2025-09-02 02:19:31,924 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg.png
+2025-09-02 02:19:31,924 [INFO] (8/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_en.mp3
+2025-09-02 02:19:31,926 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_en_bg.png -> Видео: 001_03_Taking the Bus_en_bg.mp4
+2025-09-02 02:19:34,221 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_en_bg.png
+2025-09-02 02:19:34,221 [INFO] (9/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_ru.mp3
+2025-09-02 02:19:34,223 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:19:34,223 [INFO] (10/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di.mp3
+2025-09-02 02:19:34,225 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg.png -> Видео: 001_04_At the Café_di_bg.mp4
+2025-09-02 02:19:35,771 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg.png
+2025-09-02 02:19:35,771 [INFO] (11/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_en.mp3
+2025-09-02 02:19:35,773 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_en_bg.png -> Видео: 001_04_At the Café_en_bg.mp4
+2025-09-02 02:19:37,850 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_en_bg.png
+2025-09-02 02:19:37,850 [INFO] (12/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_ru.mp3
+2025-09-02 02:19:37,852 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:19:37,852 [INFO] (13/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di.mp3
+2025-09-02 02:19:37,854 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg.png -> Видео: 001_05_Traveling by Train_di_bg.mp4
+2025-09-02 02:19:39,606 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg.png
+2025-09-02 02:19:39,606 [INFO] (14/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_en.mp3
+2025-09-02 02:19:39,609 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_en_bg.png -> Видео: 001_05_Traveling by Train_en_bg.mp4
+2025-09-02 02:19:41,733 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_en_bg.png
+2025-09-02 02:19:41,733 [INFO] (15/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_ru.mp3
+2025-09-02 02:19:41,735 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:19:41,735 [INFO] (16/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di.mp3
+2025-09-02 02:19:41,737 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg.png -> Видео: 001_06_ At the Doctor’s_di_bg.mp4
+2025-09-02 02:19:43,386 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg.png
+2025-09-02 02:19:43,386 [INFO] (17/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en.mp3
+2025-09-02 02:19:43,389 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en_bg.png -> Видео: 001_06_ At the Doctor’s_en_bg.mp4
+2025-09-02 02:19:45,553 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en_bg.png
+2025-09-02 02:19:45,553 [INFO] (18/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_ru.mp3
+2025-09-02 02:19:45,556 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:19:45,556 [INFO] (19/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di.mp3
+2025-09-02 02:19:45,558 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg.png -> Видео: 001_07_Weekend with Friends_di_bg.mp4
+2025-09-02 02:19:47,316 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg.png
+2025-09-02 02:19:47,316 [INFO] (20/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_en.mp3
+2025-09-02 02:19:47,320 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_en_bg.png -> Видео: 001_07_Weekend with Friends_en_bg.mp4
+2025-09-02 02:19:49,559 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_en_bg.png
+2025-09-02 02:19:49,559 [INFO] (21/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_ru.mp3
+2025-09-02 02:19:49,561 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:19:49,561 [INFO] (22/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di.mp3
+2025-09-02 02:19:49,563 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg.png -> Видео: 001_08_Working in the Office_di_bg.mp4
+2025-09-02 02:19:51,349 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg.png
+2025-09-02 02:19:51,349 [INFO] (23/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_en.mp3
+2025-09-02 02:19:51,352 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_en_bg.png -> Видео: 001_08_Working in the Office_en_bg.mp4
+2025-09-02 02:19:53,459 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_en_bg.png
+2025-09-02 02:19:53,459 [INFO] (24/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_ru.mp3
+2025-09-02 02:19:53,465 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:19:53,465 [INFO] (25/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di.mp3
+2025-09-02 02:19:53,470 [INFO]   Картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg.png -> Видео: 001_09_Vacation at the Beach_di_bg.mp4
+2025-09-02 02:20:26,723 [INFO] Старт make_video_from_audio_and_image
+2025-09-02 02:20:26,727 [INFO] Найдено аудио-файлов: 30
+2025-09-02 02:20:26,727 [INFO] (1/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di.mp3
+2025-09-02 02:20:26,747 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=18.528s, итог: 001_01_At the Supermarket_di.mp4
+2025-09-02 02:20:28,329 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_1.png
+2025-09-02 02:20:28,329 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_2.png
+2025-09-02 02:20:28,329 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_3.png
+2025-09-02 02:20:28,329 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_4.png
+2025-09-02 02:20:28,329 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_di_bg_5.png
+2025-09-02 02:20:28,329 [INFO] (2/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en.mp3
+2025-09-02 02:20:28,351 [INFO]   Слайдшоу: кадров=8, policy=stretch_last, sum=31.248s, итог: 001_01_At the Supermarket_en.mp4
+2025-09-02 02:20:30,990 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_1.png
+2025-09-02 02:20:30,990 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_2.png
+2025-09-02 02:20:30,990 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_3.png
+2025-09-02 02:20:30,990 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_4.png
+2025-09-02 02:20:30,990 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_5.png
+2025-09-02 02:20:30,990 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_6.png
+2025-09-02 02:20:30,991 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_7.png
+2025-09-02 02:20:30,991 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_en_bg_8.png
+2025-09-02 02:20:30,991 [INFO] (3/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_01_At the Supermarket_ru.mp3
+2025-09-02 02:20:30,994 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:20:30,994 [INFO] (4/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di.mp3
+2025-09-02 02:20:31,014 [INFO]   Слайдшоу: кадров=4, policy=stretch_last, sum=13.368s, итог: 001_02_Morning Coffee_di.mp4
+2025-09-02 02:20:32,245 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di_bg_1.png
+2025-09-02 02:20:32,245 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di_bg_2.png
+2025-09-02 02:20:32,245 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di_bg_3.png
+2025-09-02 02:20:32,245 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_di_bg_4.png
+2025-09-02 02:20:32,245 [INFO] (5/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_en.mp3
+2025-09-02 02:20:32,265 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=24.144s, итог: 001_02_Morning Coffee_en.mp4
+2025-09-02 02:20:34,099 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_en_bg_1.png
+2025-09-02 02:20:34,099 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_en_bg_2.png
+2025-09-02 02:20:34,099 [INFO] (6/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_02_Morning Coffee_ru.mp3
+2025-09-02 02:20:34,102 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:20:34,102 [INFO] (7/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di.mp3
+2025-09-02 02:20:34,122 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=16.128s, итог: 001_03_Taking the Bus_di.mp4
+2025-09-02 02:20:35,533 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg_1.png
+2025-09-02 02:20:35,533 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg_2.png
+2025-09-02 02:20:35,533 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg_3.png
+2025-09-02 02:20:35,534 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg_4.png
+2025-09-02 02:20:35,534 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_di_bg_5.png
+2025-09-02 02:20:35,534 [INFO] (8/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_en.mp3
+2025-09-02 02:20:35,553 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=27.816s, итог: 001_03_Taking the Bus_en.mp4
+2025-09-02 02:20:37,633 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_en_bg_1.png
+2025-09-02 02:20:37,633 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_en_bg_2.png
+2025-09-02 02:20:37,633 [INFO] (9/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_03_Taking the Bus_ru.mp3
+2025-09-02 02:20:37,636 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:20:37,636 [INFO] (10/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di.mp3
+2025-09-02 02:20:37,656 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=14.784s, итог: 001_04_At the Café_di.mp4
+2025-09-02 02:20:39,002 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg_1.png
+2025-09-02 02:20:39,003 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg_2.png
+2025-09-02 02:20:39,003 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg_3.png
+2025-09-02 02:20:39,003 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg_4.png
+2025-09-02 02:20:39,003 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_di_bg_5.png
+2025-09-02 02:20:39,003 [INFO] (11/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_en.mp3
+2025-09-02 02:20:39,022 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=24.576s, итог: 001_04_At the Café_en.mp4
+2025-09-02 02:20:40,892 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_en_bg_1.png
+2025-09-02 02:20:40,892 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_en_bg_2.png
+2025-09-02 02:20:40,892 [INFO] (12/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_04_At the Café_ru.mp3
+2025-09-02 02:20:40,895 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:20:40,895 [INFO] (13/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di.mp3
+2025-09-02 02:20:40,915 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=18.264s, итог: 001_05_Traveling by Train_di.mp4
+2025-09-02 02:20:42,513 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg_1.png
+2025-09-02 02:20:42,513 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg_2.png
+2025-09-02 02:20:42,513 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg_3.png
+2025-09-02 02:20:42,513 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg_4.png
+2025-09-02 02:20:42,513 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_di_bg_5.png
+2025-09-02 02:20:42,513 [INFO] (14/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_en.mp3
+2025-09-02 02:20:42,536 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=24.600s, итог: 001_05_Traveling by Train_en.mp4
+2025-09-02 02:20:44,426 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_en_bg_1.png
+2025-09-02 02:20:44,426 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_en_bg_2.png
+2025-09-02 02:20:44,426 [INFO] (15/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_05_Traveling by Train_ru.mp3
+2025-09-02 02:20:44,429 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:20:44,429 [INFO] (16/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di.mp3
+2025-09-02 02:20:44,448 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=17.448s, итог: 001_06_ At the Doctor’s_di.mp4
+2025-09-02 02:20:46,038 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg_1.png
+2025-09-02 02:20:46,038 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg_2.png
+2025-09-02 02:20:46,039 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg_3.png
+2025-09-02 02:20:46,039 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg_4.png
+2025-09-02 02:20:46,039 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_di_bg_5.png
+2025-09-02 02:20:46,039 [INFO] (17/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en.mp3
+2025-09-02 02:20:46,058 [INFO]   Слайдшоу: кадров=3, policy=stretch_last, sum=24.924s, итог: 001_06_ At the Doctor’s_en.mp4
+2025-09-02 02:20:48,010 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en_bg_1.png
+2025-09-02 02:20:48,010 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en_bg_2.png
+2025-09-02 02:20:48,010 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_en_bg_3.png
+2025-09-02 02:20:48,010 [INFO] (18/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_06_ At the Doctor’s_ru.mp3
+2025-09-02 02:20:48,013 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:20:48,013 [INFO] (19/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di.mp3
+2025-09-02 02:20:48,031 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=17.496s, итог: 001_07_Weekend with Friends_di.mp4
+2025-09-02 02:20:49,583 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg_1.png
+2025-09-02 02:20:49,583 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg_2.png
+2025-09-02 02:20:49,583 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg_3.png
+2025-09-02 02:20:49,583 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg_4.png
+2025-09-02 02:20:49,583 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_di_bg_5.png
+2025-09-02 02:20:49,583 [INFO] (20/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_en.mp3
+2025-09-02 02:20:49,603 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=20.904s, итог: 001_07_Weekend with Friends_en.mp4
+2025-09-02 02:20:51,259 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_en_bg_1.png
+2025-09-02 02:20:51,259 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_en_bg_2.png
+2025-09-02 02:20:51,259 [INFO] (21/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_07_Weekend with Friends_ru.mp3
+2025-09-02 02:20:51,261 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:20:51,262 [INFO] (22/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di.mp3
+2025-09-02 02:20:51,282 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=18.384s, итог: 001_08_Working in the Office_di.mp4
+2025-09-02 02:20:52,904 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg_1.png
+2025-09-02 02:20:52,904 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg_2.png
+2025-09-02 02:20:52,904 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg_3.png
+2025-09-02 02:20:52,904 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg_4.png
+2025-09-02 02:20:52,904 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_di_bg_5.png
+2025-09-02 02:20:52,904 [INFO] (23/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_en.mp3
+2025-09-02 02:20:52,923 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=22.176s, итог: 001_08_Working in the Office_en.mp4
+2025-09-02 02:20:54,660 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_en_bg_1.png
+2025-09-02 02:20:54,661 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_en_bg_2.png
+2025-09-02 02:20:54,661 [INFO] (24/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_08_Working in the Office_ru.mp3
+2025-09-02 02:20:54,663 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:20:54,663 [INFO] (25/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di.mp3
+2025-09-02 02:20:54,682 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=17.064s, итог: 001_09_Vacation at the Beach_di.mp4
+2025-09-02 02:20:56,232 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg_1.png
+2025-09-02 02:20:56,233 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg_2.png
+2025-09-02 02:20:56,233 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg_3.png
+2025-09-02 02:20:56,233 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg_4.png
+2025-09-02 02:20:56,233 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_di_bg_5.png
+2025-09-02 02:20:56,233 [INFO] (26/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_en.mp3
+2025-09-02 02:20:56,259 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=23.496s, итог: 001_09_Vacation at the Beach_en.mp4
+2025-09-02 02:20:58,239 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_en_bg_1.png
+2025-09-02 02:20:58,239 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_en_bg_2.png
+2025-09-02 02:20:58,239 [INFO] (27/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_09_Vacation at the Beach_ru.mp3
+2025-09-02 02:20:58,242 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:20:58,242 [INFO] (28/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di.mp3
+2025-09-02 02:20:58,275 [INFO]   Слайдшоу: кадров=5, policy=stretch_last, sum=17.376s, итог: 001_10_Evening Walk_di.mp4
+2025-09-02 02:20:59,824 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di_bg_1.png
+2025-09-02 02:20:59,825 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di_bg_2.png
+2025-09-02 02:20:59,825 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di_bg_3.png
+2025-09-02 02:20:59,825 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di_bg_4.png
+2025-09-02 02:20:59,825 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_di_bg_5.png
+2025-09-02 02:20:59,825 [INFO] (29/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_en.mp3
+2025-09-02 02:20:59,848 [INFO]   Слайдшоу: кадров=2, policy=stretch_last, sum=21.720s, итог: 001_10_Evening Walk_en.mp4
+2025-09-02 02:21:01,712 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_en_bg_1.png
+2025-09-02 02:21:01,712 [INFO]   Удалена картинка: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_en_bg_2.png
+2025-09-02 02:21:01,712 [INFO] (30/30) Аудио: D:\Entertaimant\Английский\! свои рассказы\Урок 4\001_10_Evening Walk_ru.mp3
+2025-09-02 02:21:01,715 [WARNING]   Картинка не найдена -> пропуск
+2025-09-02 02:21:01,715 [INFO] Готово. Создано видео: 20

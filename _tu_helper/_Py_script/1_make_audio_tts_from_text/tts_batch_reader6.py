@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
 """
-tts_batch_reader.py — универсальный скрипт пакетной озвучки текста (TOML-конфиг)
+tts_batch_reader.py — универсальный скрипт озвучивания текста (TOML-конфиг)
 
-v16.3:
-  • Чтение конфигурации из tts_config.toml (input_dirs, recurse, extensions, enable_languages, languages.*).
-  • Маркеры языка и голоса: [EN], _ru_, (ru), [EN:guy], (v:guy)/(voice:ryan) и т.п.
-  • Паузы: между фразами, за переносы строк, опционально за серии пробелов.
-  • Рекурсивный обход входных путей/масок, жёсткие суффиксы по имени файла.
-  • Fallback/strict для каждого языка, multi_en_outputs.
-  • Исправление «голых пауз»: паузы всегда пришиваются к следующему тексту (не отправляем в TTS отдельно).
-  • slides.txt считает ДЛИТЕЛЬНОСТЬ ПО СТРОКАМ ИСХОДНИКА (пустые строки игнорируем).
+v16:
+  • Переход на конфиг в TOML: tts_config.toml (input_dirs + recurse).
+  • Сохранены все фичи v15.1:
+      - Маркеры языка и голосовые маркеры (v:алиас)/(voice:алиас), «сахар» [EN:guy].
+      - Паузы по пробелам/переносам.
+      - Рекурсивный сбор входных файлов, жёсткие суффиксы по имени файла.
+      - Fallback/strict.
+      - multi_en_outputs.
+      - Запись таймингов каждого синтезированного кусочка в <СТЕМ>.slides.txt.
 Зависимости:
     pip install edge-tts langdetect mutagen
 Python 3.11+:
-    конфиг читается стандартным модулем tomllib.
+    использую стандартный модуль tomllib для чтения TOML.
 """
 
 import asyncio
@@ -33,9 +34,8 @@ try:
 except Exception:  # fallback на tomli, если вдруг нужно
     import tomli as tomllib
 
-# длительность mp3-кусочка
 try:
-    from mutagen.mp3 import MP3
+    from mutagen.mp3 import MP3  # для измерения длительности mp3-байтов
 except Exception:
     MP3 = None
 
@@ -49,10 +49,9 @@ def script_dir() -> Path:
 
 def load_config_toml(cfg_path: Path) -> Dict:
     if not cfg_path.exists():
-        print("Конфиг tts_config.toml не найден. Положите рядом со скриптом.")
+        print("Конфиг tts_config.toml не найден. Положите рядом с скриптом.")
         sys.exit(1)
     try:
-        # tomllib.loads ожидает строку; читаем как текст UTF-8
         data = tomllib.loads(cfg_path.read_text(encoding="utf-8"))
         return data
     except Exception as e:
@@ -60,6 +59,7 @@ def load_config_toml(cfg_path: Path) -> Dict:
         sys.exit(1)
 
 def normalize_ext_list(ext_list) -> List[str]:
+    # Ожидаем список строк с точкой
     if not isinstance(ext_list, list):
         return [".txt"]
     out = []
@@ -94,10 +94,7 @@ def expand_input_dirs(entries: List[str], recurse: bool, exts: List[str]) -> Lis
             p = base / raw
 
         if p.exists() and p.is_dir():
-            if recurse:
-                found = rglob_dir_for_exts(p, exts)
-            else:
-                found = [f.resolve() for f in p.glob("*") if f.is_file() and f.suffix.lower() in exts]
+            found = rglob_dir_for_exts(p, exts) if recurse else [f.resolve() for f in p.glob("*") if f.is_file() and f.suffix.lower() in exts]
             for f in found:
                 if f not in seen:
                     seen.add(f)
@@ -133,12 +130,13 @@ def expand_input_dirs(entries: List[str], recurse: bool, exts: List[str]) -> Lis
 
 def get_languages_cfg(cfg: Dict) -> Dict[str, Dict]:
     langs = cfg.get("languages", {})
+    # В TOML это словарь таблиц: languages.<code> = { ... }
     norm = {}
     for key, val in langs.items():
         if not isinstance(val, dict):
             continue
+        # alt_voices: в твоём JSON для RU был "alt_voices_ru" — унифицируем
         altv = val.get("alt_voices")
-        # поддержка «справочного» alt_voices_ru из старых конфигов
         if altv is None and "alt_voices_ru" in val:
             altv = val.get("alt_voices_ru")
         d = {
@@ -197,9 +195,6 @@ def build_end_delims(cfg: Dict) -> List[str]:
 # =============================================================================
 
 def split_by_delimiters_with_counts(text: str, delims: List[str]) -> List[Tuple[str, Optional[str], int]]:
-    """
-    Режем по символам из delims (включая '\n'), возвращаем [(фрагмент_до_делимитера, сам_делимитер_или_None, количество_подряд_переносов)].
-    """
     dset = set([d if len(d) == 1 else d[0] for d in delims])
     chunks: List[Tuple[str, Optional[str], int]] = []
 
@@ -233,10 +228,6 @@ def split_by_delimiters_with_counts(text: str, delims: List[str]) -> List[Tuple[
     return chunks
 
 def find_next_voice_marker(lower_text: str, start: int, voice_prefixes: List[str]) -> Optional[Tuple[int, str, int]]:
-    """
-    Ищем ближайший голосовой маркер вида '(v:alias)' или '(voice:alias)'.
-    Возвращает: (pos_open_paren, alias_lower, end_index_after_marker) или None.
-    """
     pos = lower_text.find("(", start)
     while pos != -1:
         close = lower_text.find(")", pos + 1)
@@ -252,10 +243,6 @@ def find_next_voice_marker(lower_text: str, start: int, voice_prefixes: List[str
     return None
 
 def find_next_square_combo(lower_text: str, start: int) -> Optional[Tuple[int, str, Optional[str], int]]:
-    """
-    Ищем сахарную форму: [EN:guy], [RU:dmitry], [UK:polina] или просто [EN]
-    Возвращаем: (pos_open_bracket, lang_key_lower_or_pref, alias_lower_or_None, end_index)
-    """
     pos = lower_text.find("[", start)
     while pos != -1:
         close = lower_text.find("]", pos + 1)
@@ -280,10 +267,6 @@ def split_chunk_by_markers(chunk_text: str,
                            lang_marker_map: Dict[str, str],
                            langs_cfg: Dict[str, Dict],
                            voice_prefixes: List[str]) -> List[Tuple[str, Optional[str], Optional[str]]]:
-    """
-    Делим фрагмент по ИНЛАЙНОВЫМ маркерам (языковым и голосовым).
-    Возвращаем части: (text_part, forced_lang_key, forced_voice_alias_or_id)
-    """
     if not chunk_text or not chunk_text.strip():
         return [(chunk_text, None, None)]
 
@@ -295,22 +278,18 @@ def split_chunk_by_markers(chunk_text: str,
     lower = s.lower()
 
     while i < len(s):
-        # ближайший языковой маркер
         next_lang_pos, next_lang_mark, next_lang_key = None, None, None
         for mark, lang_key in lang_marker_map.items():
             pos = lower.find(mark, i)
             if pos != -1 and (next_lang_pos is None or pos < next_lang_pos):
                 next_lang_pos, next_lang_mark, next_lang_key = pos, mark, lang_key
 
-        # ближайший голосовой маркер
         vm = find_next_voice_marker(lower, i, voice_prefixes)
         next_voice_pos = vm[0] if vm else None
 
-        # сахарная форма [EN:alias] / [EN]
         sq = find_next_square_combo(lower, i)
         next_sq_pos = sq[0] if sq else None
 
-        # выбираем ближайшее событие
         candidates = [(next_lang_pos, "lang"), (next_voice_pos, "voice"), (next_sq_pos, "sq")]
         candidates = [(p, t) for (p, t) in candidates if p is not None]
         if not candidates:
@@ -329,13 +308,13 @@ def split_chunk_by_markers(chunk_text: str,
             while j < len(s) and s[j] in " \t:—-–":
                 j += 1
             curr_lang = next_lang_key
-            curr_voice_alias = None  # сбрасываем алиас при смене языка
+            curr_voice_alias = None
             i = j
         elif typ == "voice":
             _pos, alias_lower, j = vm
             curr_voice_alias = alias_lower
             i = j
-        else:  # "sq"
+        else:
             _pos, lang_lower, alias_lower, j = sq
             if lang_lower in langs_cfg:
                 curr_lang = lang_lower
@@ -354,14 +333,8 @@ def split_chunk_by_markers(chunk_text: str,
 
     return res
 
-
-# =============================================================================
-# 4) Очистка и паузы внутри фразы
-# =============================================================================
-
 _ALLOWED_RE = re.compile(r"[^A-Za-z\u00C0-\u024F\u0400-\u04FF0-9\s\.,!?\:\;\-\(\)\[\]\"'«»]+", re.UNICODE)
-_EMOJI_RE = re.compile(
-    "[" 
+_EMOJI_RE = re.compile("[" 
     "\U0001F300-\U0001F6FF"
     "\U0001F700-\U0001F77F"
     "\U0001F780-\U0001F7FF"
@@ -404,16 +377,7 @@ def inject_space_pauses(s: str, enabled: bool, ms_per_space: int) -> str:
 def finalize_phrase_text(text: str) -> str:
     return text if re.search(r"[.!?;]$", text) else (text + ".")
 
-
-# =============================================================================
-# 5) Построение фраз + line_idx и группировка по языку
-# =============================================================================
-
-def build_phrases_with_lang_and_voice(text: str, cfg: Dict) -> List[Tuple[str, Optional[str], Optional[str], int, int]]:
-    """
-    Возвращаем фразы: (phrase_text, forced_lang_key, voice_alias_or_id, newline_count_after, line_idx)
-      - line_idx: индекс исходной строки (0..), по которому суммируем длительности в slides.
-    """
+def build_phrases_with_lang_and_voice(text: str, cfg: Dict) -> List[Tuple[str, Optional[str], Optional[str], int]]:
     langs_cfg = get_languages_cfg(cfg)
     lang_marker_map = build_marker_map(langs_cfg)
     delims = build_end_delims(cfg)
@@ -427,46 +391,32 @@ def build_phrases_with_lang_and_voice(text: str, cfg: Dict) -> List[Tuple[str, O
     voice_prefixes = get_voice_marker_prefixes(cfg)
 
     chunks = split_by_delimiters_with_counts(text, delims)
-    phrases: List[Tuple[str, Optional[str], Optional[str], int, int]] = []
+    phrases: List[Tuple[str, Optional[str], Optional[str], int]] = []
 
-    current_line_idx = 0
     for chunk_text, delim_used, newline_count in chunks:
-        local_line_idx = current_line_idx  # все части в этом чанке принадлежат текущей строке
-
         parts = split_chunk_by_markers(chunk_text, lang_marker_map, langs_cfg, voice_prefixes)
-        if parts:
-            for idx, (part_text, forced_lang, voice_alias) in enumerate(parts):
-                cleaned = sanitize_strip_symbols(part_text, strip_symbols_list)
-                cleaned = inject_space_pauses(cleaned, space_enabled, ms_per_space)
-                cleaned = sanitize_base(cleaned, strip_emojis)
-                if not cleaned:
-                    continue
-                nl_count = newline_count if idx == len(parts) - 1 else 0
-                phrases.append((finalize_phrase_text(cleaned), forced_lang, voice_alias, nl_count, local_line_idx))
-
-        # если разделитель — перенос строки, переходим к следующему индексу строки
-        if delim_used == "\n":
-            # каждый дополнительный перенос добавляет «пустую» строку — её игнорируем на стадии записи slides
-            current_line_idx += max(1, newline_count or 1)
-
+        if not parts:
+            continue
+        for idx, (part_text, forced_lang, voice_alias) in enumerate(parts):
+            cleaned = sanitize_strip_symbols(part_text, strip_symbols_list)
+            cleaned = inject_space_pauses(cleaned, space_enabled, ms_per_space)
+            cleaned = sanitize_base(cleaned, strip_emojis)
+            if not cleaned:
+                continue
+            nl_count = newline_count if idx == len(parts) - 1 else 0
+            phrases.append((finalize_phrase_text(cleaned), forced_lang, voice_alias, nl_count))
     return phrases
 
-def group_phrases_by_language(
-    phrases: List[Tuple[str, Optional[str], Optional[str], int, int]],
-    cfg: Dict
-) -> List[Tuple[str, List[Tuple[str, Optional[str], Optional[str], int, int]]]]:
-    """
-    Блоки: [(lang_key, [ (text, forced_lang, voice_alias, newline_count, line_idx), ... ]), ...]
-    """
+def group_phrases_by_language(phrases: List[Tuple[str, Optional[str], Optional[str], int]], cfg: Dict) -> List[Tuple[str, List[Tuple[str, Optional[str], Optional[str], int]]]]:
     langs_cfg = get_languages_cfg(cfg)
     detect_map = build_detect_map(langs_cfg)
     default_lang = next(iter(langs_cfg.keys()), "en")
 
-    blocks: List[Tuple[str, List[Tuple[str, Optional[str], Optional[str], int, int]]]] = []
+    blocks: List[Tuple[str, List[Tuple[str, Optional[str], Optional[str], int]]]] = []
     curr_lang_key: Optional[str] = None
-    curr_list: List[Tuple[str, Optional[str], Optional[str], int, int]] = []
+    curr_list: List[Tuple[str, Optional[str], Optional[str], int]] = []
 
-    for text, forced_lang, voice_alias, nlcount, line_idx in phrases:
+    for text, forced_lang, voice_alias, nlcount in phrases:
         if forced_lang:
             lang_key = forced_lang
         else:
@@ -477,13 +427,13 @@ def group_phrases_by_language(
             lang_key = map_detect_to_lang(code, detect_map, default_lang)
 
         if curr_lang_key is None:
-            curr_lang_key, curr_list = lang_key, [(text, forced_lang, voice_alias, nlcount, line_idx)]
+            curr_lang_key, curr_list = lang_key, [(text, forced_lang, voice_alias, nlcount)]
             continue
         if lang_key == curr_lang_key:
-            curr_list.append((text, forced_lang, voice_alias, nlcount, line_idx))
+            curr_list.append((text, forced_lang, voice_alias, nlcount))
         else:
             blocks.append((curr_lang_key, curr_list))
-            curr_lang_key, curr_list = lang_key, [(text, forced_lang, voice_alias, nlcount, line_idx)]
+            curr_lang_key, curr_list = lang_key, [(text, forced_lang, voice_alias, nlcount)]
 
     if curr_list:
         blocks.append((curr_lang_key, curr_list))
@@ -491,11 +441,6 @@ def group_phrases_by_language(
 
 def languages_present(blocks) -> Set[str]:
     return {lang for lang, frs in blocks if frs}
-
-
-# =============================================================================
-# 6) Выбор голоса, синтез и длительность
-# =============================================================================
 
 def choose_voice_for_part(lang_key: str,
                           voice_alias_or_id: Optional[str],
@@ -570,35 +515,23 @@ async def tts_render_with_fallback_to_bytes(text: str,
                 last_err = e
         raise last_err
 
-
-# =============================================================================
-# 7) Склейка пауз (паузы пришиваем к следующему тексту)
-# =============================================================================
-
-def glue_block_text(
-    frs: List[Tuple[str, Optional[str], Optional[str], int, int]],
-    cfg: Dict
-) -> List[Tuple[str, Optional[str], int]]:
-    """
-    Возвращаем список (text_piece, voice_alias_or_id, line_idx),
-    паузы НЕ отправляем отдельными кусками — «пришиваем» в начало следующего текста.
-    """
+def glue_block_text(frs: List[Tuple[str, Optional[str], Optional[str], int]], cfg: Dict) -> List[Tuple[str, Optional[str]]]:
     pauses = cfg.get("pauses", {})
     base_ms = int(pauses.get("between_phrases_ms", 600))
     np_enabled = bool(pauses.get("newline_pause", {}).get("enabled", True))
     np_ms = int(pauses.get("newline_pause", {}).get("ms_per_newline", 400))
     start_line_ms = int(pauses.get("start_of_line_extra_pause_ms", 0))
 
-    out: List[Tuple[str, Optional[str], int]] = []
+    out: List[Tuple[str, Optional[str]]] = []
     first = True
     pending_prefix = ""
 
-    for text, _forced_lang, voice_alias, nlcount, line_idx in frs:
+    for text, _forced_lang, voice_alias, nlcount in frs:
         if not text:
             continue
 
         if first:
-            out.append((text, voice_alias, line_idx))
+            out.append((text, voice_alias))
             first = False
             continue
 
@@ -613,21 +546,16 @@ def glue_block_text(
             text = pending_prefix + text
             pending_prefix = ""
 
-        out.append((text, voice_alias, line_idx))
+        out.append((text, voice_alias))
 
     if out:
-        last_text, last_voice, last_line = out[-1]
+        last_text, last_voice = out[-1]
         if last_text and not re.search(r"[.!?;]\s*$", last_text):
-            out[-1] = (finalize_phrase_text(last_text), last_voice, last_line)
+            out[-1] = (finalize_phrase_text(last_text), last_voice)
     return out
 
-
-# =============================================================================
-# 8) Рендеринг (single / multi-EN) + запись slides по НЕПУСТЫМ строкам
-# =============================================================================
-
 async def render_single_output(in_path: Path,
-                               blocks: List[Tuple[str, List[Tuple[str, Optional[str], Optional[str], int, int]]]],
+                               blocks: List[Tuple[str, List[Tuple[str, Optional[str], Optional[str], int]]]],
                                cfg: Dict,
                                active_langs: Set[str]) -> None:
     rate = int(cfg.get("rate", -10))
@@ -639,43 +567,35 @@ async def render_single_output(in_path: Path,
     out_path = in_path.with_suffix(".mp3")
     slides_path = in_path.with_suffix(".slides.txt")
     out_path.write_bytes(b"")
-
-    # суммируем длительности по индексу исходной строки (только для строк, где что-то прозвучало)
-    durations_by_line: Dict[int, float] = {}
+    slides: List[float] = []
 
     with out_path.open("ab") as f:
         for i, (lang_key, frs) in enumerate(blocks, start=1):
-            text_pieces = glue_block_text(frs, cfg)  # [(text_part, voice_alias_or_id, line_idx)]
+            text_pieces = glue_block_text(frs, cfg)
             if not text_pieces:
                 continue
 
             print(f"  [Блок {i}/{len(blocks)}] lang={lang_key}, частей={len(text_pieces)}")
-            for idx, (piece, voice_alias, line_idx) in enumerate(text_pieces, start=1):
+            for idx, (piece, voice_alias) in enumerate(text_pieces, start=1):
                 if not piece.strip():
                     continue
-                # защита: пропускаем чистые «паузные» куски (на всякий случай)
                 if len(piece.strip().replace(",", "")) == 0:
                     continue
-
                 chosen_voice, alts, strict = choose_voice_for_part(lang_key, voice_alias, cfg)
                 try:
                     used, mp3_bytes = await tts_render_with_fallback_to_bytes(piece, chosen_voice, alts, strict, rate)
                     f.write(mp3_bytes)
-                    d = mp3_duration_from_bytes(mp3_bytes)
-                    durations_by_line[line_idx] = durations_by_line.get(line_idx, 0.0) + d
+                    slides.append(mp3_duration_from_bytes(mp3_bytes))
                 except Exception as e:
                     print(f"    ! Ошибка части ({lang_key} #{idx}): {e} — пропуск части.")
 
-    # Пишем ТОЛЬКО строки, где реально что-то озвучено (пустые строки исходника игнорируем всегда)
-    if durations_by_line:
-        lines = [f"{durations_by_line[i]:.3f}" for i in sorted(durations_by_line.keys())]
-        slides_path.write_text("\n".join(lines), encoding="utf-8")
-        print(f"  Тайминги (по строкам): {slides_path}")
-
+    if slides:
+        slides_path.write_text("\n".join(f"{d:.3f}" for d in slides), encoding="utf-8")
+        print(f"  Тайминги: {slides_path}")
     print(f"  Готово: {out_path}")
 
 async def render_multi_en_outputs(in_path: Path,
-                                  blocks: List[Tuple[str, List[Tuple[str, Optional[str], Optional[str], int, int]]]],
+                                  blocks: List[Tuple[str, List[Tuple[str, Optional[str], Optional[str], int]]]],
                                   cfg: Dict,
                                   active_langs: Set[str]) -> None:
     langs_cfg = get_languages_cfg(cfg)
@@ -705,16 +625,16 @@ async def render_multi_en_outputs(in_path: Path,
         out_path = in_path.with_name(f"{stem}__{en_voice}.mp3")
         slides_path = in_path.with_name(f"{stem}__{en_voice}.slides.txt")
         out_path.write_bytes(b"")
-        durations_by_line: Dict[int, float] = {}
-
+        slides: List[float] = []
         print(f"\n  → Генерация EN-варианта голосом: {en_voice}")
+
         with out_path.open("ab") as f:
             for i, (lang_key, frs) in enumerate(blocks, start=1):
-                text_pieces = glue_block_text(frs, cfg)  # [(text, voice_alias, line_idx)]
+                text_pieces = glue_block_text(frs, cfg)
                 if not text_pieces:
                     continue
                 print(f"    [Блок {i}/{len(blocks)}] lang={lang_key}, частей={len(text_pieces)}")
-                for idx, (piece, voice_alias, line_idx) in enumerate(text_pieces, start=1):
+                for idx, (piece, voice_alias) in enumerate(text_pieces, start=1):
                     if not piece.strip():
                         continue
                     if len(piece.strip().replace(",", "")) == 0:
@@ -723,27 +643,19 @@ async def render_multi_en_outputs(in_path: Path,
                         if lang_key == "en":
                             mp3_bytes = await tts_render_bytes(piece, en_voice, rate)
                             f.write(mp3_bytes)
-                            d = mp3_duration_from_bytes(mp3_bytes)
-                            durations_by_line[line_idx] = durations_by_line.get(line_idx, 0.0) + d
+                            slides.append(mp3_duration_from_bytes(mp3_bytes))
                         else:
                             chosen_voice, alts, strict = choose_voice_for_part(lang_key, voice_alias, cfg)
                             used, mp3_bytes = await tts_render_with_fallback_to_bytes(piece, chosen_voice, alts, strict, rate)
                             f.write(mp3_bytes)
-                            d = mp3_duration_from_bytes(mp3_bytes)
-                            durations_by_line[line_idx] = durations_by_line.get(line_idx, 0.0) + d
+                            slides.append(mp3_duration_from_bytes(mp3_bytes))
                     except Exception as e:
                         print(f"      ! Ошибка части ({lang_key} #{idx}): {e} — пропуск.")
 
-        if durations_by_line:
-            lines = [f"{durations_by_line[i]:.3f}" for i in sorted(durations_by_line.keys())]
-            slides_path.write_text("\n".join(lines), encoding="utf-8")
-            print(f"  Тайминги (по строкам): {slides_path}")
+        if slides:
+            slides_path.write_text("\n".join(f"{d:.3f}" for d in slides), encoding="utf-8")
+            print(f"  Тайминги: {slides_path}")
         print(f"  Готово: {out_path}")
-
-
-# =============================================================================
-# 9) Жёсткие суффиксы и активные языки
-# =============================================================================
 
 def pick_active_languages_for_file(stem: str, cfg: Dict) -> Set[str]:
     langs_cfg = get_languages_cfg(cfg)
@@ -757,14 +669,8 @@ def pick_active_languages_for_file(stem: str, cfg: Dict) -> Set[str]:
         enable = list(langs_cfg.keys())
     return set(enable)
 
-
-# =============================================================================
-# 10) Основной цикл
-# =============================================================================
-
 async def process_one_file(path: Path, cfg: Dict) -> None:
     print(f"\n=== Файл: {path}")
-
     raw_text = path.read_text(encoding="utf-8", errors="ignore")
     if not raw_text.strip():
         print("  Пустой файл — пропуск.")
@@ -782,7 +688,6 @@ async def process_one_file(path: Path, cfg: Dict) -> None:
 
     stem = path.stem
     active_langs = pick_active_languages_for_file(stem, cfg)
-
     present = languages_present(blocks)
     if not (active_langs & present):
         print(f"  В тексте нет фраз для активных языков {sorted(active_langs)} — пропуск.")
