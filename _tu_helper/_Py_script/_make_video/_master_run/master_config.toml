@@ -1,0 +1,57 @@
+# master_config.toml — пример
+# Все относительные пути считаются от папки, где лежит master_run.py
+
+[globals]
+# Эти ключи будут применяться к целевым TOML-файлам, если они там существуют
+input_dirs = ["D:/Entertaiment/Английский/data/Урок 4"]
+language = "en"
+delete_source_images_after = false
+
+[options]
+dry_run = false
+continue_on_error = false
+backup_configs = true
+python_executable = ""   # если пусто — используется текущий интерпретатор
+
+# --- Шаг 1: применяем только input_dirs к нескольким конфигаам ---
+[[steps]]
+type = "set_params"
+targets = [
+  "0_split_lesson_file/config.toml",
+  "1_make_audio_tts_from_text/config.toml",
+  "2_image_text_overlay/config.toml"
+]
+only_keys = ["input_dirs"]
+
+# --- Шаг 2: запускаем split_lesson_file.py ---
+[[steps]]
+type = "run_script"
+script = "0_split_lesson_file/split_lesson_file.py"
+args = []
+
+# --- Шаг 3: меняем язык для TTS с переопределением на уровне шага ---
+[[steps]]
+type = "set_params"
+targets = ["1_make_audio_tts_from_text/config.toml"]
+only_keys = ["language"]
+
+  [steps.step_params]
+  language = "en-GB"
+
+# --- Шаг 4: запускаем TTS ---
+[[steps]]
+type = "run_script"
+script = "1_make_audio_tts_from_text/tts_batch_reader.py"
+
+# --- Шаг 5: в одном шаге: правим флаг и запускаем overlay ---
+[[steps]]
+type = "set_params_and_run"
+targets = ["2_image_text_overlay/config.toml"]
+only_keys = ["delete_source_images_after"]
+
+  [steps.step_params]
+  delete_source_images_after = true
+
+  [steps.run]
+  script = "2_image_text_overlay/image_text_overlay.py"
+  args = []
