@@ -1,0 +1,79 @@
+# master_config.toml (под вашу структуру из архива)
+# Этот файл кладём в: _make_video/_master_run/master_config.toml
+# ВНИМАНИЕ: targets и scripts резолвятся относительно РОДИТЕЛЬСКОЙ папки (_make_video).
+
+[globals]
+# Унифицированные входные директории для всех шагов
+input_dirs = ["D:/Entertaiment/Английский/data/Урок 4"]
+
+# Унифицированные суффиксы для 2_make_image_to_audio (если нужно)
+include_suffixes = ["_en", "_di"]
+exclude_suffixes = ["_ru", "_draft"]
+output_suffix   = "_bg"
+
+[options]
+dry_run = false
+continue_on_error = false
+backup_configs = true
+python_executable = ""
+
+# 1) Применяем только input_dirs во все конфиги, где ключ существует
+[[steps]]
+type = "set_params"
+targets = [
+  "0_split_lesson_file/config.toml",
+  "1_make_audio_tts_from_text/tts_config.toml",
+  "2_make_image_to_audio/config.toml",
+  "3_make_image_text_overlay/config.toml",
+  "4_make_video_from_audio_and_image/config.toml"
+]
+only_keys = ["input_dirs"]
+
+# 2) Запускаем разбиение уроков
+[[steps]]
+type = "run_script"
+script = "0_split_lesson_file/split_lesson_file.py"
+args = []
+
+# 3) (опционально) Можно было бы поменять голос/языки TTS — но таких ключей "language" нет.
+#    Поэтому сейчас прокидываем снова только input_dirs, если вы их меняли выше.
+[[steps]]
+type = "set_params"
+targets = ["1_make_audio_tts_from_text/tts_config.toml"]
+only_keys = ["input_dirs"]
+
+[[steps]]
+type = "run_script"
+script = "1_make_audio_tts_from_text/tts_batch_reader.py"
+
+# 4) В шаге для 2_make_image_to_audio — применяем include/exclude/output_suffix и запускаем
+[[steps]]
+type = "set_params_and_run"
+targets = ["2_make_image_to_audio/config.toml"]
+only_keys = ["include_suffixes", "exclude_suffixes", "output_suffix"]
+
+  [steps.step_params]
+  # Локальные переопределения для этого шага (если нужны)
+  # output_suffix = "_bg"
+
+  [steps.run]
+  script = "2_make_image_to_audio/make_image_to_audio.py"
+  args = []
+
+# 5) Наложение текста: обычно тоже зависит от input_dirs; просто запускаем
+[[steps]]
+type = "run_script"
+script = "3_make_image_text_overlay/image_text_overlay.py"
+
+# 6) Финальный рендер из аудио+картинок; можно включить удаление картинок после сборки
+[[steps]]
+type = "set_params_and_run"
+targets = ["4_make_video_from_audio_and_image/config.toml"]
+only_keys = ["delete_images_after"]
+
+  [steps.step_params]
+  delete_images_after = true
+
+  [steps.run]
+  script = "4_make_video_from_audio_and_image/make_video_from_audio_and_image.py"
+  args = []
