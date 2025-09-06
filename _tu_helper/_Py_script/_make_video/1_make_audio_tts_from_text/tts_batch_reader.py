@@ -392,6 +392,100 @@ def sanitize_base(s: str, strip_emojis: bool) -> str:
         s = _ALLOWED_RE.sub("", s)
     return s.strip()
 
+# -------------------------------------------------------------------------
+# Skipping/muting parts of text before TTS (configured via [filters] in TOML)
+# -------------------------------------------------------------------------
+def _compile_skip_regexes(cfg: Dict):
+    filters = cfg.get("filters", {}) if isinstance(cfg, dict) else {}
+    enabled = bool(filters.get("enabled", True))
+    if not enabled:
+        return [], []
+    skip_specs = filters.get("skip", [])
+    regexes = []
+    for spec in skip_specs if isinstance(skip_specs, list) else []:
+        try:
+            pat = spec.get("pattern") if isinstance(spec, dict) else None
+            if not pat:
+                continue
+            flags = 0
+            for fl in (spec.get("flags") or []):
+                fls = str(fl).upper()
+                if fls == "IGNORECASE":
+                    flags |= re.IGNORECASE
+                elif fls == "MULTILINE":
+                    flags |= re.MULTILINE
+                elif fls == "DOTALL":
+                    flags |= re.DOTALL
+                elif fls == "UNICODE":
+                    flags |= re.UNICODE
+            regexes.append(re.compile(pat, flags))
+        except Exception:
+            # ignore bad regex
+            continue
+    # HTML-like tags: <skip>...</skip>, <mute>...</mute>, etc.
+    skip_tags = filters.get("skip_tags", [])
+    tag_regexes = []
+    for tag in skip_tags if isinstance(skip_tags, list) else []:
+        t = str(tag).strip()
+        if not t:
+            continue
+        try:
+            tag_regexes.append(re.compile(rf"<{re.escape(t)}>(.*?)</{re.escape(t)}>", re.DOTALL | re.UNICODE | re.IGNORECASE))
+        except Exception:
+            continue
+    return regexes, tag_regexes
+
+def _apply_skip_filters(s: str, regexes, tag_regexes) -> str:
+    if not s:
+        return s
+    # Apply tag removals first
+    for rg in tag_regexes:
+        s = rg.sub("", s)
+    # Then general regex removals
+    for rg in regexes:
+        s = rg.sub("", s)
+    # Clean up extra spaces left
+    s = re.sub(r"[ \t]+", " ", s, flags=re.UNICODE)
+    s = re.sub(r" ?([,.;:!?])", r"\1", s, flags=re.UNICODE)  # remove space before punctuation
+    return s.strip()
+
+
+# -------------------------------------------------------------------------
+# Bracket-based mute filters before TTS (configured via [filters.bracket_pairs])
+# -------------------------------------------------------------------------
+def _compile_skip_regexes(cfg: Dict):
+    filters = cfg.get("filters", {}) if isinstance(cfg, dict) else {}
+    enabled = bool(filters.get("enabled", True))
+    if not enabled:
+        return [], []
+    pairs = filters.get("bracket_pairs", [])
+    regexes = []
+    for p in pairs if isinstance(pairs, list) else []:
+        try:
+            if not (isinstance(p, (list, tuple)) and len(p) == 2):
+                continue
+            op, cl = str(p[0]), str(p[1])
+            if not op or not cl:
+                continue
+            op_esc = re.escape(op)
+            cl_esc = re.escape(cl)
+            regexes.append(re.compile(rf"{op_esc}.*?{cl_esc}", re.DOTALL | re.UNICODE))
+        except Exception:
+            continue
+    return regexes, []
+
+def _apply_skip_filters(s: str, regexes, _unused_tag_regexes) -> str:
+    if not s:
+        return s
+    for rg in regexes:
+        prev = None
+        while prev != s:
+            prev = s
+            s = rg.sub("", s)
+    s = re.sub(r"[ \t]+", " ", s, flags=re.UNICODE)
+    s = re.sub(r" ?([,.;:!?])", r"\1", s, flags=re.UNICODE)
+    return s.strip()
+
 def inject_space_pauses(s: str, enabled: bool, ms_per_space: int) -> str:
     if not enabled or ms_per_space <= 0 or " " not in s:
         return s
@@ -426,16 +520,22 @@ def build_phrases_with_lang_and_voice(text: str, cfg: Dict) -> List[Tuple[str, O
 
     voice_prefixes = get_voice_marker_prefixes(cfg)
 
+    # Compile text-skip filters once per call
+    _skip_regexes, _skip_tag_regexes = _compile_skip_regexes(cfg)
+
     chunks = split_by_delimiters_with_counts(text, delims)
     phrases: List[Tuple[str, Optional[str], Optional[str], int, int]] = []
 
     current_line_idx = 0
     for chunk_text, delim_used, newline_count in chunks:
+        chunk_text = _apply_skip_filters(chunk_text, _skip_regexes, [])
         local_line_idx = current_line_idx  # все части в этом чанке принадлежат текущей строке
 
         parts = split_chunk_by_markers(chunk_text, lang_marker_map, langs_cfg, voice_prefixes)
         if parts:
             for idx, (part_text, forced_lang, voice_alias) in enumerate(parts):
+                # Apply mute/skip filters from config before any other sanitation
+                part_text = _apply_skip_filters(part_text, _skip_regexes, _skip_tag_regexes)
                 cleaned = sanitize_strip_symbols(part_text, strip_symbols_list)
                 cleaned = inject_space_pauses(cleaned, space_enabled, ms_per_space)
                 cleaned = sanitize_base(cleaned, strip_emojis)
@@ -637,7 +737,8 @@ async def render_single_output(in_path: Path,
         return
 
     out_path = in_path.with_suffix(".mp3")
-    slides_path = in_path.with_suffix(".slides.txt")
+    # slides_path = in_path.with_suffix(".slides.txt")
+    slides_path = in_path.with_suffix(".sli")
     out_path.write_bytes(b"")
 
     # суммируем длительности по индексу исходной строки (только для строк, где что-то прозвучало)
@@ -703,7 +804,7 @@ async def render_multi_en_outputs(in_path: Path,
     stem = in_path.stem
     for en_voice in alt_en:
         out_path = in_path.with_name(f"{stem}__{en_voice}.mp3")
-        slides_path = in_path.with_name(f"{stem}__{en_voice}.slides.txt")
+        slides_path = in_path.with_name(f"{stem}__{en_voice}.sli")
         out_path.write_bytes(b"")
         durations_by_line: Dict[int, float] = {}
 
@@ -766,11 +867,33 @@ async def process_one_file(path: Path, cfg: Dict) -> None:
     print(f"\n=== Файл: {path}")
 
     raw_text = path.read_text(encoding="utf-8", errors="ignore")
+
+    _regexes, _ = _compile_skip_regexes(cfg)
+
+    raw_text_pref = _apply_skip_filters(raw_text, _regexes, []) if _regexes else raw_text
+
+    try:
+
+        _filters_cfg = cfg.get("filters", {}) if isinstance(cfg, dict) else {}
+
+        if _filters_cfg.get("debug_dump", False):
+
+            # preview_path = path.with_suffix(".filtered.preview.txt")
+            preview_path = path.with_suffix(".pre")
+
+            preview_path.write_text(raw_text_pref, encoding="utf-8")
+
+            print(f"  Предпросмотр после фильтров: {preview_path.name}")
+
+    except Exception as _e:
+
+        print(f"  [warn] Не удалось сохранить предпросмотр: {_e}")
+
     if not raw_text.strip():
         print("  Пустой файл — пропуск.")
         return
 
-    phrases = build_phrases_with_lang_and_voice(raw_text, cfg)
+    phrases = build_phrases_with_lang_and_voice(raw_text_pref, cfg)
     if not phrases:
         print("  После разметки не осталось фраз — пропуск.")
         return
@@ -806,6 +929,33 @@ def main():
     extensions = normalize_ext_list(cfg.get("extensions", [".txt"]))
 
     files = expand_input_dirs(entries, recurse=recurse, exts=extensions)
+
+    # Фильтрация по суффиксам (имя файла без расширения)
+
+    exc_sfx = [s for s in (cfg.get('exclude_suffixes') or []) if isinstance(s, str) and s]
+
+    inc_sfx = [s for s in (cfg.get('include_suffixes') or []) if isinstance(s, str) and s]
+
+    if exc_sfx or inc_sfx:
+
+        filtered = []
+
+        for f in files:
+
+            stem = f.stem
+
+            if inc_sfx and not any(stem.endswith(s) for s in inc_sfx):
+
+                continue
+
+            if exc_sfx and any(stem.endswith(s) for s in exc_sfx):
+
+                continue
+
+            filtered.append(f)
+
+        files = filtered
+
     if not files:
         print("Файлы не найдены (проверьте 'input_dirs', 'recurse' и 'extensions').")
         sys.exit(1)

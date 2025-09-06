@@ -1,21 +1,15 @@
 # -*- coding: utf-8 -*-
 r"""
-Скрипт: режет учебные тексты на СЕКЦИИ и извлекает БЛОКИ (EN/RU/и любые свои из config.toml),
-сохраняет каждый блок в отдельный файл с заданным суффиксом.
+Режет учебные тексты на СЕКЦИИ и извлекает БЛОКИ (EN/RU/словари и т.п.) по config.toml.
+Работает с нумерованными заголовками N.N Title. (Эвристика ненумерованных при желании можно вернуть.)
 
-Особенности:
- - Config: config.toml
- - INPUT.input_dirs — список папок/файлов; можно рекурсивно.
- - INPUT.extensions — какие расширения парсить (по умолчанию .txt).
- - INPUT.exclude_suffixes / include_suffixes — фильтрация входных файлов по суффиксу в имени (без расширения).
- - Поддерживается формат секций с НУМЕРОВАННЫМИ заголовками: "N.N Title".
- - BLOCKS.rules — набор блоков: markers, suffix, sentence_per_line, remove_empty_lines, ignore_case, ignore_leading_space.
- - Имена файлов: "003_01 Title_en.txt" и пр.; заголовок в названии очищается от запрещённых символов
-   и от хвостовой пунктуации (точки, запятые, подчёркивания, тире и т.п.).
- - OUTPUT.output_root: если не задан — писать рядом с исходником; если задан — зеркальная структура внутри него.
- - ADVANCED.delete_source_after = true — удалить исходный файл после успешной генерации выходных.
+Новые вещи:
+ - Робастное распознавание маркеров блоков: трим BOM/ZWSP/NBSP, игнорируем ведущие пробелы,
+   поддерживаем case-insensitive (опция в блоке).
+ - Подробные логи: показываем, сколько файлов/секций/блоков найдено и что записано.
+ - Остальное: запись рядом с исходником, если OUTPUT.output_root не задан; delete_source_after.
 
-Запуск: python split_lesson_file.py
+Config: config.toml
 """
 
 import os
@@ -28,25 +22,12 @@ try:
 except ModuleNotFoundError:  # pragma: no cover
     import tomli as tomllib
 
-# -------------------------------
-# Регулярки и константы
-# -------------------------------
 SECTION_HEADER_NUM_RE = re.compile(r'^[ \t]*([0-9]+)\.([0-9]+)[ \t]+(.+?)\s*$', re.UNICODE)
-INVALID_FILENAME_CHARS = r'\/:*?"<>|'  # Windows-ограничения
-NBSP = "\u00A0"
-ZWSP = "\u200B"
-BOMS = ("\ufeff", "\uFEFF")
+INVALID_FILENAME_CHARS = r'\/:*?"<>|'  # Windows имя
 
 
 # -------------------------------
-# Лог
-# -------------------------------
-def log(msg: str):
-    print(msg, flush=True)
-
-
-# -------------------------------
-# Утилиты: пути/строки
+# Утилиты: пути/строки/логи
 # -------------------------------
 def normalize_path(p: Optional[str]) -> Optional[str]:
     if p is None:
@@ -56,28 +37,30 @@ def normalize_path(p: Optional[str]) -> Optional[str]:
         p = p[1:-1].strip()
     return os.path.normpath(p)
 
-
 def sanitize_filename(name: str) -> str:
     """
     Делает имя файла безопасным:
-      - убирает запрещённые символы Windows (\/:*?"<>|),
+      - убирает запрещённые символы Windows,
       - схлопывает пробелы,
-      - убирает хвостовую пунктуацию/разделители (.,;: _-–—~ и пробелы).
+      - убирает точки и прочие знаки в конце.
     """
     trans = {ord(ch): ' ' for ch in INVALID_FILENAME_CHARS}
     cleaned = name.translate(trans)
     cleaned = re.sub(r'\s+', ' ', cleaned, flags=re.UNICODE).strip()
-    # убрать хвостовые служебные символы/пунктуацию
-    cleaned = re.sub(r'[ \.\,_\-–—~;:!@#$%^&+=]+$', '', cleaned)
+    # уберём финальные точки, пробелы, дефисы и подчёркивания
+    cleaned = re.sub(r'[ ._\-]+$', '', cleaned)
     return cleaned
-
 
 def pad_number(n: int, width: int) -> str:
     return str(n).zfill(width)
 
 
+def log(msg: str):
+    print(msg, flush=True)
+
+
 # -------------------------------
-# Конфиг
+# Загрузка конфига
 # -------------------------------
 def load_config(path: str = "config.toml") -> dict:
     if not os.path.isfile(path):
@@ -91,9 +74,6 @@ def load_config(path: str = "config.toml") -> dict:
         raise ValueError("В config.toml не задан INPUT.input_dirs.")
     extensions = [str(e).lower() for e in data.get("INPUT", {}).get("extensions", [".txt"])]
     recursive = bool(data.get("INPUT", {}).get("recursive", True))
-    # Новые параметры фильтрации по суффиксам
-    exclude_suffixes = [str(s) for s in data.get("INPUT", {}).get("exclude_suffixes", [])]
-    include_suffixes = [str(s) for s in data.get("INPUT", {}).get("include_suffixes", [])]
 
     # OUTPUT
     output_root = normalize_path(data.get("OUTPUT", {}).get("output_root", None)) or None
@@ -106,7 +86,7 @@ def load_config(path: str = "config.toml") -> dict:
     extension = str(naming.get("extension", ".txt"))
     if not extension.startswith("."):
         extension = "." + extension
-    base_chapter = int(naming.get("base_chapter", 0))  # (зарезервировано для ненумерованных схем)
+    base_chapter = int(naming.get("base_chapter", 0))  # для ненумерованных (если вернёте эвристику)
 
     # ADVANCED
     adv = data.get("ADVANCED", {})
@@ -129,7 +109,9 @@ def load_config(path: str = "config.toml") -> dict:
             "suffix": str(b.get("suffix", "")).strip(),
             "sentence_per_line": bool(b.get("sentence_per_line", False)),
             "remove_empty_lines": bool(b.get("remove_empty_lines", False)),
+            # новая опция: регистр маркеров
             "ignore_case": bool(b.get("ignore_case", True)),
+            # новая опция: игнорировать пробелы перед маркером
             "ignore_leading_space": bool(b.get("ignore_leading_space", True)),
         })
 
@@ -137,8 +119,6 @@ def load_config(path: str = "config.toml") -> dict:
         "input_dirs": input_dirs,
         "extensions": extensions,
         "recursive": recursive,
-        "exclude_suffixes": exclude_suffixes,
-        "include_suffixes": include_suffixes,
         "output_root": output_root,
         "pad_chapter": pad_chapter,
         "pad_section": pad_section,
@@ -160,7 +140,7 @@ def load_config(path: str = "config.toml") -> dict:
 def read_text(path: str, encoding: str) -> str:
     with open(path, "r", encoding=encoding, newline="") as f:
         text = f.read()
-    # убрать BOM/невидимые в начале
+    # Убираем BOM/ZWSP с начала
     return text.lstrip("\ufeff").lstrip("\uFEFF").lstrip("\u200b")
 
 
@@ -168,49 +148,20 @@ def ensure_dir(path: str):
     os.makedirs(path, exist_ok=True)
 
 
-def _passes_suffix_filters(filename: str, include_suffixes: List[str], exclude_suffixes: List[str]) -> bool:
-    """
-    Проверяет файл по фильтрам include/exclude по СУФФИКСУ имени (без расширения).
-    exclude имеет приоритет.
-    """
-    base, _ = os.path.splitext(filename)
-    # exclude → сразу мимо
-    for s in exclude_suffixes:
-        if s and base.endswith(s):
-            return False
-    # include → если непустой, допускаем только перечисленные
-    if include_suffixes:
-        return any(s and base.endswith(s) for s in include_suffixes)
-    return True
-
-
-def iter_files(root: str, extensions: List[str], recursive: bool, ignore_hidden: bool,
-               include_suffixes: List[str], exclude_suffixes: List[str]) -> List[str]:
+def iter_files(root: str, extensions: List[str], recursive: bool, ignore_hidden: bool) -> List[str]:
     res = []
     root = os.path.abspath(root)
-    if not os.path.exists(root):
-        return res
-
-    def _accept(fn: str) -> bool:
-        if ignore_hidden and fn.startswith("."):
-            return False
-        if os.path.splitext(fn)[1].lower() not in extensions:
-            return False
-        return _passes_suffix_filters(fn, include_suffixes, exclude_suffixes)
-
-    if os.path.isfile(root):
-        fn = os.path.basename(root)
-        if _accept(fn):
-            res.append(root)
-        return res
-
     if not os.path.isdir(root):
         return res
 
     if not recursive:
         for fn in os.listdir(root):
             full = os.path.join(root, fn)
-            if os.path.isfile(full) and _accept(fn):
+            if not os.path.isfile(full):
+                continue
+            if ignore_hidden and fn.startswith("."):
+                continue
+            if os.path.splitext(fn)[1].lower() in extensions:
                 res.append(full)
         return res
 
@@ -218,28 +169,22 @@ def iter_files(root: str, extensions: List[str], recursive: bool, ignore_hidden:
         if ignore_hidden:
             dirnames[:] = [d for d in dirnames if not d.startswith(".")]
         for fn in filenames:
-            if _accept(fn):
+            if ignore_hidden and fn.startswith("."):
+                continue
+            if os.path.splitext(fn)[1].lower() in extensions:
                 res.append(os.path.join(dirpath, fn))
     return res
 
 
 # -------------------------------
-# Санитизация текста секции
+# Санитизация секции
 # -------------------------------
-def sanitize_section_text(text: str) -> str:
-    """
-    Убираем пустые строки в начале/конце, схлопываем кратные пустые до одной,
-    гарантируем одну пустую строку после первой строки (заголовок → текст).
-    """
+def sanitize_block_text(text: str) -> str:
     lines = text.splitlines()
-
-    # trim head/tail
     while lines and lines[0].strip() == "":
         lines.pop(0)
     while lines and lines[-1].strip() == "":
         lines.pop()
-
-    # collapse multiple empty
     out, prev_empty = [], False
     for ln in lines:
         is_empty = (ln.strip() == "")
@@ -247,15 +192,13 @@ def sanitize_section_text(text: str) -> str:
             continue
         out.append(ln)
         prev_empty = is_empty
-
     if len(out) >= 2 and out[1].strip() != "":
         out.insert(1, "")
-
     return "\n".join(out) + ("\n" if out else "")
 
 
 # -------------------------------
-# Парсинг секций (нумерованные заголовки)
+# Парсинг секций (нумерованные)
 # -------------------------------
 def split_sections(text: str) -> List[Dict]:
     lines = text.splitlines()
@@ -265,7 +208,7 @@ def split_sections(text: str) -> List[Dict]:
         m = SECTION_HEADER_NUM_RE.match(line)
         if m:
             if current is not None:
-                current["body"] = sanitize_section_text("\n".join(buf))
+                current["body"] = sanitize_block_text("\n".join(buf))
                 sections.append(current)
                 buf = []
             current = {
@@ -280,7 +223,7 @@ def split_sections(text: str) -> List[Dict]:
                 buf.append(line)
 
     if current is not None:
-        current["body"] = sanitize_section_text("\n".join(buf))
+        current["body"] = sanitize_block_text("\n".join(buf))
         sections.append(current)
     return sections
 
@@ -288,9 +231,14 @@ def split_sections(text: str) -> List[Dict]:
 # -------------------------------
 # Извлечение БЛОКОВ
 # -------------------------------
+NBSP = "\u00A0"
+ZWSP = "\u200B"
+BOMS = ("\ufeff", "\uFEFF")
+
 def _strip_invisibles(s: str) -> str:
-    # левые невидимые + пробелы/табы/NBSP
-    return s.lstrip(" \t" + NBSP + "".join(BOMS) + ZWSP)
+    # убираем BOM/ZWSP/NBSP в начале строки и ведущие пробелы/табы
+    s = s.lstrip(" \t" + NBSP + "".join(BOMS) + ZWSP)
+    return s
 
 def _norm_for_compare(s: str, ignore_case: bool) -> str:
     s = _strip_invisibles(s)
@@ -298,12 +246,13 @@ def _norm_for_compare(s: str, ignore_case: bool) -> str:
 
 def extract_blocks_from_section(section_text: str, blocks_cfg: List[dict], verbose: bool=False) -> Dict[str, str]:
     """
-    Ищем строки, начинающиеся с любого из маркеров блоков (учёт ignore_case/ignore_leading_space).
-    Контент блока: от строки-маркера (исключая её) до следующего маркера/конца секции.
+    Ищем строки, начинающиеся с любого из заданных маркеров (с учётом опций ignore_case/ignore_leading_space).
+    Контент блока — от строки-маркера (исключая её) до следующего маркера/конца секции.
     """
     lines = section_text.splitlines()
     found: List[Tuple[int, str, str]] = []
 
+    # индексация маркеров
     for b in blocks_cfg:
         name = b["name"]
         ignore_case = b.get("ignore_case", True)
@@ -325,7 +274,6 @@ def extract_blocks_from_section(section_text: str, blocks_cfg: List[dict], verbo
 
     found.sort(key=lambda x: x[0])
 
-    # брать первый маркер каждого блока по порядку появления
     first_marker_idx: Dict[str, int] = {}
     ordered: List[Tuple[int, str, str]] = []
     for idx, name, raw_marker in found:
@@ -341,7 +289,8 @@ def extract_blocks_from_section(section_text: str, blocks_cfg: List[dict], verbo
         if k + 1 < len(ordered):
             end_line = ordered[k + 1][0]
         body_lines = lines[start_line:end_line]
-        result[name] = sanitize_section_text("\n".join(body_lines))
+        body = "\n".join(body_lines)
+        result[name] = sanitize_block_text(body)
     return result
 
 
@@ -349,20 +298,15 @@ def extract_blocks_from_section(section_text: str, blocks_cfg: List[dict], verbo
 # Форматирование блока
 # -------------------------------
 def split_into_sentences(text: str) -> List[str]:
-    # переносы строк превращаем в пробелы, дальше режем по [.?!] + пробел/конец
     one_line = re.sub(r'[ \t]*\n[ \t]*', ' ', text.strip())
     return [p.strip() for p in re.split(r'(?<=[\.\?\!])\s+', one_line) if p.strip()]
 
 def format_block_text(raw_text: str, sentence_per_line: bool, remove_empty_lines: bool) -> str:
     lines = raw_text.splitlines()
-
-    # trim head/tail
     while lines and lines[0].strip() == "":
         lines.pop(0)
     while lines and lines[-1].strip() == "":
         lines.pop()
-
-    # collapse multiple empty
     tmp, prev_empty = [], False
     for ln in lines:
         is_empty = (ln.strip() == "")
@@ -371,21 +315,16 @@ def format_block_text(raw_text: str, sentence_per_line: bool, remove_empty_lines
         tmp.append(ln)
         prev_empty = is_empty
     lines = tmp
-
     if not lines:
         return ""
-
     if remove_empty_lines:
         lines = [ln for ln in lines if ln.strip() != ""]
-
     if not sentence_per_line:
         return "\n".join(lines) + "\n"
 
-    # sentence_per_line=True
     first = lines[0].rstrip()
     has_punct = bool(re.search(r'[\.!\?:]\s*$', first))
     is_title = (not has_punct) and (len(first) <= 120)
-
     if is_title:
         title = first
         rest = "\n".join(lines[1:]).strip()
@@ -404,8 +343,7 @@ def format_block_text(raw_text: str, sentence_per_line: bool, remove_empty_lines
 def build_base_filename(ch: int, sec: int, title: str, pad_ch: bool, pad_sec: bool, sep: str) -> str:
     ch_str = pad_number(ch, 3) if pad_ch else str(ch)
     sec_str = pad_number(sec, 2) if pad_sec else str(sec)
-    safe_title = sanitize_filename(title)
-    return f"{ch_str}_{sec_str}{sep}{safe_title}"
+    return f"{ch_str}_{sec_str}{sep}{sanitize_filename(title)}"
 
 def write_block_files(base_name: str, out_dir: str, ext: str, blocks_text: Dict[str, str],
                       blocks_cfg: List[dict], output_encoding: str) -> List[str]:
@@ -470,7 +408,6 @@ def process_file(src_file: str, cfg: dict, rel_root: Optional[str] = None) -> Li
         created = write_block_files(base_name, out_dir, cfg["extension"], blocks_text, cfg["blocks"], cfg["output_encoding"])
         created_all.extend(created)
 
-    # удаление исходника после успешной генерации
     if created_all and cfg["delete_source_after"]:
         try:
             os.remove(src_file)
@@ -489,30 +426,49 @@ def main():
         log(f"  - {d}")
     log(f"OUTPUT ROOT: {cfg['output_root'] or '(рядом с исходником)'}")
     log("BLOCKS: " + ", ".join([b["name"] for b in cfg["blocks"]]))
-    log("FILTERS: include=" + str(cfg["include_suffixes"]) + "  exclude=" + str(cfg["exclude_suffixes"]))
 
     created_total: List[str] = []
     total_files = 0
 
     for src_root in cfg["input_dirs"]:
-        files = iter_files(
-            root=src_root,
-            extensions=cfg["extensions"],
-            recursive=cfg["recursive"],
-            ignore_hidden=cfg["ignore_hidden"],
-            include_suffixes=cfg["include_suffixes"],
-            exclude_suffixes=cfg["exclude_suffixes"],
-        )
+        files = []
+        if os.path.isdir(src_root):
+            # итерация по файлам
+            def _iter(root):
+                root = os.path.abspath(root)
+                if not cfg["recursive"]:
+                    for fn in os.listdir(root):
+                        full = os.path.join(root, fn)
+                        if os.path.isfile(full) and os.path.splitext(fn)[1].lower() in cfg["extensions"]:
+                            if not (cfg["ignore_hidden"] and fn.startswith(".")):
+                                files.append(full)
+                else:
+                    for dirpath, dirnames, filenames in os.walk(root):
+                        if cfg["ignore_hidden"]:
+                            dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+                        for fn in filenames:
+                            if cfg["ignore_hidden"] and fn.startswith("."):
+                                continue
+                            if os.path.splitext(fn)[1].lower() in cfg["extensions"]:
+                                files.append(os.path.join(dirpath, fn))
+            _iter(src_root)
+        elif os.path.isfile(src_root) and os.path.splitext(src_root)[1].lower() in cfg["extensions"]:
+            files = [src_root]
+        else:
+            log(f"[warn] пропуск несуществующего пути: {src_root}")
+            continue
+
         files.sort()
         total_files += len(files)
         log(f"[scan] найдено файлов в «{src_root}»: {len(files)}")
+
         for f in files:
             created_total += process_file(f, cfg, rel_root=src_root)
 
     log(f"Готово. Создано файлов: {len(created_total)} из {total_files} исходных.")
     if not created_total:
-        log("Подсказка: проверьте BLOCKS.rules → markers (точное написание),\n"
-            "а также фильтры INPUT.include_suffixes / exclude_suffixes, и что в файлах есть секции/маркеры.")
+        log("Подсказка: проверьте в config.toml раздел BLOCKS.rules → markers (точное написание),\n"
+            "а также что ваши файлы действительно содержат строки-маркеры (например, «EN:», «RU:», «Новые слова:»).")
 
 
 if __name__ == "__main__":

@@ -1,12 +1,22 @@
 [INPUT]
 # Несколько исходных папок; каждая сканируется рекурсивно.
-input_dirs = [
-  "D:/Entertaiment/Английский/data/Урок 4"
-]
+input_dirs = ['D:/Entertaiment/Английский/data/Урок 4']
+
+
 # Какие расширения обрабатывать:
 extensions = [".txt"]
 # Рекурсивный обход (true/false)
 recursive = true
+
+# --- Фильтрация по суффиксам (только эти два параметра) ---
+
+# Файлы, чьё имя (без расширения) заканчивается на любой из этих суффиксов — исключаются
+exclude_suffixes = ['_en','_di','_ru','_ua','_draft']
+
+# Если список НЕ ПУСТОЙ — берём ТОЛЬКО файлы с этими суффиксами в конце имени (без расширения).
+# Если список ПУСТОЙ — ограничение не применяется.
+include_suffixes = []
+
 
 [OUTPUT]
 # Корневая папка для результатов.
@@ -32,7 +42,7 @@ skip_files_without_sections = true
 # Кодировки
 source_encoding = "utf-8"
 output_encoding = "utf-8"
-delete_source_after = true
+delete_source_after = false
 
 # ---------- БЛОКИ (можно добавлять/удалять/править как угодно) ----------
 # Каждый блок: маркеры начала, суффикс для выходного файла, пост-обработка текста.
@@ -45,6 +55,13 @@ sentence_per_line = true
 remove_empty_lines = false
 
 [[BLOCKS.rules]]
+name = "TR"
+markers = ["TR:", "Транскрипция:"]
+suffix = "_tr"
+sentence_per_line = true
+remove_empty_lines = false
+
+[[BLOCKS.rules]]
 name = "RU"
 markers = ["RU:", "Русский:"]
 suffix = "_ru"
@@ -52,8 +69,15 @@ sentence_per_line = true
 remove_empty_lines = false
 
 [[BLOCKS.rules]]
+name = "UA"
+markers = ["UA:", "Український:"]
+suffix = "_ua"
+sentence_per_line = true
+remove_empty_lines = false
+
+[[BLOCKS.rules]]
 name = "DICT"
-markers = ["Новые слова:", ]
+markers = ["Новые слова:", "Нове слово:","Нові слова:"]
 suffix = "_di"
 sentence_per_line = true
 remove_empty_lines = true
