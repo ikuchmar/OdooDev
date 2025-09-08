@@ -16,15 +16,10 @@ TXT → ищем картинки рядом → накладываем текс
         - "full_text" → все блоки объединяются в один многострочный текст и кладутся на выбранную(ые) картинку(и).
     * Картинки ищем по ПЕРВОМУ реально найденному источнику из списка паттернов (учитывая image_match_mode).
 
-НОВОЕ: remove_markers поддерживает ВАЙЛДКАРДЫ (в том же параметре):
-- Простые маркеры:  "(en)", "(ru)", "[SKIP]"
-- Шаблоны:          "(v:*)", "#hide?end", "prefix*"
-  Где * = любой фрагмент (минимально жадный), ? = любой 1 символ.
-  Пример: "(v:*)" удалит всё между "(v:" и ближайшей закрывающей ")".
-
 Прочее:
 - image_match_mode: exact/prefix
 - target_images: all/first
+- фильтрация маркеров remove_markers / drop_lines_with_markers
 - индексация выходов при циклах
 - безопасное удаление исходника — один раз после обработки всех блоков для этой картинки
 - Python 3.11+ (tomllib), Pillow
@@ -34,7 +29,6 @@ import sys
 import logging
 from typing import List, Tuple, Optional, Iterable, Dict, Any
 from pathlib import Path
-import re
 
 try:
     import tomllib  # Python 3.11+
@@ -135,8 +129,8 @@ def wrap_text_to_width(text: str, font: ImageFont.FreeTypeFont, draw: ImageDraw.
         cur = ""
         for w in words:
             cand = (cur + " " + w).strip() if cur else w
-            bb = draw.textbbox((0, 0), cand, font=font, stroke_width=0)
-            width = bb[2] - bb[0]
+            width = draw.textbbox((0, 0), cand, font=font, stroke_width=0)[2]
+            width -= draw.textbbox((0, 0), cand, font=font, stroke_width=0)[0]
             if width <= max_w or not cur:
                 cur = cand
             else:
@@ -150,8 +144,8 @@ def text_block_bbox(lines: List[str], font: ImageFont.FreeTypeFont, draw: ImageD
                     line_spacing: float, stroke_width: int) -> Tuple[int, int]:
     max_w, total_h, prev_h = 0, 0, 0
     for i, line in enumerate(lines):
-        bb = draw.textbbox((0,0), line if line else " ", font=font, stroke_width=stroke_width)
-        w = bb[2]-bb[0]; h = bb[3]-bb[1]
+        bbox = draw.textbbox((0,0), line if line else " ", font=font, stroke_width=stroke_width)
+        w = bbox[2]-bbox[0]; h = bbox[3]-bbox[1]
         max_w = max(max_w, w)
         total_h += h if i == 0 else int(prev_h * line_spacing)
         prev_h = h
@@ -171,8 +165,8 @@ def draw_multiline_text(img: Image.Image, xy: Tuple[int,int], lines: List[str],
 
     prev_h = 0; ly = y
     for i, line in enumerate(lines):
-        bb = draw.textbbox((0,0), line if line else " ", font=font, stroke_width=stroke_width)
-        lw = bb[2]-bb[0]; lh = bb[3]-bb[1]
+        bbox = draw.textbbox((0,0), line if line else " ", font=font, stroke_width=stroke_width)
+        lw = bbox[2]-bbox[0]; lh = bbox[3]-bbox[1]
         ly = y if i == 0 else (ly + int(prev_h * line_spacing))
         prev_h = lh
         if align == "left": lx = x
@@ -200,10 +194,6 @@ def normalize_format_and_ext(src: Path, save_format_cfg: str) -> Tuple[str, str]
     if ext == ".webp": return "WEBP", ".webp"
     logging.warning("Неожиданное расширение '%s' у %s. Сохраняем как PNG.", ext, src.name)
     return "PNG", ".png"
-
-
-def ensure_dir(path: Path):
-    path.mkdir(parents=True, exist_ok=True)
 
 
 def choose_output_path(src_img: Path, output_dir: str, naming: str, suffix: str, save_ext: str,
@@ -275,93 +265,29 @@ def find_images_for_text(txt_path: Path, image_exts: Iterable[str], match_mode: 
 
 
 # =========================
-# Маркеры: поддержка строк и вайлдкардов
+# Фильтрация текста
 # =========================
 
-def _split_markers_to_literals_and_regex(markers: List[str]) -> Tuple[List[str], List[re.Pattern]]:
-    """
-    Делим remove_markers на:
-      - literals: простые строки, заменяем через .replace
-      - regexes: шаблоны с * и/или ? → конвертируем в регулярки
-    Примечание: * → .*? (нежадно), ? → .
-    """
-    literals: List[str] = []
-    regexes: List[re.Pattern] = []
-    for m in markers or []:
-        if not m:
-            continue
-        # наличие символов вайлдкарда?
-        if ("*" in m) or ("?" in m):
-            # экранируем всё как текст, потом заменим экранированные \* и \? на regex
-            pat = re.escape(m)
-            pat = pat.replace(r"\*", r".*?").replace(r"\?", r".")
-            try:
-                regexes.append(re.compile(pat))
-            except re.error as e:
-                logging.warning("Некорректный вайлдкард-маркер '%s' (%s). Обрабатываю как литерал.", m, e)
-                literals.append(m)
-        else:
-            literals.append(m)
-    return literals, regexes
-
-
-def _apply_markers_to_text(text: str, literals: List[str], regexes: List[re.Pattern], drop_lines: bool, include_empty: bool) -> str:
-    """
-    Удаление маркеров в "сыром" тексте:
-      - drop_lines=True: удаляем строки, содержащие ЛЮБОЙ литерал или совпадение по ЛЮБОЙ регулярке.
-      - иначе: вырезаем все литералы и все совпадения по регуляркам из каждой строки.
-    """
-    out_lines: List[str] = []
-    for line in text.splitlines():
-        drop = False
-        if drop_lines:
-            # если встречается любой маркер — удаляем строку
-            if any(lit in line for lit in literals):
-                drop = True
-            elif any(rx.search(line) for rx in regexes):
-                drop = True
-            if drop:
-                continue
-            out_line = line
-        else:
-            out_line = line
-            # сначала литералы
-            for lit in literals:
-                if lit:
-                    out_line = out_line.replace(lit, "")
-            # затем regex
-            for rx in regexes:
-                out_line = rx.sub("", out_line)
-
-        if include_empty or out_line.strip() != "":
-            out_lines.append(out_line)
-    return "\n".join(out_lines)
-
-
-def filter_text_by_markers_raw(text: str, markers: List[str], drop_lines: bool, include_empty: bool) -> str:
-    literals, regexes = _split_markers_to_literals_and_regex(markers)
-    return _apply_markers_to_text(text, literals, regexes, drop_lines, include_empty)
+def filter_text_by_markers_raw(text: str, markers: List[str], drop_lines: bool) -> str:
+    if not markers: return text
+    if drop_lines:
+        kept = [ln for ln in text.splitlines() if not any(m in ln for m in markers)]
+        return "\n".join(kept)
+    cleaned = text
+    for m in markers:
+        if m: cleaned = cleaned.replace(m, "")
+    return cleaned
 
 
 def filter_lines_by_markers(lines: List[str], markers: List[str], drop_lines: bool) -> List[str]:
-    """
-    (Используется в одиночном режиме построчно.)
-    """
-    literals, regexes = _split_markers_to_literals_and_regex(markers)
-    out: List[str] = []
+    if not markers: return lines
+    if drop_lines:
+        return [ln for ln in lines if not any(m in ln for m in markers)]
+    out = []
     for ln in lines:
-        if drop_lines:
-            if any(lit in ln for lit in literals) or any(rx.search(ln) for rx in regexes):
-                continue
-            out.append(ln)
-        else:
-            s = ln
-            for lit in literals:
-                if lit:
-                    s = s.replace(lit, "")
-            for rx in regexes:
-                s = rx.sub("", s)
-            out.append(s)
+        for m in markers:
+            if m: ln = ln.replace(m, "")
+        out.append(ln)
     return out
 
 
@@ -569,18 +495,17 @@ def _detect_base_by_patterns(txt_name: str, patterns: List[str]) -> Optional[str
     for pat in patterns:
         if "{base}" not in pat or not pat.endswith(".txt"): continue
         suffix = _extract_suffix(pat)
-        if "*" in suffix or "?" in suffix:
-            # В этом простом варианте не поддерживаем вайлдкарды в суффиксе паттерна.
+        if "*" in suffix:
+            # Упрощение: звёздочки в этом варианте не поддерживаем — держим паттерны явными.
             continue
         if name.endswith(suffix) and len(name) > len(suffix):
             return name[:-len(suffix)]
     return None
 
 
-def _read_filtered_lines(p: Path, encoding: str, markers: List[str],
-                         drop_lines: bool, include_empty: bool) -> List[str]:
+def _read_filtered_lines(p: Path, encoding: str, markers: List[str], drop_lines: bool, include_empty: bool) -> List[str]:
     raw = p.read_text(encoding=encoding)
-    raw = filter_text_by_markers_raw(raw, markers, drop_lines, include_empty=True)  # сначала чистим, без удаления пустых
+    raw = filter_text_by_markers_raw(raw, markers, drop_lines)
     lines = raw.splitlines()
     if not include_empty:
         lines = [ln for ln in lines if ln.strip() != ""]
@@ -601,6 +526,7 @@ def build_blocks_from_patterns(folder: Path, base: str, patterns: List[str], cfg
     sources: List[Dict[str, Any]] = []
     primary: Optional[Path] = None
 
+    # Читаем источники в порядке паттернов
     for pat in patterns:
         if "{base}" not in pat or not pat.endswith(".txt"):
             continue
@@ -627,6 +553,9 @@ def build_blocks_from_patterns(folder: Path, base: str, patterns: List[str], cfg
         for s in sources:
             if i < len(s["lines"]):
                 block.append(s["lines"][i])
+            else:
+                # пропускаем отсутствующие
+                pass
         if block:
             blocks.append(block)
 
@@ -691,7 +620,7 @@ def main():
 
     processed_bases: set[Tuple[Path, str]] = set()
 
-    # Односоставный режим: базовые настройки фильтрации
+    # Односоставный режим: чтение/фильтрация
     text_encoding = cfg.get("text_encoding","utf-8") or "utf-8"
     remove_markers: List[str] = cfg.get("remove_markers", []) or []
     drop_lines_with_markers = bool(cfg.get("drop_lines_with_markers", False))
@@ -766,9 +695,7 @@ def main():
             skipped += 1
             continue
 
-        # чистим по маркерам (с поддержкой вайлдкардов)
-        filtered = filter_text_by_markers_raw(raw_text, remove_markers, drop_lines_with_markers, include_empty=True)
-
+        filtered = filter_text_by_markers_raw(raw_text, remove_markers, drop_lines_with_markers)
         images = find_images_for_text(txt, image_exts, match_mode=match_mode)
         if not images:
             no_images += 1

@@ -16,25 +16,12 @@ image_extensions = [".jpg", ".jpeg", ".png", ".webp"]
 # Кодировка текстовых файлов
 text_encoding = "utf-8"
 
-multi_sources_patterns = [
-  "{base}_en.txt",
-  "{base}_tr.txt",
-  "{base}_ua.txt"
-]
-
 
 # === Фильтрация маркеров в тексте ===
 # Любые вхождения строк из списка remove_markers будут удалены из текста.
 # Если после удаления строка станет пустой — её поведение определяется include_empty_lines.
 # ВАЖНО: каждый маркер — отдельный элемент массива (НЕ пишите "(ru), (v:ryan)" в одном элементе).
-#remove_markers = ["[SKIP]", "[NO-TEXT]", "#hide", "<skip>", "(en)", "(ru)", "(v:ryan)"]
-remove_markers = [
-  "(ua)",     # буквальный маркер
-  "(en)",     # буквальный маркер
-  "(ru)",     # буквальный маркер
-  "(v:*)",    # вайлдкард: убирает всё от "(v:" до ближайшей ")"
-  "[SKIP]"
-]
+remove_markers = ["[SKIP]", "[NO-TEXT]", "#hide", "<skip>", "(en)", "(ru)", "(v:ryan)"]
 
 # Если true — строки, содержащие ЛЮБОЙ маркер, удаляются целиком (а не только маркер внутри).
 drop_lines_with_markers = false
@@ -102,7 +89,7 @@ cycle_index_name_template = "{stem}{suffix}{i}{ext}"
 # === Удаление исходной картинки после успешного сохранения ===
 # Если true — после успешного сохранения результата исходная картинка удаляется.
 # Защита: не удаляем при dry_run=true и если итоговый путь совпадает с исходным (overwrite).
-delete_original_after_success = true
+delete_original_after_success = false
 
 
 # === Наложение текста ===
@@ -151,8 +138,7 @@ max_width_pct = 0.90
 max_height_pct = 0.90
 
 # Межстрочный интервал (множитель)
-#line_spacing = 1.20
-line_spacing = 2.20
+line_spacing = 1.20
 
 
 # === Прочее ===
