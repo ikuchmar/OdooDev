@@ -1,6 +1,6 @@
 [INPUT]
 # Несколько исходных папок; каждая сканируется рекурсивно.
-input_dirs = ['D:/Entertaiment/Английский/data/Урок 4']
+input_dirs = ['D:/Entertaiment/Английский/data/Урок 5']
 
 
 # Какие расширения обрабатывать:
@@ -77,7 +77,7 @@ remove_empty_lines = false
 
 [[BLOCKS.rules]]
 name = "DICT"
-markers = ["Новые слова:", "Нове слово:","Нові слова:"]
+markers = ["Новые слова:", "Нове слово:","Нові слова:","Vocabulary:"]
 suffix = "_di"
 sentence_per_line = true
 remove_empty_lines = true

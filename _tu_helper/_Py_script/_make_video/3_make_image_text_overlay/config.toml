@@ -1,6 +1,6 @@
 # === Общие параметры входа/выхода ===
 # Список папок для обхода (рекурсивно, если recursive=true)
-input_dirs = ['D:/Entertaiment/Английский/data/Урок 4']
+input_dirs = ['D:/Entertaiment/Английский/data/Урок 5']
 
 #input_dirs = ["./input"]
 
