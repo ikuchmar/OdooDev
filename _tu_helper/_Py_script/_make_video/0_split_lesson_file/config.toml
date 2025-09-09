@@ -1,6 +1,6 @@
 [INPUT]
 # Несколько исходных папок; каждая сканируется рекурсивно.
-input_dirs = ['D:/Entertaiment/Английский/data/Урок 1']
+input_dirs = ['D:/Entertaiment/Английский/data/Урок 02']
 
 
 # Какие расширения обрабатывать:
@@ -47,32 +47,35 @@ delete_source_after = false
 # ---------- БЛОКИ (можно добавлять/удалять/править как угодно) ----------
 # Каждый блок: маркеры начала, суффикс для выходного файла, пост-обработка текста.
 
+#Если sentence_per_line = true — внутри блока текст после каждой точки / вопросительного / восклицательного знака (.?!) переносится на новую строку.
+#Если sentence_per_line = false — текст сохраняется «как есть», только с очисткой пустых строк.
+
 [[BLOCKS.rules]]
 name = "EN"
 markers = ["EN:", "English:"]
 suffix = "_en"
-sentence_per_line = true
+sentence_per_line = false
 remove_empty_lines = false
 
 [[BLOCKS.rules]]
 name = "TR"
 markers = ["TR:", "Транскрипция:"]
 suffix = "_tr"
-sentence_per_line = true
+sentence_per_line = false
 remove_empty_lines = false
 
 [[BLOCKS.rules]]
 name = "RU"
 markers = ["RU:", "Русский:"]
 suffix = "_ru"
-sentence_per_line = true
+sentence_per_line = false
 remove_empty_lines = false
 
 [[BLOCKS.rules]]
 name = "UA"
 markers = ["UA:", "Український:"]
 suffix = "_ua"
-sentence_per_line = true
+sentence_per_line = false
 remove_empty_lines = false
 
 [[BLOCKS.rules]]

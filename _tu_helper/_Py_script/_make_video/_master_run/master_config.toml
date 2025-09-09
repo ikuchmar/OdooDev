@@ -1,6 +1,6 @@
 # master_config.toml — новый формат с skip / halt_after и [[steps.params]]
 [globals]
-input_dirs = ["D:/Entertaiment/Английский/data/Урок 1"]
+input_dirs = ["D:/Entertaiment/Английский/data/Урок 02"]
 
 include_suffixes = ["_en", "_di"]
 exclude_suffixes = ["_ru", "_draft"]
