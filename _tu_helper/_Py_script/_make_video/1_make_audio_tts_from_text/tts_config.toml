@@ -14,7 +14,7 @@ voice_marker_prefixes = ["v:", "voice:"]
 allow_partial_voice_match = true
 
 # Можно указывать папки и/или маски (относительные и абсолютные пути).
-input_dirs = ['D:/Entertaiment/Английский/data/Урок 5']
+input_dirs = ['D:/Entertaiment/Английский/data/Урок 1']
 
 
 # Было: "recursive_inputs". Теперь: "recurse".

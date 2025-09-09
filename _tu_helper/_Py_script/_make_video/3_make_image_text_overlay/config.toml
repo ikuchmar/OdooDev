@@ -1,6 +1,6 @@
 # === Общие параметры входа/выхода ===
 # Список папок для обхода (рекурсивно, если recursive=true)
-input_dirs = ['D:/Entertaiment/Английский/data/Урок 5']
+input_dirs = ['D:/Entertaiment/Английский/data/Урок 1']
 
 #input_dirs = ["./input"]
 
@@ -94,7 +94,7 @@ webp_quality = 90
 # включите индексацию, чтобы не перезаписывать файл, а создавать image_1, image_2, ...
 cycle_output_indexing = true
 cycle_index_start = 1         # начало нумерации
-cycle_index_pad = 0           # 0 = без ведущих нулей; 2 → 01, 02, ...
+cycle_index_pad = 2           # 0 = без ведущих нулей; 2 → 01, 02, ...
 # Плейсхолдеры: {stem} — имя без расширения; {i} — индекс; {suffix} — output_suffix (если naming="suffix"); {ext} — расширение с "."
 cycle_index_name_template = "{stem}{suffix}{i}{ext}"
 
