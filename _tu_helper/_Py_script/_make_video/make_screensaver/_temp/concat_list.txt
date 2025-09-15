@@ -1,0 +1,3 @@
+file 'D:\Work_Odoo\OdooDev\_tu_helper\_Py_script\_make_video\English Story\ChatGPT Image Sep 8, 2025, 08_02_27 PM.png'
+duration 2.0
+file 'D:\Work_Odoo\OdooDev\_tu_helper\_Py_script\_make_video\English Story\ChatGPT Image Sep 8, 2025, 08_02_27 PM.png'

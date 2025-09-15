@@ -1,0 +1,335 @@
+2025-09-08 19:52:26,641 [INFO] Старт make_video_from_audio_and_image
+2025-09-08 19:52:26,655 [INFO] Найдено аудио-файлов: 11
+2025-09-08 19:52:26,655 [INFO] (1/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en.mp3
+2025-09-08 19:52:28,105 [INFO]   Слайдшоу: кадров=11, policy=stretch_last, sum=37.368s, итог: 005_01 Roman Britain_en.mp4
+2025-09-08 19:52:34,049 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_1.png
+2025-09-08 19:52:34,049 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_10.png
+2025-09-08 19:52:34,049 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_11.png
+2025-09-08 19:52:34,049 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_2.png
+2025-09-08 19:52:34,050 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_3.png
+2025-09-08 19:52:34,050 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_4.png
+2025-09-08 19:52:34,050 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_5.png
+2025-09-08 19:52:34,050 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_6.png
+2025-09-08 19:52:34,050 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_7.png
+2025-09-08 19:52:34,050 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_8.png
+2025-09-08 19:52:34,050 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_01 Roman Britain_en_bg_9.png
+2025-09-08 19:52:34,050 [INFO] (2/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_02 Anglo-Saxons_en.mp3
+2025-09-08 19:52:34,153 [INFO]   Слайдшоу: кадров=7, policy=stretch_last, sum=23.184s, итог: 005_02 Anglo-Saxons_en.mp4
+2025-09-08 19:52:37,153 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_02 Anglo-Saxons_en_bg_1.png
+2025-09-08 19:52:37,153 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_02 Anglo-Saxons_en_bg_2.png
+2025-09-08 19:52:37,153 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_02 Anglo-Saxons_en_bg_3.png
+2025-09-08 19:52:37,153 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_02 Anglo-Saxons_en_bg_4.png
+2025-09-08 19:52:37,153 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_02 Anglo-Saxons_en_bg_5.png
+2025-09-08 19:52:37,153 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_02 Anglo-Saxons_en_bg_6.png
+2025-09-08 19:52:37,153 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_02 Anglo-Saxons_en_bg_7.png
+2025-09-08 19:52:37,153 [INFO] (3/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_03 Vikings in England_en.mp3
+2025-09-08 19:52:37,220 [INFO]   Слайдшоу: кадров=7, policy=stretch_last, sum=22.152s, итог: 005_03 Vikings in England_en.mp4
+2025-09-08 19:52:40,037 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_03 Vikings in England_en_bg_1.png
+2025-09-08 19:52:40,037 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_03 Vikings in England_en_bg_2.png
+2025-09-08 19:52:40,037 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_03 Vikings in England_en_bg_3.png
+2025-09-08 19:52:40,037 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_03 Vikings in England_en_bg_4.png
+2025-09-08 19:52:40,047 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_03 Vikings in England_en_bg_5.png
+2025-09-08 19:52:40,048 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_03 Vikings in England_en_bg_6.png
+2025-09-08 19:52:40,048 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_03 Vikings in England_en_bg_7.png
+2025-09-08 19:52:40,049 [INFO] (4/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_04 Norman Conquest_en.mp3
+2025-09-08 19:52:40,130 [INFO]   Слайдшоу: кадров=7, policy=stretch_last, sum=22.944s, итог: 005_04 Norman Conquest_en.mp4
+2025-09-08 19:52:43,008 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_04 Norman Conquest_en_bg_1.png
+2025-09-08 19:52:43,008 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_04 Norman Conquest_en_bg_2.png
+2025-09-08 19:52:43,008 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_04 Norman Conquest_en_bg_3.png
+2025-09-08 19:52:43,008 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_04 Norman Conquest_en_bg_4.png
+2025-09-08 19:52:43,008 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_04 Norman Conquest_en_bg_5.png
+2025-09-08 19:52:43,008 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_04 Norman Conquest_en_bg_6.png
+2025-09-08 19:52:43,008 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_04 Norman Conquest_en_bg_7.png
+2025-09-08 19:52:43,020 [INFO] (5/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_05 Magna Carta_en.mp3
+2025-09-08 19:52:43,114 [INFO]   Слайдшоу: кадров=7, policy=stretch_last, sum=20.472s, итог: 005_05 Magna Carta_en.mp4
+2025-09-08 19:52:45,802 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_05 Magna Carta_en_bg_1.png
+2025-09-08 19:52:45,802 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_05 Magna Carta_en_bg_2.png
+2025-09-08 19:52:45,802 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_05 Magna Carta_en_bg_3.png
+2025-09-08 19:52:45,802 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_05 Magna Carta_en_bg_4.png
+2025-09-08 19:52:45,802 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_05 Magna Carta_en_bg_5.png
+2025-09-08 19:52:45,802 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_05 Magna Carta_en_bg_6.png
+2025-09-08 19:52:45,802 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_05 Magna Carta_en_bg_7.png
+2025-09-08 19:52:45,802 [INFO] (6/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_06 The Tudors_en.mp3
+2025-09-08 19:52:45,879 [INFO]   Слайдшоу: кадров=7, policy=stretch_last, sum=22.656s, итог: 005_06 The Tudors_en.mp4
+2025-09-08 19:52:48,677 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_06 The Tudors_en_bg_1.png
+2025-09-08 19:52:48,677 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_06 The Tudors_en_bg_2.png
+2025-09-08 19:52:48,677 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_06 The Tudors_en_bg_3.png
+2025-09-08 19:52:48,693 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_06 The Tudors_en_bg_4.png
+2025-09-08 19:52:48,693 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_06 The Tudors_en_bg_5.png
+2025-09-08 19:52:48,693 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_06 The Tudors_en_bg_6.png
+2025-09-08 19:52:48,693 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_06 The Tudors_en_bg_7.png
+2025-09-08 19:52:48,693 [INFO] (7/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_07 English Civil War_en.mp3
+2025-09-08 19:52:48,755 [INFO]   Слайдшоу: кадров=7, policy=stretch_last, sum=24.192s, итог: 005_07 English Civil War_en.mp4
+2025-09-08 19:52:51,793 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_07 English Civil War_en_bg_1.png
+2025-09-08 19:52:51,796 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_07 English Civil War_en_bg_2.png
+2025-09-08 19:52:51,798 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_07 English Civil War_en_bg_3.png
+2025-09-08 19:52:51,798 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_07 English Civil War_en_bg_4.png
+2025-09-08 19:52:51,798 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_07 English Civil War_en_bg_5.png
+2025-09-08 19:52:51,798 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_07 English Civil War_en_bg_6.png
+2025-09-08 19:52:51,798 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_07 English Civil War_en_bg_7.png
+2025-09-08 19:52:51,798 [INFO] (8/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_08 The Industrial Revolution_en.mp3
+2025-09-08 19:52:51,878 [INFO]   Слайдшоу: кадров=7, policy=stretch_last, sum=21.816s, итог: 005_08 The Industrial Revolution_en.mp4
+2025-09-08 19:52:54,786 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_08 The Industrial Revolution_en_bg_1.png
+2025-09-08 19:52:54,786 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_08 The Industrial Revolution_en_bg_2.png
+2025-09-08 19:52:54,786 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_08 The Industrial Revolution_en_bg_3.png
+2025-09-08 19:52:54,786 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_08 The Industrial Revolution_en_bg_4.png
+2025-09-08 19:52:54,786 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_08 The Industrial Revolution_en_bg_5.png
+2025-09-08 19:52:54,786 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_08 The Industrial Revolution_en_bg_6.png
+2025-09-08 19:52:54,786 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_08 The Industrial Revolution_en_bg_7.png
+2025-09-08 19:52:54,798 [INFO] (9/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_09 The Victorian Era_en.mp3
+2025-09-08 19:52:54,860 [INFO]   Слайдшоу: кадров=7, policy=stretch_last, sum=22.536s, итог: 005_09 The Victorian Era_en.mp4
+2025-09-08 19:52:57,879 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_09 The Victorian Era_en_bg_1.png
+2025-09-08 19:52:57,879 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_09 The Victorian Era_en_bg_2.png
+2025-09-08 19:52:57,879 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_09 The Victorian Era_en_bg_3.png
+2025-09-08 19:52:57,879 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_09 The Victorian Era_en_bg_4.png
+2025-09-08 19:52:57,879 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_09 The Victorian Era_en_bg_5.png
+2025-09-08 19:52:57,879 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_09 The Victorian Era_en_bg_6.png
+2025-09-08 19:52:57,879 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_09 The Victorian Era_en_bg_7.png
+2025-09-08 19:52:57,879 [INFO] (10/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di.mp3
+2025-09-08 19:52:57,960 [INFO]   Слайдшоу: кадров=25, policy=stretch_last, sum=85.704s, итог: 005_10 World Wars and Modern England_di.mp4
+2025-09-08 19:53:35,582 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_1.png
+2025-09-08 19:53:35,606 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_10.png
+2025-09-08 19:53:35,617 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_11.png
+2025-09-08 19:53:35,617 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_12.png
+2025-09-08 19:53:35,617 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_13.png
+2025-09-08 19:53:35,621 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_14.png
+2025-09-08 19:53:35,621 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_15.png
+2025-09-08 19:53:35,621 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_16.png
+2025-09-08 19:53:35,621 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_17.png
+2025-09-08 19:53:35,621 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_18.png
+2025-09-08 19:53:35,621 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_19.png
+2025-09-08 19:53:35,621 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_2.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_20.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_21.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_22.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_23.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_24.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_25.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_3.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_4.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_5.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_6.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_7.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_8.png
+2025-09-08 19:53:35,632 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_di_bg_9.png
+2025-09-08 19:53:35,632 [INFO] (11/11) Аудио: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_en.mp3
+2025-09-08 19:53:35,981 [INFO]   Слайдшоу: кадров=7, policy=stretch_last, sum=24.408s, итог: 005_10 World Wars and Modern England_en.mp4
+2025-09-08 19:53:39,366 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_en_bg_1.png
+2025-09-08 19:53:39,382 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_en_bg_2.png
+2025-09-08 19:53:39,382 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_en_bg_3.png
+2025-09-08 19:53:39,382 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_en_bg_4.png
+2025-09-08 19:53:39,382 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_en_bg_5.png
+2025-09-08 19:53:39,382 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_en_bg_6.png
+2025-09-08 19:53:39,382 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 5\005_10 World Wars and Modern England_en_bg_7.png
+2025-09-08 19:53:39,382 [INFO] Готово. Создано видео: 11
+2025-09-10 19:30:20,402 [INFO] Старт make_video_from_audio_and_image
+2025-09-10 19:30:20,407 [INFO] Найдено аудио-файлов: 13
+2025-09-10 19:30:20,407 [INFO] (1/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di.mp3
+2025-09-10 19:30:21,319 [INFO]   Слайдшоу: кадров=21, policy=stretch_last, sum=85.488s, итог: 001_00 Vocabulary_di.mp4
+2025-09-10 19:30:38,717 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_01.png
+2025-09-10 19:30:38,718 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_02.png
+2025-09-10 19:30:38,719 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_03.png
+2025-09-10 19:30:38,720 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_04.png
+2025-09-10 19:30:38,720 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_05.png
+2025-09-10 19:30:38,721 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_06.png
+2025-09-10 19:30:38,721 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_07.png
+2025-09-10 19:30:38,722 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_08.png
+2025-09-10 19:30:38,722 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_09.png
+2025-09-10 19:30:38,723 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_10.png
+2025-09-10 19:30:38,723 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_11.png
+2025-09-10 19:30:38,724 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_12.png
+2025-09-10 19:30:38,724 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_13.png
+2025-09-10 19:30:38,725 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_14.png
+2025-09-10 19:30:38,725 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_15.png
+2025-09-10 19:30:38,725 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_16.png
+2025-09-10 19:30:38,726 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_17.png
+2025-09-10 19:30:38,726 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_18.png
+2025-09-10 19:30:38,727 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_19.png
+2025-09-10 19:30:38,727 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_20.png
+2025-09-10 19:30:38,728 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_00 Vocabulary_di_bg_21.png
+2025-09-10 19:30:38,728 [INFO] (2/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en.mp3
+2025-09-10 19:30:38,831 [INFO]   Слайдшоу: кадров=14, policy=stretch_last, sum=60.432s, итог: 001_01 The United Kingdom_en.mp4
+2025-09-10 19:30:46,459 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_01.png
+2025-09-10 19:30:46,460 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_02.png
+2025-09-10 19:30:46,460 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_03.png
+2025-09-10 19:30:46,461 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_04.png
+2025-09-10 19:30:46,461 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_05.png
+2025-09-10 19:30:46,462 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_06.png
+2025-09-10 19:30:46,462 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_07.png
+2025-09-10 19:30:46,463 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_08.png
+2025-09-10 19:30:46,463 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_09.png
+2025-09-10 19:30:46,463 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_10.png
+2025-09-10 19:30:46,464 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_11.png
+2025-09-10 19:30:46,464 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_12.png
+2025-09-10 19:30:46,465 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_13.png
+2025-09-10 19:30:46,465 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_01 The United Kingdom_en_bg_14.png
+2025-09-10 19:30:46,465 [INFO] (3/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en.mp3
+2025-09-10 19:30:46,521 [INFO]   Слайдшоу: кадров=14, policy=stretch_last, sum=57.720s, итог: 001_02 Great Britain_en.mp4
+2025-09-10 19:30:53,400 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_01.png
+2025-09-10 19:30:53,401 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_02.png
+2025-09-10 19:30:53,402 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_03.png
+2025-09-10 19:30:53,403 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_04.png
+2025-09-10 19:30:53,404 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_05.png
+2025-09-10 19:30:53,405 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_06.png
+2025-09-10 19:30:53,405 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_07.png
+2025-09-10 19:30:53,406 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_08.png
+2025-09-10 19:30:53,406 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_09.png
+2025-09-10 19:30:53,407 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_10.png
+2025-09-10 19:30:53,408 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_11.png
+2025-09-10 19:30:53,408 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_12.png
+2025-09-10 19:30:53,409 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_13.png
+2025-09-10 19:30:53,409 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_02 Great Britain_en_bg_14.png
+2025-09-10 19:30:53,409 [INFO] (4/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en.mp3
+2025-09-10 19:30:53,488 [INFO]   Слайдшоу: кадров=14, policy=stretch_last, sum=62.136s, итог: 001_03 England_en.mp4
+2025-09-10 19:31:00,823 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_01.png
+2025-09-10 19:31:00,824 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_02.png
+2025-09-10 19:31:00,825 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_03.png
+2025-09-10 19:31:00,825 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_04.png
+2025-09-10 19:31:00,826 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_05.png
+2025-09-10 19:31:00,826 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_06.png
+2025-09-10 19:31:00,826 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_07.png
+2025-09-10 19:31:00,827 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_08.png
+2025-09-10 19:31:00,828 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_09.png
+2025-09-10 19:31:00,829 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_10.png
+2025-09-10 19:31:00,829 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_11.png
+2025-09-10 19:31:00,830 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_12.png
+2025-09-10 19:31:00,831 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_13.png
+2025-09-10 19:31:00,832 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_03 England_en_bg_14.png
+2025-09-10 19:31:00,832 [INFO] (5/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en.mp3
+2025-09-10 19:31:00,882 [INFO]   Слайдшоу: кадров=14, policy=stretch_last, sum=57.456s, итог: 001_04 Scotland_en.mp4
+2025-09-10 19:31:07,392 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_01.png
+2025-09-10 19:31:07,394 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_02.png
+2025-09-10 19:31:07,394 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_03.png
+2025-09-10 19:31:07,395 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_04.png
+2025-09-10 19:31:07,395 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_05.png
+2025-09-10 19:31:07,395 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_06.png
+2025-09-10 19:31:07,397 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_07.png
+2025-09-10 19:31:07,397 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_08.png
+2025-09-10 19:31:07,398 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_09.png
+2025-09-10 19:31:07,398 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_10.png
+2025-09-10 19:31:07,398 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_11.png
+2025-09-10 19:31:07,399 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_12.png
+2025-09-10 19:31:07,399 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_13.png
+2025-09-10 19:31:07,400 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_04 Scotland_en_bg_14.png
+2025-09-10 19:31:07,400 [INFO] (6/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en.mp3
+2025-09-10 19:31:07,464 [INFO]   Слайдшоу: кадров=14, policy=stretch_last, sum=53.952s, итог: 001_05 Wales_en.mp4
+2025-09-10 19:31:13,592 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_01.png
+2025-09-10 19:31:13,592 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_02.png
+2025-09-10 19:31:13,593 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_03.png
+2025-09-10 19:31:13,593 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_04.png
+2025-09-10 19:31:13,594 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_05.png
+2025-09-10 19:31:13,594 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_06.png
+2025-09-10 19:31:13,595 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_07.png
+2025-09-10 19:31:13,595 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_08.png
+2025-09-10 19:31:13,596 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_09.png
+2025-09-10 19:31:13,597 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_10.png
+2025-09-10 19:31:13,597 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_11.png
+2025-09-10 19:31:13,598 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_12.png
+2025-09-10 19:31:13,598 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_13.png
+2025-09-10 19:31:13,599 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_05 Wales_en_bg_14.png
+2025-09-10 19:31:13,599 [INFO] (7/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en.mp3
+2025-09-10 19:31:13,649 [INFO]   Слайдшоу: кадров=13, policy=stretch_last, sum=52.848s, итог: 001_06 Northern Ireland_en.mp4
+2025-09-10 19:31:19,614 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_01.png
+2025-09-10 19:31:19,615 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_02.png
+2025-09-10 19:31:19,615 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_03.png
+2025-09-10 19:31:19,615 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_04.png
+2025-09-10 19:31:19,616 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_05.png
+2025-09-10 19:31:19,616 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_06.png
+2025-09-10 19:31:19,616 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_07.png
+2025-09-10 19:31:19,617 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_08.png
+2025-09-10 19:31:19,617 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_09.png
+2025-09-10 19:31:19,617 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_10.png
+2025-09-10 19:31:19,617 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_11.png
+2025-09-10 19:31:19,617 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_12.png
+2025-09-10 19:31:19,617 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_06 Northern Ireland_en_bg_13.png
+2025-09-10 19:31:19,619 [INFO] (8/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en.mp3
+2025-09-10 19:31:19,667 [INFO]   Слайдшоу: кадров=14, policy=stretch_last, sum=55.416s, итог: 001_07 Republic of Ireland_en.mp4
+2025-09-10 19:31:25,864 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_01.png
+2025-09-10 19:31:25,865 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_02.png
+2025-09-10 19:31:25,865 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_03.png
+2025-09-10 19:31:25,866 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_04.png
+2025-09-10 19:31:25,867 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_05.png
+2025-09-10 19:31:25,867 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_06.png
+2025-09-10 19:31:25,867 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_07.png
+2025-09-10 19:31:25,869 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_08.png
+2025-09-10 19:31:25,869 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_09.png
+2025-09-10 19:31:25,869 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_10.png
+2025-09-10 19:31:25,870 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_11.png
+2025-09-10 19:31:25,870 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_12.png
+2025-09-10 19:31:25,870 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_13.png
+2025-09-10 19:31:25,870 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_07 Republic of Ireland_en_bg_14.png
+2025-09-10 19:31:25,870 [INFO] (9/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en.mp3
+2025-09-10 19:31:25,919 [INFO]   Слайдшоу: кадров=13, policy=stretch_last, sum=52.632s, итог: 001_08 London_en.mp4
+2025-09-10 19:31:31,529 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_01.png
+2025-09-10 19:31:31,530 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_02.png
+2025-09-10 19:31:31,531 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_03.png
+2025-09-10 19:31:31,531 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_04.png
+2025-09-10 19:31:31,532 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_05.png
+2025-09-10 19:31:31,532 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_06.png
+2025-09-10 19:31:31,532 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_07.png
+2025-09-10 19:31:31,533 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_08.png
+2025-09-10 19:31:31,533 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_09.png
+2025-09-10 19:31:31,534 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_10.png
+2025-09-10 19:31:31,535 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_11.png
+2025-09-10 19:31:31,535 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_12.png
+2025-09-10 19:31:31,536 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_08 London_en_bg_13.png
+2025-09-10 19:31:31,536 [INFO] (10/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en.mp3
+2025-09-10 19:31:31,584 [INFO]   Слайдшоу: кадров=13, policy=stretch_last, sum=48.408s, итог: 001_09 Edinburgh, Cardiff, Belfast_en.mp4
+2025-09-10 19:31:36,947 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_01.png
+2025-09-10 19:31:36,947 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_02.png
+2025-09-10 19:31:36,948 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_03.png
+2025-09-10 19:31:36,948 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_04.png
+2025-09-10 19:31:36,949 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_05.png
+2025-09-10 19:31:36,949 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_06.png
+2025-09-10 19:31:36,951 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_07.png
+2025-09-10 19:31:36,952 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_08.png
+2025-09-10 19:31:36,953 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_09.png
+2025-09-10 19:31:36,953 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_10.png
+2025-09-10 19:31:36,953 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_11.png
+2025-09-10 19:31:36,953 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_12.png
+2025-09-10 19:31:36,954 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_09 Edinburgh, Cardiff, Belfast_en_bg_13.png
+2025-09-10 19:31:36,954 [INFO] (11/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en.mp3
+2025-09-10 19:31:37,026 [INFO]   Слайдшоу: кадров=13, policy=stretch_last, sum=53.136s, итог: 001_10 Why people confuse England and the UK_en.mp4
+2025-09-10 19:31:42,920 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_01.png
+2025-09-10 19:31:42,921 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_02.png
+2025-09-10 19:31:42,922 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_03.png
+2025-09-10 19:31:42,922 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_04.png
+2025-09-10 19:31:42,923 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_05.png
+2025-09-10 19:31:42,924 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_06.png
+2025-09-10 19:31:42,926 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_07.png
+2025-09-10 19:31:42,926 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_08.png
+2025-09-10 19:31:42,926 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_09.png
+2025-09-10 19:31:42,926 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_10.png
+2025-09-10 19:31:42,927 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_11.png
+2025-09-10 19:31:42,927 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_12.png
+2025-09-10 19:31:42,928 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_10 Why people confuse England and the UK_en_bg_13.png
+2025-09-10 19:31:42,928 [INFO] (12/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en.mp3
+2025-09-10 19:31:42,973 [INFO]   Слайдшоу: кадров=13, policy=stretch_last, sum=53.760s, итог: 001_11 Symbols of the UK_en.mp4
+2025-09-10 19:31:48,932 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_01.png
+2025-09-10 19:31:48,933 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_02.png
+2025-09-10 19:31:48,934 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_03.png
+2025-09-10 19:31:48,934 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_04.png
+2025-09-10 19:31:48,935 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_05.png
+2025-09-10 19:31:48,935 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_06.png
+2025-09-10 19:31:48,937 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_07.png
+2025-09-10 19:31:48,937 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_08.png
+2025-09-10 19:31:48,937 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_09.png
+2025-09-10 19:31:48,937 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_10.png
+2025-09-10 19:31:48,938 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_11.png
+2025-09-10 19:31:48,938 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_12.png
+2025-09-10 19:31:48,939 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_11 Symbols of the UK_en_bg_13.png
+2025-09-10 19:31:48,939 [INFO] (13/13) Аудио: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en.mp3
+2025-09-10 19:31:49,002 [INFO]   Слайдшоу: кадров=12, policy=stretch_last, sum=61.848s, итог: 001_12 Formation of the United Kingdom_en.mp4
+2025-09-10 19:31:55,735 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_01.png
+2025-09-10 19:31:55,735 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_02.png
+2025-09-10 19:31:55,736 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_03.png
+2025-09-10 19:31:55,737 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_04.png
+2025-09-10 19:31:55,737 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_05.png
+2025-09-10 19:31:55,738 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_06.png
+2025-09-10 19:31:55,738 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_07.png
+2025-09-10 19:31:55,738 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_08.png
+2025-09-10 19:31:55,740 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_09.png
+2025-09-10 19:31:55,740 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_10.png
+2025-09-10 19:31:55,741 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_11.png
+2025-09-10 19:31:55,742 [INFO]   Удалена картинка: D:\Entertaiment\Английский\data\Урок 01\001_12 Formation of the United Kingdom_en_bg_12.png
+2025-09-10 19:31:55,742 [INFO] Готово. Создано видео: 13
