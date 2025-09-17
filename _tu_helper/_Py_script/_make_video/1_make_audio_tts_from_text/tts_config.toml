@@ -14,7 +14,7 @@ voice_marker_prefixes = ["v:", "voice:"]
 allow_partial_voice_match = true
 
 # Можно указывать папки и/или маски (относительные и абсолютные пути).
-input_dirs = ['D:/Entertaiment/Английский/data/Урок 01']
+input_dirs = ['D:/Entertaiment/Английский/data/Урок 01_1']
 
 
 # Было: "recursive_inputs". Теперь: "recurse".
@@ -86,7 +86,7 @@ all_voices_en = [
   "en-AU-WilliamNeural",
   "en-AU-NatashaNeural"
 ]
-strict_no_fallback = true
+strict_no_fallback = false
 markers            = ["[EN]", "_en_", "(en)", "en:", "english:"]
 detect_prefixes    = ["en"]
 
@@ -107,7 +107,7 @@ voice              = "ru-RU-DmitryNeural"
 alt_voices_ru      = ["ru-RU-SergeyNeural", "ru-RU-AndreiNeural", "ru-RU-DmitryNeural", "ru-RU-SvetlanaNeural"]
 # Рабочее поле:
 alt_voices         = ["ru-RU-SergeyNeural", "ru-RU-AndreiNeural", "ru-RU-DmitryNeural", "ru-RU-SvetlanaNeural"]
-strict_no_fallback = true
+strict_no_fallback = false
 markers            = ["[RU]", "[RUS]", "_ru_", "_рус_", "(ru)", "(рус)", "ru:", "рус:", "russian:"]
 detect_prefixes    = ["ru"]
 
@@ -125,7 +125,7 @@ svetlana = "ru-RU-SvetlanaNeural"
 [languages.ua]
 voice              = "uk-UA-OstapNeural"
 alt_voices         = ["uk-UA-PolinaNeural","uk-UA-OstapNeural"]
-strict_no_fallback = true
+strict_no_fallback = false
 markers            = ["[UK]", "[UA]", "_uk_", "_ua_", "(uk)", "(ua)", "uk:", "ua:", "ukrainian:"]
 detect_prefixes    = ["uk"]
 
