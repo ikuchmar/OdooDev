@@ -17,7 +17,7 @@ mode = "dirs"  # варианты: "dir" | "file_list"
 #input_dir = "D://Entertaimant//Английский//! свои рассказы//Урок 1"   # папка с аудио
 
 # Если mode = "dirs" — список папок с аудио:
-input_dirs = ['D:/Entertaiment/Английский/data/Урок 02']
+input_dirs = ['D:/Entertaiment/Английский/data/Урок 01']
     #  "D://Entertaimant//Английский//! свои рассказы//Урок 2",
     #  "D://Entertaimant//Английский//! свои рассказы//Урок 3"
 

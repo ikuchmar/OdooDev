@@ -1,0 +1,49 @@
+# =========================
+# Общие параметры видео
+# =========================
+[video]
+# Итоговый файл (может быть относительным к папке скрипта либо абсолютным)
+output = "D:/Work_Odoo/OdooDev/_tu_helper/_Py_script/_make_video/English Story/Start.mp4"
+
+# Целевое разрешение
+width  = 1920
+height = 1080
+
+# Цвет подложки при вписывании (HEX #RRGGBB или #RRGGBBAA)
+background = "#000000"
+
+# Частота кадров
+fps = 30
+
+# Кодек и качество
+codec        = "libx264"
+crf          = 18
+preset       = "medium"
+pixel_format = "yuv420p"
+
+# Аудио (опционально). Если не нужно — оставьте пустым.
+audio        = ""                        # например: "D:/audio/music.mp3"
+audio_offset = 0.0                       # сдвиг аудио в секундах; может быть отрицательным
+shortest     = true                      # обрезать по самому короткому потоку
+
+# Служебные настройки
+temp_dir      = "./_temp"                # папка для временных файлов
+list_filename = "concat_list.txt"        # имя файла-списка для FFmpeg
+log_level     = "info"                   # quiet|error|warning|info
+continue_on_error = false                # если true — пропускать отсутствующие файлы
+
+# =========================
+# Список изображений
+# У каждой записи ОБЯЗАТЕЛЬНО указать абсолютный путь и длительность.
+# =========================
+[[images]]
+path     = "D:/Work_Odoo/OdooDev/_tu_helper/_Py_script/_make_video/English Story/ChatGPT Image Sep 8, 2025, 08_02_27 PM.png"
+duration = 2.0
+
+#[[images]]
+#path     = "D:/Entertaimant/Английский/! свои рассказы/Урок 4/001_01_At the Supermarket_en_bg1.png"
+#duration = 2.5
+#
+#[[images]]
+#path     = "D:/Entertaimant/Английский/! свои рассказы/Урок 4/001_01_At the Supermarket_en_bg2.png"
+#duration = 3.2
