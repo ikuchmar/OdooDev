@@ -1,0 +1,94 @@
+[meta]
+title = "Пример диаграммы"
+canvas_size = [1200, 800]
+
+# --- Блоки ---
+[[blocks]]
+id = "block1"
+title = "Старт"
+properties = ["Инициализация", "Параметры"]
+pos = [0.15, 0.50]                 # нормированные координаты центра (0..1)
+width = 0.35
+header_height = 0.18
+prop_height = 0.10
+[[blocks.outs]]
+ to = "block2"
+ label = 'go'
+auto_shape = 'rounded'
+auto_corner_radius = 10
+auto_stroke_width = 2
+auto_fill = 'none'
+auto_stroke = '#000000'
+auto_font_family = 'Arial'
+auto_font_size_title = 14
+auto_font_size_prop = 12
+auto_font_bold_title = true
+auto_font_italic_arrow = true
+auto_text_align_title = 'center'
+auto_text_align_props = 'left'
+auto_text_valign_title = 'baseline'
+auto_text_valign_props = 'baseline'
+auto_text_padding_title_x = 6
+auto_text_padding_title_y = 6
+auto_text_padding_prop_x = 6
+auto_text_padding_prop_y = 6
+[[blocks]]
+id = "block2"
+title = "Обработка"
+properties = ["Верификация", "Фильтрация", "Агрегация"]
+# pos отсутствует — будет рассчитан автораскладкой
+[[blocks.outs]]
+ to = "block3"
+ label = 'finish'
+auto_pos = [0.5, 0.5]
+auto_width = 0.22
+auto_header_height = 0.12
+auto_prop_height = 0.06
+auto_shape = 'rounded'
+auto_corner_radius = 10
+auto_stroke_width = 2
+auto_fill = 'none'
+auto_stroke = '#000000'
+auto_font_family = 'Arial'
+auto_font_size_title = 14
+auto_font_size_prop = 12
+auto_font_bold_title = true
+auto_font_italic_arrow = true
+auto_text_align_title = 'center'
+auto_text_align_props = 'left'
+auto_text_valign_title = 'baseline'
+auto_text_valign_props = 'baseline'
+auto_text_padding_title_x = 6
+auto_text_padding_title_y = 6
+auto_text_padding_prop_x = 6
+auto_text_padding_prop_y = 6
+[[blocks]]
+id = "block3"
+title = "Завершение"
+properties = ["Финал"]
+pos = [0.85, 0.50]
+
+# --- Стрелки ---
+auto_width = 0.22
+auto_header_height = 0.12
+auto_prop_height = 0.06
+auto_shape = 'rounded'
+auto_corner_radius = 10
+auto_stroke_width = 2
+auto_fill = 'none'
+auto_stroke = '#000000'
+auto_font_family = 'Arial'
+auto_font_size_title = 14
+auto_font_size_prop = 12
+auto_font_bold_title = true
+auto_font_italic_arrow = true
+auto_text_align_title = 'center'
+auto_text_align_props = 'left'
+auto_text_valign_title = 'baseline'
+auto_text_valign_props = 'baseline'
+auto_text_padding_title_x = 6
+auto_text_padding_title_y = 6
+auto_text_padding_prop_x = 6
+auto_text_padding_prop_y = 6
+[layout_result.blocks_pos]
+# Пример: block2 появится/обновится после первого запуска
