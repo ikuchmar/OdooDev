@@ -1,0 +1,135 @@
+# ===============================
+# 02_autolayout — конфигурация этапа авто-раскладки и записи данных
+# ===============================
+# Назначение: рассчитать расположение блоков и по правилам записать auto_* и/или материализованные дефолты в данные.
+# Выход: рядом с входным файлом, с суффиксом .s02.autolayout.toml
+#
+# Советы:
+# - `respect_fixed_blocks = true` — не двигать блоки, у которых есть ручной pos.
+# - Запись обратно управляется ТОЛЬКО новым форматом [[persist.groups]] и [persist.defaults].
+# - Для принудительной подстановки ширины из [defaults] в поля блока используйте [persist.defaults] (см. ниже).
+
+[io]
+# --- Где искать входные TOML с графами ---
+input_dirs = [
+    "D:/Entertaiment/Графы/Пример 1"
+    # , "D:/Проекты/Диаграммы"
+] # Список папок для сканирования
+
+recursive = true
+
+# Для 02-го этапа обычно берём результаты 01-го:
+input_suffix = ".s01.prepared.toml"  # можно сменить при необходимости
+
+include_extensions = ["toml"]
+exclude_patterns = []
+
+write_mode = "new"     # "new" | "inplace"
+backup_original = false
+dry_run = false
+stop_on_error = true
+
+[layout]
+# Режим автоматики и геометрии
+mode = "layered"                       # "layered" | "off"
+direction = "LR"                       # LR | RL | TB | BT
+minimize_edge_crossings = true         # Стараться уменьшать пересечения рёбер
+avoid_node_overlap = true              # Разводить коллизии блоков
+node_gap  = 0.08                       # 0..1 — отступ между соседними узлами
+layer_gap = 0.12                       # 0..1 — отступ между слоями
+respect_fixed_blocks = true            # Не двигать блоки с ручными pos
+
+grid_snap = 0.02                # шаг привязки к сетке (0.0 — выключено)
+deterministic = true            # детерминированная раскладка при одинаковом seed
+seed = 42                       # зерно генератора случайностей (для повторяемости)
+[defaults]
+# Дефолты визуальных параметров (могут быть «материализованы» в поля блока)
+canvas_size = [1200, 800]
+block.width = 0.10
+block_header_height = 0.12
+block_prop_height   = 0.10
+
+# Центровка текста по умолчанию
+text_align_title  = "center"           # "left" | "center" | "right"
+text_align_props  = "center"           # "left" | "center" | "right"
+text_valign_title = "middle"           # "top" | "middle" | "baseline" | "bottom"
+text_valign_props = "middle"           # "top" | "middle" | "baseline" | "bottom"
+# --- Дополнительные дефолты оформления ---
+# Форма и стили блока
+block.shape = "rect"              # варианты: "rect" | "rounded" | "pill" (если поддерживаются в рендере)
+block.corner_radius = 8           # радиус скругления углов (px или относит. ед. — согласно реализации)
+block.stroke_width = 1.0          # толщина обводки блока
+block.fill_color = "#FFFFFF"      # цвет заливки блока
+block.stroke_color = "#222222"    # цвет обводки блока
+
+# Шрифты
+font.family = "Inter, Segoe UI, Arial, sans-serif"  # семейство по умолчанию
+font.size_title = 14            # размер шрифта заголовка
+font.size_prop  = 12            # размер шрифта свойств
+font.bold_title = true          # жирный заголовок
+font.italic_arrow = false       # курсивные подписи у стрелок (если есть)
+
+# Отступы текста внутри блока
+block.text_padding_title_x = 0.02
+block.text_padding_title_y = 0.02
+block.text_padding_prop_x  = 0.02
+block.text_padding_prop_y  = 0.02
+
+# Тема (общие цвета)
+theme.background = "#FFFFFF"
+theme.text_color = "#222222"
+theme.arrow_color = "#222222"
+[persist]
+# Управление записью данных обратно в блоки — ТОЛЬКО новый формат (без обратной совместимости)
+# Доступные группы: "pos", "size", "shape", "fonts", "style", "text"
+
+[[persist.groups]]
+name   = "pos"
+save   = true
+freeze = false
+# Пояснения:
+#   save=true  — записывать рассчитанные auto_* для этой группы как обычные поля в блоке
+#   freeze=true — запрещать запись (глобальная «заморозка» для всех блоков)
+
+[[persist.groups]]
+name   = "size"
+save   = true
+freeze = false
+
+# Ниже — шаблоны для остальных групп (раскомментируйте по необходимости):
+# [[persist.groups]]
+# name = "shape"     # радиусы скруглений, форма
+# save = true
+# freeze = false
+#
+# [[persist.groups]]
+# name = "fonts"     # размеры/семейства/жирность и т.п.
+# save = false
+# freeze = false
+#
+# [[persist.groups]]
+# name = "style"     # stroke_width/fill/stroke
+# save = false
+# freeze = false
+#
+# [[persist.groups]]
+# name = "text"      # выравнивания/отступы текста
+# save = false
+# freeze = false
+
+[persist.defaults]
+# «Материализация» дефолтов из [defaults] в поля блока.
+# write — какие группы переносить (на сейчас поддерживается "size").
+#   "size" переносит:
+#     defaults.block.width          -> width
+#     defaults.block_header_height  -> header_height
+#     defaults.block_prop_height    -> prop_height
+# mode:
+#   "fill"      — только если в блоке поле пусто
+#   "overwrite" — перезаписывать даже ручные значения (ОСТОРОЖНО)
+write = ["size"]
+mode  = "overwrite"
+
+[post]
+# Дополнительные завершающие действия
+dedupe_outs = true
