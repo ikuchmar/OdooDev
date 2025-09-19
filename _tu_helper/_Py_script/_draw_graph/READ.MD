@@ -1,201 +1,257 @@
+Проект для автоматической отрисовки блок-схем из TOML-файлов с поддержкой ручной фиксации параметров и авто-генерации «умолчаний».
 
-# Техническое задание (финальная версия 1.2)
+1) Назначение
 
-## 1. Назначение
-Создать утилиту для визуализации графов процессов/структур, которая:  
-- читает данные из TOML-файлов,  
-- поддерживает составные блоки (заголовок + подблоки-свойства),  
-- рисует направленные стрелки (от края к краю) с подписями,  
-- выполняет авторасположение блоков с минимизацией пересечений стрелок,  
-- сохраняет вычисленные координаты обратно в TOML,  
-- работает с несколькими входными папками (рекурсивный поиск),  
-- сохраняет PNG и SVG рядом с исходными данными,  
-- по настройке открывает результат в браузере,  
-- запускается без аргументов, используя `run.toml` для параметров.
+draw_graph.py считывает описание диаграммы в формате TOML, раскладывает блоки слоями (направление слева→направо по умолчанию), строит стрелки и сохраняет результат в SVG/PNG. Ручные параметры узлов уважаются, авто-параметры пересчитываются при каждом запуске и (по настройке) могут записываться обратно в файл диаграммы.
 
-## 2. Запуск
-- Скрипт запускается без аргументов:  
-  ```bash
-  python _draw_graph.py
-  ```  
-- В той же папке ищется файл `run.toml`.  
-- Отсутствие `run.toml` → ошибка с пояснением.
+2) Структура проекта
+/_draw_graph/
+  draw_graph.py         # Скрипт отрисовки
+  run.toml              # Глобальная конфигурация
+  flow.graph.toml       # Пример диаграммы
+  output/               # Сохранённые SVG/PNG
 
-## 3. Формат `run.toml`
-```toml
-# Папки с графами
-input_dirs = [
-  "D:/Entertaiment/Английский/data/Урок 01",
-  "D:/Проекты/Диаграммы"
-]
 
-# Обход подпапок
-recursive = true
+Пример «графа»: flow.graph.toml — показывает формат [[blocks]] и вложенные [[blocks.outs]] (исходящие связи).
 
-# Какие расширения обрабатывать
-include_extensions = ["toml"]
+Конфигурация: run.toml — все параметры с комментариями и дефолтами.
 
-# Исключения (глоб-паттерны)
-exclude_patterns = ["*/_archive/*", "*_bak.toml"]
+3) Установка и требования
 
-[layout]
-mode = "layered"                 # off | force | layered
-minimize_edge_crossings = true
-avoid_node_overlap = true
-edge_routing = "orthogonal"      # straight | orthogonal | spline | auto
-edge_label_placement = "smart"
-node_padding = 0.02
-grid_snap = 0.01
-deterministic = true
-seed = 42
+Python 3.11+ (рекомендуется 3.12)
 
-[persist]
-write_positions_to_input = true
-write_mode = "overwrite"         # update_missing | overwrite
-sort_blocks = "by_pos_id"        # by_pos_id | by_id
-sort_arrows = "by_from_to_label" # by_from_to_label | none
-create_backup = true             # сохранять *.bak перед изменением
+Для PNG-экспорта нужен cairosvg (опционально)
 
-[output]
-save_png = true
-save_svg = true
-png_dpi = 200
-file_naming = "same_basename"    # X.toml → X.png / X.svg
-open_in_browser = "svg"          # none | svg | html
-show_preview_windows = false
+Шрифты: используется системный шрифт из font.family (по умолчанию — Arial).
 
-[defaults]
-canvas_size = [1000, 700]
-style.curve = "auto"             # auto | straight | arc | spline
-style.label_offset = 0.05
-style.connector_from = "auto"    # auto | left | right | top | bottom
-style.connector_to = "auto"      # auto | left | right | top | bottom
-style.arrow_size = 1.0
-style.arrow_thickness = 2.0
+pip install cairosvg  # только если нужен PNG
 
-block.width = 0.35
-block.header_height = 0.18
-block.prop_height = 0.10
-block.corner_radius = 10
-block.stroke_width = 2.0
-block.fill_color = "none"
-block.stroke_color = "#000000"
+4) Запуск
+python draw_graph.py
 
-font.family = "Arial"
-font.size_title = 12
-font.size_prop = 10
-font.size_arrow = 9
-font.bold_title = true
-font.italic_arrow = true
 
-theme.mode = "light"
-theme.background = "#FFFFFF"
-theme.text_color = "#000000"
-theme.arrow_color = "#111111"
-theme.block_fill_color = "none"
-theme.block_stroke_color = "#000000"
-```
+Скрипт рекурсивно ищет входные TOML в директориях input_dirs, фильтрует по include_extensions и строит для каждого найденного файла.
 
-## 4. Формат TOML данных графа
-```toml
-[global]
-style.curve = "spline"
-style.label_offset = 0.1
-style.connector_from = "right"
-style.connector_to = "left"
+5) Конфигурация (run.toml)
+5.1 Поиск входных файлов
 
+input_dirs: список папок; recursive: true|false; include_extensions; exclude_patterns.
+
+5.2 Раскладка (layout)
+
+layout.mode: "layered" (слоями) или "off" (использовать pos/auto_pos как есть).
+
+layout.direction: "LR"|"RL"|"TB"|"BT"; по умолчанию — "LR" (слева→направо).
+
+minimize_edge_crossings: bool — снижать пересечения рёбер; avoid_node_overlap: bool — разводить пересечения блоков.
+
+Отступы: node_gap — зазор между соседями в слое; layer_gap — зазор между слоями (0..1).
+
+respect_fixed_blocks: bool — если у блока есть ручной pos=[x,y], раскладка его не двигает.
+
+Прочее: grid_snap (привязка к сетке при записи позиций), deterministic, seed.
+
+5.3 Сохранение авто-параметров
+
+[persist].create_backup: делать .bak перед перезаписью.
+
+[persist].persist_auto_fields: какие группы auto_* записывать назад в [[blocks]] — "pos", "size", "shape", "fonts", "style", "text".
+
+freeze_auto_*: bool — заморозка групп (не перезаписывать соответствующие auto_*).
+
+5.4 Вывод
+
+[output].save_svg: bool, [output].save_png: bool, png_dpi, open_in_browser: "svg"|"none".
+
+5.5 Значения по умолчанию (defaults)
+
+canvas_size = [W,H] в пикселях.
+
+Размеры блока (нормированные, 0..1):
+block.width, block.header_height, block.prop_height.
+
+Форма и стиль: block.shape ("rect"|"rounded"|"pill"|"ellipse"), block.corner_radius, block.stroke_width, block.fill_color, block.stroke_color.
+
+Шрифты: font.family, font.size_title, font.size_prop, font.bold_title, font.italic_arrow.
+
+Текст в блоках:
+block.text_align_title|props ("left"|"center"|"right"),
+block.text_valign_title|props ("baseline"|"middle"),
+block.text_padding_* (px).
+
+Стрелки по умолчанию: style.curve ("auto"|"straight"|"orthogonal"|"spline"), style.label_offset (0..1), style.connector_from|to ("auto"|"left"|"right"|"top"|"bottom"), style.arrow_size, style.arrow_thickness.
+
+6) Формат файла диаграммы (TOML)
+6.1 Заголовок
 [meta]
-title = "Название диаграммы"
-canvas_size = [1200, 800]        # переопределяет defaults.canvas_size
+title = "Пример диаграммы"
+canvas_size = [1200, 800]  # опционально, перекрывает defaults
 
+
+6.2 Блоки
 [[blocks]]
-id = "block1"
-title = "Основной блок"
-properties = ["Свойство 1", "Свойство 2"]
-pos = [0.25, 0.60]               # нормированные координаты центра (0..1)
-width = 0.35
-header_height = 0.18
-prop_height = 0.10
+id = "block9"
+title = "Старт"
+properties = ["Инициализация", "Параметры"]
 
-[[blocks]]
-id = "block2"
-title = "Другой блок"
-properties = ["Атрибут A", "Атрибут B"]
 
-[[arrows]]
-from = "block1"
+properties — имена подблоков-свойств. Высота каждой строки берётся из block.prop_height (или auto_prop_height).
+
+6.2.1 Ручная фиксация размеров/позиции
+
+Если задать ручные поля, они «уважаются» и раскладка их не трогает:
+
+pos = [0.25, 0.60]         # нормированные координаты центра (0..1)
+width = 0.35               # нормированная ширина
+header_height = 0.18       # высота заголовка (норм.)
+prop_height = 0.10         # высота ОДНОГО свойства (норм.)
+
+
+(соответствует логике respect_fixed_blocks = true и приоритету ручных параметров).
+
+6.2.2 Авто-параметры (пересчитываются каждый запуск)
+
+Скрипт генерирует и может сохранять обратно поля auto_*:
+
+auto_pos = [0.13, 0.50]
+auto_width = 0.22
+auto_header_height = 0.12
+auto_prop_height = 0.06
+auto_shape = "rounded"
+auto_corner_radius = 10
+auto_stroke_width = 2
+auto_fill  = "none"
+auto_stroke = "#000000"
+auto_font_family = "Arial"
+auto_font_size_title = 14
+auto_font_size_prop  = 12
+auto_font_bold_title = true
+auto_font_italic_arrow = true
+auto_text_align_title = "center"
+auto_text_align_props = "left"
+auto_text_valign_title = "baseline"
+auto_text_valign_props = "baseline"
+auto_text_padding_title_x = 6
+auto_text_padding_title_y = 6
+auto_text_padding_prop_x  = 6
+auto_text_padding_prop_y  = 6
+
+
+Перечень отражает группы pos/size/shape/fonts/style/text из [persist].persist_auto_fields.
+
+Важно: перед построением скрипт очищает старые auto_* (чтобы не копились) и генерирует их заново из актуальных настроек run.toml. При наличии ручного аналога (pos, width, ...), ручное значение имеет приоритет, а auto_* корректируется только там, где ручного нет. (Поведение контроля записи/заморозки см. §5.3.)
+
+6.3 Связи (стрелки) внутри блока
+
+Исходящие стрелки задаются вложенными таблицами у блока:
+
+[[blocks.outs]]
 to = "block2"
-label = "связь 1"
+label = "go"               # подпись (опц.)
+style.curve = "orthogonal" # перегрузка дефолтов для ребра (опц.)
+style.label_offset = 0.5   # 0..1, 0.5 — по центру
+style.connector_from = "right"
+style.connector_to   = "left"
 
-```
 
-### Правила:
-- `blocks[].id` — уникальные.  
-- `arrows[].from` и `arrows[].to` — должны ссылаться на существующие блоки.  
-- `pos` может отсутствовать: будет рассчитан авто-layout’ом.  
-- Если `persist.write_positions_to_input=true` — итоговые `pos` записываются в файл.  
-- При `write_mode="overwrite"` все позиции перезаписываются, при `update_missing` — только отсутствующие.  
+Формат [[blocks.outs]] полностью заменил старые [[arrows]] и сокращённый синтаксис outs = ["B", ...]. При обнаружении устаревших записей скрипт преобразует их в новый вложенный формат.
 
-## 5. Приоритет параметров
-1. Явно указанный в файле графа (`diagram.toml`).  
-2. Значение из `run.toml [defaults]`.  
-3. Встроенное значение по умолчанию.  
+7) Алгоритм приоритета параметров
 
-Пример встроенных значений:
-- `canvas_size = [800, 600]`
-- `style.curve = "straight"`
-- `block.width = 0.35`
-- `theme.mode = "light"`
-- `theme.background = "#FFFFFF"`
+Для каждого блока и каждой настройки:
 
-## 6. Логика работы
-1. Прочитать `run.toml`.  
-2. Собрать список входных TOML-файлов (`input_dirs`, `recursive`, `include_extensions`, `exclude_patterns`).  
-3. Для каждого файла:  
-   - Прочитать блоки и стрелки.  
-   - Валидировать данные.  
-   - Выполнить раскладку (`layout.mode`).  
-   - Применить роутинг рёбер и размещение подписей.  
-   - Сохранить позиции блоков в TOML (с бэкапом).  
-   - Сгенерировать PNG и SVG.  
-   - При `open_in_browser` — открыть SVG/HTML в браузере.  
+Если задано ручное поле (например, width, pos, header_height, prop_height, выравнивание/шрифты/форма) — использовать его.
 
-## 7. Визуальные правила
-- **Блоки**:  
-  - рамка со скруглением (`block.corner_radius`),  
-  - заголовок в шапке,  
-  - свойства — подблоки одинаковой ширины.  
-- **Стрелки**:  
-  - направленные, от края к краю,  
-  - стиль по `style.curve` и `layout.edge_routing`,  
-  - подписи размещаются «умно» (`smart`) или по центру.  
-- **Темы**:  
-  - поддержка `light` и `dark`.  
+Иначе, если есть актуальное auto_* (после пересчёта) — использовать его.
 
-## 8. Логи
-- `OK: <file>` — успешная генерация.  
-- `INFO: positions written` — позиции перезаписаны.  
-- `WARN: overlap resolved` — блоки развели.  
-- `WARN: label adjusted` — подпись сдвинута.  
-- `ERROR: missing block id ...` — некорректные ссылки.  
-- В конце: сводка (кол-во файлов, TOML изменённых, PNG/SVG создано, открытых в браузере).  
+Иначе — взять дефолт из [defaults] в run.toml.
 
-## 9. Критерии приёмки
-- Запуск без аргументов, чтение `run.toml`.  
-- Обработка всех подходящих файлов из `input_dirs`.  
-- Авторасположение без наложений блоков.  
-- Минимизация пересечений стрелок.  
-- Позиции записываются обратно в TOML.  
-- PNG и SVG создаются рядом с исходниками.  
-- При `open_in_browser="svg"` результат открывается в браузере.  
-- Детерминированность при одинаковом seed.  
+Запись auto_* назад в [[blocks]] управляется [persist] и флажками freeze_auto_*.
 
-## 10. Пограничные случаи
-- Граф без стрелок — только блоки.  
-- Длинные заголовки и подписи — переносятся, не накладываются.  
-- Циклы и параллельные стрелки поддерживаются.  
-- Пустые свойства в блоке — допустимо.  
+8) Текст и выравнивание
 
-## 11. Версионирование
-- Версия ТЗ: **1.2**.  
-- Возможные расширения: экспорты PDF, темы оформления, генерация легенд.  
+Горизонталь: left|center|right → SVG text-anchor="start|middle|end". По умолчанию заголовок по центру, свойства — по центру/слева (смотри текущие дефолты в run.toml).
+
+Вертикаль: baseline|middle. Для одиночных строк удобно middle (вертикальный центр строки). Дефолты можно переопределить в defaults.
+
+Отступы текста задаются в пикселях (block.text_padding_*).
+
+9) Стрелки
+
+Кривая: style.curve = "auto"|"straight"|"orthogonal"|"spline".
+
+Подпись на ребре: style.label_offset = 0..1 — 0.5 ставит подпись по центру.
+
+Подключения к сторонам блоков: style.connector_from|to = "auto"|"left"|"right"|"top"|"bottom".
+
+Размер наконечника и толщина — style.arrow_size, style.arrow_thickness.
+Все значения можно задать глобально в run.toml и адресно в каждом [[blocks.outs]].
+
+10) Направление и слои
+
+По умолчанию схема строится слева направо (layout.direction = "LR"). Можно выбрать и другие ориентации: RL, TB, BT. Раскладка «слоями» создаёт ряды блоков с контролем зазоров и попыткой уменьшить пересечения.
+
+11) Экспорт
+
+SVG всегда точный и масштабируемый ([output].save_svg = true).
+
+PNG зависит от установленного cairosvg; плотность задаётся png_dpi.
+
+Можно авто-открывать SVG после генерации: open_in_browser = "svg".
+
+12) Обратная запись и безопасность данных
+
+Перед перезаписью исходника может создаваться .bak (включено по умолчанию).
+
+Во избежание «разрастания» файла, скрипт очищает прежние auto_* и пишет только актуальные, согласно persist_auto_fields и freeze_auto_*.
+
+13) Пример минимальной диаграммы
+[meta]
+title = "Пример диаграммы"
+
+[[blocks]]
+id = "A"
+title = "Старт"
+properties = ["Инициализация", "Параметры"]
+
+[[blocks.outs]]
+to = "B"
+label = "go"
+style.curve = "orthogonal"
+style.connector_from = "right"
+style.connector_to   = "left"
+
+[[blocks]]
+id = "B"
+title = "Обработка"
+properties = ["Верификация", "Фильтрация", "Агрегация"]
+
+[[blocks.outs]]
+to = "C"
+label = "finish"
+
+[[blocks]]
+id = "C"
+title = "Завершение"
+properties = ["Финал"]
+
+
+(Подробный пример со сгенерированными auto_* см. в flow.graph.toml.)
+
+14) Известные моменты и рекомендации
+
+Если вручную заданы pos/width/header_height/prop_height, включите respect_fixed_blocks = true, чтобы раскладка не смещала такие блоки.
+
+При миграции со старого формата ([[arrows]], outs=[...]) дайте скрипту пройтись по файлу — он преобразует в [[blocks.outs]]. Проверьте дубликаты исходящих связей (в ранних версиях они могли накапливаться).
+
+Для центрирования подписи ребра используйте style.label_offset = 0.5.
+
+15) История изменений (TL;DR)
+
+Перешли на формат [[blocks.outs]] (вместо [[arrows]] и outs=[...]).
+
+Добавлен расширенный набор auto_* для формы/шрифтов/стилей/текста с управлением группами через [persist].
+
+Поддержка вертикального центрирования текста — через block.text_valign_* = "middle".
+
+Направление раскладки по умолчанию — LR (слева→направо).
