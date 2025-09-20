@@ -1,46 +1,81 @@
-# ===============================
-# 03_render — конфигурация этапа рендера SVG/PNG
-# ===============================
-# Назначение: отрисовать итоговые SVG/PNG из файлов данных графа, НЕ меняя их содержимое.
-# По умолчанию артефакты сохраняются там же, где лежит входной .toml.
-#
-# Совет: если нужен PNG — убедитесь, что установлен пакет `cairosvg`, иначе будет предупреждение и PNG не создастся.
+# config_render.toml — конфигурация рендера (этап 03)
+# Совместимые по смыслам ключи с прежним run.toml
 
 [io]
 # --- Где искать входные TOML с графами ---
 input_dirs = [
-    "D:/Entertaiment/Графы/Пример 1"
-    # , "D:/Проекты/Диаграммы"
+  "D:/Entertaiment/Графы/Пример 1"
 ] # Список папок для сканирования
-
 recursive = true
-
-# Для 03-го этапа обычно берём результаты 02-го:
-input_suffix = ".s02.autolayout.toml"
-
 include_extensions = ["toml"]
 exclude_patterns = []
-
-# Режимы записи здесь влияют только на возможную перезапись выходных артефактов в целевой папке (если она совпадает с входной)
-write_mode = "new"     # "new" | "inplace"
-backup_original = false
+# Что считать входом (суффикс имени файла второго этапа):
+input_suffix = "_02.toml"
+# Суффикс выходных артефактов:
+output_suffix = ""
+# Сухой прогон (не писать файлы):
 dry_run = false
-stop_on_error = true
 
 [output]
-# Где и как сохранять графику
-save_svg = true
-save_png = true
+# Экспорт PNG (требуется cairosvg):
+save_png = false
 png_dpi = 200
-open_in_browser = "svg"          # "svg" | "none"
-# output_dir = ""                # (опционально) если пусто — сохранять рядом с входным .toml
 
-[style]
-# Параметры линий/стрелок, где применимо
-curve = "auto"                   # "auto" | "straight" | "orthogonal"
-# Доп. параметры (толщина линий, палитры, шрифты) можно добавить по мере надобности
-label_offset = 8               # смещение подписи вдоль ребра (px)
-connector_from = "auto"        # точка выхода ребра: "auto" | "center" | "side"
-connector_to = "auto"          # точка входа ребра: "auto" | "center" | "side"
-arrow_size = 8                 # размер стрелки (px)
-arrow_thickness = 1.0          # толщина линии ребра/стрелки (px)
+[layout]
+# Режим раскладки, если в файле нет pos/auto_pos:
+#   "layered" — послойно (как в draw_graph.py)
+#   "off"     — ничего не раскладывать
+mode = "layered"
+# Направление: LR | RL | TB | BT
+direction = "LR"
+# Зазоры (доли 0..1), влияют на фолбэк-раскладку
+node_gap = 0.03
+layer_gap = 0.08
+# Уважать ручные pos (если есть)
+respect_fixed_blocks = true
+
+[defaults]
+# Размер холста по умолчанию (переопределяется meta.canvas_size в графе)
+canvas_size = [1200, 800]
+
+# --- Размеры (нормированные доли) ---
+block.width = 0.10
+block.header_height = 0.06
+block.prop_height = 0.03
+
+# --- Форма/стиль блока ---
+block.shape = "rounded"        # rect|rounded|pill|ellipse
+block.corner_radius = 10.0
+block.stroke_width = 2.0
+block.fill_color   = "none"
+block.stroke_color = "#000000"
+
+# --- Шрифты ---
+font.family = "Arial"
+font.size_title = 14
+font.size_prop  = 12
+font.bold_title = true
+font.italic_arrow = true
+
+# --- Текст в блоках (выравнивание и отступы) ---
+block.text_align_title = "center"  # left|center|right
+block.text_align_props = "center"  # left|center|right
+block.text_valign_title = "middle" # baseline|middle
+block.text_valign_props = "middle" # baseline|middle
+block.text_padding_title_x = 6
+block.text_padding_title_y = 6
+block.text_padding_prop_x  = 6
+block.text_padding_prop_y  = 6
+
+# --- Тема/цвета ---
+theme.background = "#FFFFFF"
+theme.text_color = "#000000"
+theme.arrow_color = "#222222"
+
+# --- Стрелки ---
+style.curve = "auto"            # auto|straight|orthogonal  (spline отключён)
+style.label_offset = 0.5        # 0..1
+style.connector_from = "right"   # auto|left|right|top|bottom
+style.connector_to   = "left"   # auto|left|right|top|bottom
+style.arrow_size = 1.0
+style.arrow_thickness = 2.0
