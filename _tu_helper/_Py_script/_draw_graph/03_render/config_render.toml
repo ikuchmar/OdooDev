@@ -1,81 +1,60 @@
-# config_render.toml — конфигурация рендера (этап 03)
-# Совместимые по смыслам ключи с прежним run.toml
+# config_render.toml — Этап 03: строгий рендер
+# Ничего не вычисляем; читаем (РУЧНЫЕ > AUTO_* > DEFAULTS).
+# Параметр open_after_render — открыть SVG в браузере после генерации.
 
 [io]
-# --- Где искать входные TOML с графами ---
 input_dirs = [
   "D:/Entertaiment/Графы/Пример 1"
-] # Список папок для сканирования
+]
 recursive = true
 include_extensions = ["toml"]
 exclude_patterns = []
-# Что считать входом (суффикс имени файла второго этапа):
 input_suffix = "_02.toml"
-# Суффикс выходных артефактов:
-output_suffix = ""
-# Сухой прогон (не писать файлы):
+output_suffix = "_03"
 dry_run = false
 
 [output]
-# Экспорт PNG (требуется cairosvg):
 save_png = false
 png_dpi = 200
+open_after_render = true      # ОТКРЫТЬ результат в браузере: true|false (Windows/macOS/Linux)
 
-[layout]
-# Режим раскладки, если в файле нет pos/auto_pos:
-#   "layered" — послойно (как в draw_graph.py)
-#   "off"     — ничего не раскладывать
-mode = "layered"
-# Направление: LR | RL | TB | BT
-direction = "LR"
-# Зазоры (доли 0..1), влияют на фолбэк-раскладку
-node_gap = 0.03
-layer_gap = 0.08
-# Уважать ручные pos (если есть)
-respect_fixed_blocks = true
+[strict]
+missing_pos = "error"         # "error" | "grid"
 
 [defaults]
-# Размер холста по умолчанию (переопределяется meta.canvas_size в графе)
 canvas_size = [1200, 800]
-
-# --- Размеры (нормированные доли) ---
 block.width = 0.10
-block.header_height = 0.06
-block.prop_height = 0.03
-
-# --- Форма/стиль блока ---
-block.shape = "rounded"        # rect|rounded|pill|ellipse
+block.header_height = 0.10
+block.prop_height   = 0.06
+block.shape = "rounded"
 block.corner_radius = 10.0
-block.stroke_width = 2.0
-block.fill_color   = "none"
-block.stroke_color = "#000000"
-
-# --- Шрифты ---
+block.stroke_width  = 2.0
+block.fill_color    = "none"
+block.stroke_color  = "#000000"
 font.family = "Arial"
 font.size_title = 14
 font.size_prop  = 12
 font.bold_title = true
 font.italic_arrow = true
-
-# --- Текст в блоках (выравнивание и отступы) ---
-block.text_align_title = "center"  # left|center|right
-block.text_align_props = "center"  # left|center|right
-block.text_valign_title = "middle" # baseline|middle
-block.text_valign_props = "middle" # baseline|middle
+block.text_align_title = "center"
+block.text_align_props = "center"
+block.text_valign_title = "middle"
+block.text_valign_props = "middle"
 block.text_padding_title_x = 6
 block.text_padding_title_y = 6
 block.text_padding_prop_x  = 6
 block.text_padding_prop_y  = 6
-
-# --- Тема/цвета ---
 theme.background = "#FFFFFF"
 theme.text_color = "#000000"
 theme.arrow_color = "#222222"
-
-# --- Стрелки ---
-style.curve = "auto"            # auto|straight|orthogonal  (spline отключён)
-style.label_offset = 0.5        # 0..1
-style.connector_from = "right"   # auto|left|right|top|bottom
-style.connector_to   = "left"   # auto|left|right|top|bottom
+style.curve = "orthogonal"    # auto|straight|orthogonal
+style.label_offset = 0.5
+style.connector_from = "right"
+style.connector_to   = "left"
 style.arrow_size = 1.0
 style.arrow_thickness = 2.0
+
+
+# --- Разделители между строками свойств ---
+block.props_dividers = true           # Включить горизонтальные линии между строками свойств: true|false
+block.props_divider_thickness = 1.0   # Толщина линий (px); если 0 — берем половину толщины рамки

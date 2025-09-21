@@ -1,16 +1,92 @@
+# config_autolayout.toml — Этап 02: генерация auto_* параметров (позиции, размеры, стили)
+# + Материализация дефолтов в обычные поля при необходимости.
+
 [io]
-input_dirs = ["D:/Entertaiment/Графы/Пример 1"]
+input_dirs = [
+  "D:/Entertaiment/Графы/Пример 1"
+]
 recursive = true
-input_suffix = "_01.toml"
 include_extensions = ["toml"]
-exclude_patterns = []
+exclude_patterns = ["*_02.toml", "*_03.toml"]
+input_suffix = "_01.toml"
 output_suffix = "_02"
+write_mode = "new"
+backup_original = false
+dry_run = false
+stop_on_error = true
+
+[persist]
+# Управление запоминаемыми группами auto_*
+[[persist.groups]]  # pos
+name = "pos"
+save = true
+freeze = false
+[[persist.groups]]  # size
+name = "size"
+save = true
+freeze = false
+[[persist.groups]]  # shape
+name = "shape"
+save = true
+freeze = false
+[[persist.groups]]  # fonts
+name = "fonts"
+save = true
+freeze = false
+[[persist.groups]]  # text
+name = "text"
+save = true
+freeze = false
+[[persist.groups]]  # edge_style
+name = "edge_style"
+save = true
+freeze = false
 
 [persist.defaults]
-write = ["size"]
-mode  = "overwrite"
+# Материализация: какие группы записывать в НЕ-auto поля (в дополнение к auto_)
+# Допустимые: "pos","size","shape","fonts","text","edge_style"
+materialize = []              # пример: ["size","pos"]
+mode = "fill"                 # "fill" — только пустые поля; "overwrite" — перезаписывать всегда
+
+[layout]
+mode = "layered"              # layered|grid|off
+direction = "LR"              # LR|RL|TB|BT
+node_gap = 0.10
+layer_gap = 0.18
+respect_fixed_blocks = true
 
 [defaults]
+canvas_size = [1200, 800]
 block.width = 0.10
-block_header_height = 0.12
-block_prop_height = 0.10
+block.header_height = 0.10
+block.prop_height   = 0.06
+
+block.shape = "rounded"
+block.corner_radius = 10.0
+block.stroke_width  = 2.0
+block.fill_color    = "none"
+block.stroke_color  = "#000000"
+
+font.family = "Arial"
+font.size_title = 14
+font.size_prop  = 12
+font.bold_title = true
+font.italic_arrow = true
+
+block.text_align_title = "center"
+block.text_align_props = "center"
+block.text_valign_title = "middle"
+block.text_valign_props = "middle"
+block.text_padding_title_x = 6
+block.text_padding_title_y = 6
+block.text_padding_prop_x  = 6
+block.text_padding_prop_y  = 6
+
+theme.background = "#FFFFFF"
+theme.text_color = "#000000"
+theme.arrow_color = "#222222"
+
+style.curve = "orthogonal"          # auto|straight|orthogonal
+style.label_offset = 0.5
+style.connector_from = "right"
+style.connector_to   = "left"

@@ -1,0 +1,123 @@
+# config_master_run.toml — Этап 04: мастер-оркестратор
+# Назначение: по шагам править конфиги подскриптов и запускать их в нужном порядке.
+
+[globals]
+# --- Общие настройки, доступные для use="global" в шагах ---
+input_dirs = ["D:/Entertaiment/Графы/Пример 1"]
+delete_toml_after = true   # Удалять промежуточные TOML (_01.toml, _02.toml) после успешных шагов
+
+[options]
+# --- Поведение мастера ---
+dry_run = false               # true → только показать план без изменений и запусков
+continue_on_error = false     # false → остановка на первой ошибке; true → продолжать
+backup_configs = false        # true → делать .bak перед изменением конфигов
+python_executable = ""        # Путь к Python; пусто → системный
+
+# ============================================================================
+# ШАГИ
+# Типы:
+#   - "set_params"           — только правка конфигов
+#   - "run_script"           — только запуск скрипта
+#   - "set_params_and_run"   — сначала правка, затем запуск
+
+# ---------- 01_prepare -------------------------------------------------------
+[[steps]]
+type = "set_params_and_run"
+targets = ["01_prepare/config_prepare.toml"]
+skip = false
+halt_after = false
+  [[steps.params]]
+  key = "io.input_dirs"
+  use = "global"
+  global_key = "input_dirs"
+  [[steps.params]]
+  key = "io.input_suffix"
+  use = "value"
+  value = ".toml"          # вход для 01_prepare
+  [[steps.params]]
+  key = "io.output_suffix"
+  use = "value"
+  value = "_01"
+  [[steps.params]]
+  key = "ensure.add_missing_properties"
+  use = "value"
+  value = true
+  [[steps.params]]
+  key = "ensure.add_missing_outs"
+  use = "value"
+  value = true
+  [[steps.params]]
+  key = "ensure.force_label_on_outs"
+  use = "value"
+  value = false            # label добавляем на 02-м этапе
+  [[steps.params]]
+  key = "io.exclude_patterns"
+  use = "value"
+  value = ["*_01.toml", "*_02.toml", "*_03.toml"]
+  [steps.run]
+  script = "01_prepare/prepare.py"
+  args = []
+
+# ---------- 02_autolayout ----------------------------------------------------
+[[steps]]
+type = "set_params_and_run"
+targets = ["02_autolayout/config_autolayout.toml"]
+skip = false
+halt_after = false
+  [[steps.params]]
+  key = "io.input_dirs"
+  use = "global"
+  global_key = "input_dirs"
+  [[steps.params]]
+  key = "io.input_suffix"
+  use = "value"
+  value = "_01.toml"       # вход для 02_autolayout
+  [[steps.params]]
+  key = "io.output_suffix"
+  use = "value"
+  value = "_02"
+  [[steps.params]]
+  key = "persist.defaults.materialize"
+  use = "value"
+  value = []               # примеры: ["size","pos"]
+  [[steps.params]]
+  key = "persist.defaults.mode"
+  use = "value"
+  value = "fill"           # "fill" | "overwrite"
+  [steps.run]
+  script = "02_autolayout/autolayout.py"
+  args = []
+
+# ---------- 03_render --------------------------------------------------------
+[[steps]]
+type = "set_params_and_run"
+targets = ["03_render/config_render.toml"]
+skip = false
+halt_after = false
+  [[steps.params]]
+  key = "io.input_dirs"
+  use = "global"
+  global_key = "input_dirs"
+  [[steps.params]]
+  key = "io.input_suffix"
+  use = "value"
+  value = "_02.toml"       # вход для 03_render
+  [[steps.params]]
+  key = "io.output_suffix"
+  use = "value"
+  value = "_03"
+  [[steps.params]]
+  key = "output.open_after_render"
+  use = "value"
+  value = true
+  [[steps.params]]
+  key = "defaults.block.props_dividers"
+  use = "value"
+  value = true
+  [[steps.params]]
+  key = "defaults.block.props_divider_thickness"
+  use = "value"
+  value = 1.0
+  [steps.run]
+  script = "03_render/render.py"
+  args = []
