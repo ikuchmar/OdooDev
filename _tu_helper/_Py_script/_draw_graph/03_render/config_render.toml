@@ -3,9 +3,7 @@
 # Параметр open_after_render — открыть SVG в браузере после генерации.
 
 [io]
-input_dirs = [
-  "D:/Entertaiment/Графы/Пример 1"
-]
+input_dirs = ["D:/Entertaiment/Графы/Пример 1"]
 recursive = true
 include_extensions = ["toml"]
 exclude_patterns = []

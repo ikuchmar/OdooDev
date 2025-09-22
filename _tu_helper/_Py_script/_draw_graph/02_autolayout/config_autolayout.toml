@@ -2,15 +2,16 @@
 # + Материализация дефолтов в обычные поля при необходимости.
 
 [io]
-input_dirs = [
-  "D:/Entertaiment/Графы/Пример 1"
-]
+# --- Где искать входные TOML с графами ---
+input_dirs = ["D:/Entertaiment/Графы/Пример 1"]
 recursive = true
 include_extensions = ["toml"]
+# Исключаем уже обработанные файлы
 exclude_patterns = ["*_02.toml", "*_03.toml"]
-input_suffix = "_01.toml"
-output_suffix = "_02"
-write_mode = "new"
+# Файлы для чтения/записи
+input_suffix = "_01.toml"   # вход (после prepare)
+output_suffix = "_02"       # суффикс результата этого этапа
+write_mode = "new"          # "new" | "inplace"
 backup_original = false
 dry_run = false
 stop_on_error = true
@@ -21,22 +22,27 @@ stop_on_error = true
 name = "pos"
 save = true
 freeze = false
+
 [[persist.groups]]  # size
 name = "size"
 save = true
 freeze = false
+
 [[persist.groups]]  # shape
 name = "shape"
 save = true
 freeze = false
+
 [[persist.groups]]  # fonts
 name = "fonts"
 save = true
 freeze = false
+
 [[persist.groups]]  # text
 name = "text"
 save = true
 freeze = false
+
 [[persist.groups]]  # edge_style
 name = "edge_style"
 save = true
@@ -47,45 +53,53 @@ freeze = false
 # Допустимые: "pos","size","shape","fonts","text","edge_style"
 materialize = []              # пример: ["size","pos"]
 mode = "fill"                 # "fill" — только пустые поля; "overwrite" — перезаписывать всегда
-
 [layout]
+# Настройки автолайаута (работают только на этом этапе; рендер берёт готовые координаты/размеры)
 mode = "layered"              # layered|grid|off
 direction = "LR"              # LR|RL|TB|BT
-node_gap = 0.10
-layer_gap = 0.18
-respect_fixed_blocks = true
+node_gap = 0.10               # горизонтальный зазор между узлами (в относительных единицах)
+layer_gap = 0.18              # вертикальный зазор между слоями (в относительных единицах)
+respect_fixed_blocks = true   # не двигать блоки, у которых зафиксированы координаты
 
 [defaults]
+# Значения по умолчанию (используются автолайаутом для расчёта auto_* при отсутствии явных значений)
 canvas_size = [1200, 800]
+
+# Геометрия блока
 block.width = 0.10
 block.header_height = 0.10
 block.prop_height   = 0.06
 
-block.shape = "rounded"
+# Форма/рамка
+block.shape = "rounded"       # "rect" | "rounded"
 block.corner_radius = 10.0
 block.stroke_width  = 2.0
 block.fill_color    = "none"
 block.stroke_color  = "#000000"
 
+# Шрифты
 font.family = "Arial"
 font.size_title = 14
 font.size_prop  = 12
 font.bold_title = true
 font.italic_arrow = true
 
-block.text_align_title = "center"
+# Текстовые выравнивания
+block.text_align_title = "center"   # "left"|"center"|"right"
 block.text_align_props = "center"
-block.text_valign_title = "middle"
+block.text_valign_title = "middle"  # "top"|"middle"|"bottom"
 block.text_valign_props = "middle"
 block.text_padding_title_x = 6
 block.text_padding_title_y = 6
 block.text_padding_prop_x  = 6
 block.text_padding_prop_y  = 6
 
+# Тема/цвета/стрелки (для автолайаута — скорее подсказки; фактический рендер на этапе 03)
 theme.background = "#FFFFFF"
 theme.text_color = "#000000"
 theme.arrow_color = "#222222"
 
+# Стиль рёбер
 style.curve = "orthogonal"          # auto|straight|orthogonal
 style.label_offset = 0.5
 style.connector_from = "right"

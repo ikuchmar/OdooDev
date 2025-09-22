@@ -22,8 +22,8 @@ stop_on_error = true
 
 [ensure]
 add_missing_properties = true
-add_missing_outs       = true
-force_label_on_outs    = false  # label добавляем на 2-м этапе (autolayout)
+add_missing_outs = true
+force_label_on_outs = true  # label добавляем на 2-м этапе (autolayout)
 generate_block_ids     = "off"  # "off" | "slug" | "uuid"
 slug_maxlen            = 40
 add_default_meta       = false
