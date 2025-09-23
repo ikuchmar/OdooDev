@@ -8,7 +8,7 @@ recursive = true
 include_extensions = ["toml"]
 exclude_patterns = []
 input_suffix = "_02.toml"
-output_suffix = "_03"
+output_suffix = ""
 dry_run = false
 
 [output]

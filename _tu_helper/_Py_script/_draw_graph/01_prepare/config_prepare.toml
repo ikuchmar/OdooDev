@@ -1,34 +1,28 @@
-# config_prepare.toml — Этап 01: подготовка / нормализация входных TOML
-# Привести структуру к стабильному виду без вычислений.
-#  • Добавить недостающие секции: properties = [], outs = []
-#  • (опц.) Сгенерировать id для блоков
-#  • (опц.) Проставить базовые meta.*
-#  • (опц.) Удалить дублирующиеся связи в [[blocks.outs]]
-#  • В дампе TOML добавлять ПУСТУЮ СТРОКУ ПЕРЕД КАЖДЫМ [[blocks]] для удобочитаемости.
+# config_prepare.toml — Этап 01: подготовка / нормализация
+# ВАЖНО: Комментарии исходника не сохраняются (канонизация).
 
 [io]
-# --- Где искать входные TOML с графами ---
+# Где искать входные TOML
 input_dirs = ["D:/Entertaiment/Графы/Пример 1"]
 recursive = true
-include_extensions = ["toml"]
-# Исключаем уже подготовленные файлы, чтобы избежать *_01_01.toml:
+# Исключить уже подготовленные файлы (чтобы не делать *_01_01.toml)
 exclude_patterns = ["*_01.toml", "*_02.toml", "*_03.toml"]
-input_suffix = ".toml"     # какие файлы считать "сырыми"
-output_suffix = "_01"      # суффикс результата этапа 01
-write_mode = "new"         # "new" | "inplace"
-backup_original = false
-dry_run = false
-stop_on_error = true
+# Что считаем «сырым» (матч по окончанию имени файла, регистронезависимо)
+input_suffix = ".toml"
+# Суффикс для нового файла перед .toml
+output_suffix = "_01"
 
-[ensure]
-add_missing_properties = true
-add_missing_outs = true
-force_label_on_outs = true  # label добавляем на 2-м этапе (autolayout)
-generate_block_ids     = "off"  # "off" | "slug" | "uuid"
-slug_maxlen            = 40
-add_default_meta       = false
-title_from_filename    = true
-default_canvas_size    = [1200, 800]
+[behavior]
+# Сохранение оригинальных фрагментов:
+# false | "inline" | "appendix"
+keep_original = false
 
-[migration]
-dedupe_outs = true
+[aliases]
+# Синонимы для блоков — и заголовков, и шортката "block = ..."
+blocks = ["blocks","блоки","block","блок","node","узел"]
+
+[aliases.fields]
+outs       = ["outs","выходы","стрелки","edges"]
+properties = ["properties","параметры","свойства","props"]
+title      = ["title","заголовок","название"]
+id         = ["id","ид","идентификатор","ключ"]
