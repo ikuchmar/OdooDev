@@ -36,24 +36,25 @@ mode="tree"
 а дочерние узлы будут представлять товары, относящиеся к данной категории.
 
 =============================================================
-<record model="ir.ui.view" id="product_form_view">
-    <field name="name">product.form</field>
-    <field name="model">product.product</field>
-    <field name="arch" type="xml">
-        <form string="Product Form">
-            <sheet>
-                <group>
-                    <field name="name"/>
-                    <field name="variants" mode="tree">
-                        <tree>
+
+        <record model="ir.ui.view" id="product_form_view">
+            <field name="name">product.form</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <form string="Product Form">
+                    <sheet>
+                        <group>
                             <field name="name"/>
-                        </tree>
-                    </field>
-                </group>
-            </sheet>
-        </form>
-    </field>
-</record>
+                            <field name="variants" mode="tree">
+                                <tree>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
 =============================================================
 Представление как таблица (variants) на форме Product

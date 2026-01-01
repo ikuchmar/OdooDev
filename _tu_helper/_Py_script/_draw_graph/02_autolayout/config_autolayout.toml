@@ -1,121 +1,29 @@
-# config_autolayout.toml — Этап 02: генерация auto_* параметров (позиции, размеры, стили)
-# + Материализация дефолтов в обычные поля при необходимости.
-
+# config_autolayout.toml — Вариант B + порядок блоков
 [io]
-# --- Где искать входные TOML с графами ---
 input_dirs = ["D:/Entertaiment/Графы/Пример 1"]
 recursive = true
 include_extensions = ["toml"]
-# Исключаем уже обработанные файлы
 exclude_patterns = ["*_02.toml", "*_03.toml"]
-# Файлы для чтения/записи
-input_suffix = "_01.toml"   # вход (после prepare)
-output_suffix = "_02"       # суффикс результата этого этапа
-write_mode = "new"          # "new" | "inplace"
-backup_original = false
-dry_run = false
+input_suffix = "_01.toml"
+output_suffix = "_02"
 stop_on_error = true
 
-[persist]
-# Управление запоминаемыми группами auto_*
-[[persist.groups]]  # pos
-name = "pos"
-save = true
-freeze = false
-
-[[persist.groups]]  # size
-name = "size"
-save = true
-freeze = false
-
-[[persist.groups]]  # shape
-name = "shape"
-save = true
-freeze = false
-
-[[persist.groups]]  # fonts
-name = "fonts"
-save = true
-freeze = false
-
-[[persist.groups]]  # text
-name = "text"
-save = true
-freeze = false
-
-[[persist.groups]]  # edge_style
-name = "edge_style"
-save = true
-freeze = false
-
-[persist.defaults]
-# Материализация: какие группы записывать в НЕ-auto поля (в дополнение к auto_)
-# Допустимые: "pos","size","shape","fonts","text","edge_style"
-materialize = []              # пример: ["size","pos"]
-mode = "fill"                 # "fill" — только пустые поля; "overwrite" — перезаписывать всегда
 [layout]
-# Настройки автолайаута (работают только на этом этапе; рендер берёт готовые координаты/размеры)
+direction = "LR"   # LR|RL|TB|BT
 
-# Алгоритм раскладки:
-# "layered" — слоистая (минимизация пересечений рёбер, удобно для потоков)
-# "grid"    — сетка (компактно, но без упора на уменьшение пересечений)
-# "off"     — не раскладывать (оставить ваши координаты)
+[order]
+mode = "auto"      # auto|topological|input
 
-mode = "layered"              # layered|grid|off
-
-# Направление:
-# "LR" — слева направо, "RL" — справа налево,
-# "TB" — сверху вниз, "BT" — снизу вверх
-
-direction = "LR"              # LR|RL|TB|BT
-
-# Зазоры (помогают избежать наложений)
-node_gap = 0.10               # горизонтальный зазор между узлами (в относительных единицах)
-
-layer_gap = 0.18              # вертикальный зазор между слоями (в относительных единицах)
-
-respect_fixed_blocks = true   # не двигать блоки, у которых зафиксированы координаты
+[edges]
+curve = "auto"
+avoid_nodes = true
+avoid_padding = 0.08
+avoid_direction = "auto"
+connector_from = "right"
+connector_to   = "left"
 
 [defaults]
-# Значения по умолчанию (используются автолайаутом для расчёта auto_* при отсутствии явных значений)
-canvas_size = [1200, 800]
-
-# Геометрия блока
-block.width = 0.10
+block.width = 0.12
 block.header_height = 0.10
 block.prop_height   = 0.06
-
-# Форма/рамка
-block.shape = "rounded"       # "rect" | "rounded"
-block.corner_radius = 10.0
-block.stroke_width  = 2.0
-block.fill_color    = "none"
-block.stroke_color  = "#000000"
-
-# Шрифты
-font.family = "Arial"
-font.size_title = 14
-font.size_prop  = 12
-font.bold_title = true
-font.italic_arrow = true
-
-# Текстовые выравнивания
-block.text_align_title = "center"   # "left"|"center"|"right"
-block.text_align_props = "center"
-block.text_valign_title = "middle"  # "top"|"middle"|"bottom"
-block.text_valign_props = "middle"
-block.text_padding_title_x = 6
-block.text_padding_title_y = 6
-block.text_padding_prop_x  = 6
-block.text_padding_prop_y  = 6
-
-# Тема/цвета/стрелки (для автолайаута — скорее подсказки; фактический рендер на этапе 03)
-theme.background = "#FFFFFF"
-theme.text_color = "#000000"
-theme.arrow_color = "#222222"
-
-# Стиль рёбер
-style.curve = "orthogonal"          # auto|straight|orthogonal
 style.label_offset = 0.5
-style.connector_from = "right"
-style.connector_to   = "left"
